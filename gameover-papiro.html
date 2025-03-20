@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game over</title>
+    <style>
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0; /* Ajuste para colar a imagem na borda esquerda */
+            width: 100%; /* Ajuste para cobrir 100% da largura */
+            height: 150%; /* Ajuste para cobrir 100% da altura */
+            background-image: url('./realistic\ game\ over\ screen\ with\ the\ sage\ glaring\ angrily\ inside\ the\ temple\ surrounded\ by\ torches.png');
+            background-size: cover; /* Ajusta a imagem para cobrir todo o fundo */
+            background-position: center; /* Centraliza a imagem */
+            background-repeat: no-repeat; /* Evita que a imagem se repita */
+            transition: transform 0.1s; 
+        }
+
+        .button-container {
+            margin-top: 70px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            gap: 20px;
+            align-items: center;
+        }
+
+        .button {
+            padding: 10px 15px;
+            font-size: 10px;
+            font-weight: bold;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
+            border: 2px solid #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #333;
+            transform: scale(1.1);
+        }
+
+        .button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="button-container">
+        <!-- Adicionei id aos botões para referenciá-los no JavaScript -->
+        <button id="startGame" class="button">Voltar para o Menu</button>
+        <button id="home" class="button">Tentar Novamente</button>
+    </div>
+    <script>
+        // Adicionando os eventos de clique aos botões
+        document.getElementById('startGame').addEventListener('click', function() {
+            // Navega para a página fora do iframe, fechando o iframe
+            window.top.location.href = './inital_page.html'; // O 'window.top' vai acessar a janela superior e redirecioná-la.
+        });
+        
+        document.getElementById('home').addEventListener('click', function() {
+            // Navega para a página de tentar novamente fora do iframe
+            window.top.location.href = './sabio.html'; // O 'window.top' também é usado aqui.
+        });
+    </script>
+</body>
+</html>

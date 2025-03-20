@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bootstrap Carrossel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <style>
+    .carousel-item img {
+      object-fit: cover;
+      width: 100%;
+      height: 100vh;
+    }
+
+    /* Estilo para as legendas do carrossel */
+    .carousel-caption {
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 10px;
+      padding: 20px;
+      bottom: 10%;
+      transition: background-color 0.5s ease;
+    }
+
+    .carousel-caption h5,
+    .carousel-caption p {
+      color: white;
+    }
+
+    /* Estilos para os botões de navegação personalizados */
+    .top-left-btn,
+    .top-right-btn {
+      position: fixed;
+      z-index: 1050;
+      background-color: white;
+      color: black;
+      border: none;
+      padding: 20px;
+      font-size: 40px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0.8;
+      pointer-events: auto;
+    }
+
+    /* Ajuste para as setas ficarem um pouco mais acima */
+    .top-left-btn {
+      top: 10%;
+      left: 20px;
+      transform: translateY(-50%);
+    }
+
+    .top-right-btn {
+      top: 10%;
+      right: 20px;
+      transform: translateY(-50%);
+    }
+
+    /* Ícones de seta dentro das setas */
+    .top-left-btn i,
+    .top-right-btn i {
+      font-size: 36px;
+      transition: transform 0.3s ease;
+    }
+
+    /* Adiciona o efeito de hover */
+    .top-left-btn:hover,
+    .top-right-btn:hover {
+      background-color: #f0f0f0;
+      cursor: pointer;
+      opacity: 1;
+    }
+
+    /* Efeito ao clicar */
+    .top-left-btn:active,
+    .top-right-btn:active {
+      background-color: #e0e0e0;
+      transform: scale(0.95);
+    }
+
+    .top-left-btn:focus,
+    .top-right-btn:focus {
+      outline: none;
+    }
+
+    /* Centralizando o botão de som */
+    .toggle-music {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      color: #d2691e;
+      background-color: rgba(255, 69, 0, 0.5);
+      border: none;
+      border-radius: 6px;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .toggle-music:hover {
+      background-color: rgba(255, 69, 0, 0.7);
+    }
+
+    /* Mensagem para ativar o som */
+    .music-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+      z-index: 999;
+    }
+
+    /* Animação de transição para as setas */
+    .top-left-btn,
+    .top-right-btn {
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* Efeito de animação para as setas */
+    .show {
+      opacity: 1 !important;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+    .hide {
+      opacity: 0 !important;
+      pointer-events: none;
+      transform: scale(0.8);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="background">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+          aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+          aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+          aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="./frist image.png" class="d-block img-fluid"
+            alt="Imagem de uma grande e majestosa pirâmide" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>O Eco da Guerra e a fuga de Rahin</h5>
+            <p>
+              Rahin, um jovem soldado árabe, luta em meio à guerra entre Egito e seus inimigos. Durante uma patrulha,
+              ele e seu grupo são emboscados. Separado de seus companheiros, ele foge e encontra para o deserto em uma forma desesperada de fuga, presando por sua vida.
+            </p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="./papiro-image.jpg" class="d-block img-fluid" alt="Faraó está diante ao seu soldado" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>A Esperança</h5>
+            <p>
+              Perdido no deserto, Rahin descobre um papiro romano desgastado pelo vento e sol perdido em meio a areia, percebe que o conteúdo que está escrito no papito é um código, repleto de números e símbolos romanos que ele não consegue compreender. 
+              Rahin se lembra de um velho sábio nas montanhas, um estudioso dos métodos romanos. Ele decide partir imediatamente para encontrá-lo.
+            </p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="./templo zoroastrista isolado nas montanhas do Irã por fora.png" class="d-block img-fluid" alt="Cavalaria romana em caminho ao Egito para a guerra" />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>A busca pela verdade</h5>
+            <p>
+              Rahin viaja até a morada de Darian, um ancião conhecido por seu conhecimento das línguas e táticas romanas. Percorrendo um longo caminho pelo desento, de longe Rahin avista o templo em cima de um monte. O templo do tal velho sábio.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensagem pedindo para o usuário ligar a música -->
+  <div id="musicMessage" class="music-message">
+    <p>Por favor, ative o som para uma experiência completa!</p>
+  </div>
+
+  <button id="toggleMusic" class="toggle-music">&#x1F50A;</button>
+  <audio id="backgroundMusic" src="./egypt-jelly-dance-131475.mp3" loop></audio>
+
+  <!-- Botões de navegação -->
+  <button class="top-left-btn show" onclick="window.location.href = './inital_page.html';">
+    <i class="bi bi-chevron-left"></i>&larr;</i> <!-- Ícone de seta para a esquerda -->
+  </button>
+  <button class="top-right-btn show" onclick="window.location.href = './sabio.html';">
+    <i class="bi bi-chevron-right"> &rarr;</i> <!-- Ícone de seta para a direita -->
+  </button>
+
+  <script>
+    const toggleMusicButton = document.getElementById("toggleMusic");
+    const backgroundMusic = document.getElementById("backgroundMusic");
+    const musicMessage = document.getElementById("musicMessage");
+
+    // Tentar iniciar a música automaticamente, se permitido
+    backgroundMusic.play().catch(function (error) {
+      // Caso o navegador bloqueie, mostramos a mensagem para ativar o som
+      musicMessage.style.display = "block";
+    });
+
+    toggleMusicButton.addEventListener("click", function () {
+      if (backgroundMusic.paused) {
+        backgroundMusic.play();
+        toggleMusicButton.innerHTML = "&#x1F50A;"; // Ícone de som desligado
+        musicMessage.style.display = "none"; // Esconde a mensagem
+      } else {
+        backgroundMusic.pause();
+        backgroundMusic.currentTime = 0;
+        toggleMusicButton.innerHTML = "&#x1F507;"; // Ícone de som ligado
+      }
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.min.js"></script>
+</body>
+
+</html>

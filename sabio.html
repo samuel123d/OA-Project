@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batalha dos Números: A Missão de Rahin</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 75vh;
+            background-image: url('./um\ sabio\ iraniano\ dentro\ de\ um\ palacio\ um\ pouco\ escuro\ com\ tochas\ a\ sua\ volta.png');
+            /* Substitua 'sua-imagem.jpg' pelo caminho da sua imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: white;
+            text-align: center;
+            position: absolute;
+            top: 93%;
+            left: 91%;
+            margin-top: -55px;
+            transform: translate(-50%, -50%);
+            animation: slideIn 3s ease-in-out;
+            /* Animação de entrada */
+        }
+
+        .buttons {
+            margin-top: 50px;
+        }
+
+        button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 35px;
+        }
+
+        /* Animação de Abertura do Diálogo */
+        @keyframes slideIn {
+            from {
+                transform: translate(-50%, -60%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        #dialog-box {
+            display: block;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            height: 14%;
+            width: 60%;
+            text-align: center;
+            position: absolute;
+            top: 88%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: slideIn 3s ease-in-out;
+            /* Animação de entrada */
+        }
+
+
+
+        .back-btn {
+            position: absolute;
+            top: -25px;
+            left: -30px;
+            background: none;
+            color: white;
+            border: none;
+            font-size: 10px;
+            cursor: pointer;
+        }
+
+        #tutorial {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .tutorial-box {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .btn {
+
+            margin-top: 2px;
+            font-size: 10px;
+
+        }
+
+        .tutorial-box p {
+            margin: 10px 0;
+        }
+
+        .tutorial-box button {
+            background-color: red;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        .dialog-buttons {
+
+            margin-left: -170px;
+        }
+
+        .carousel-buttons {
+            margin-top: 20px;
+        }
+
+        .typing-animation {
+            position: relative;
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            padding-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            animation: typing 3s steps(25) 1s forwards, blink 0.75s step-end infinite;
+            transform: translateX(-60px);
+            /* Move o texto 40px para a esquerda */
+        }
+
+        @keyframes typing {
+            to {
+                width: 100%;
+                /* Faz a animação preencher toda a largura */
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .vertical-hr {
+            width: 2px;
+            height: 120px;
+            background-color: white;
+            border: none;
+            position: absolute;
+            left: 80%;
+
+            top: -12px;
+            margin: 20px;
+        }
+
+        .dialog {
+            size: 30px;
+
+        }
+
+        .back {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            display: inline;
+            background-color: gray;
+            padding-block: 5px;
+            padding-left: 0px;
+            padding-right: 7px;
+            border-radius: 3px;
+            
+        }
+
+        .titulo {
+            display: inline;
+            padding: 15px 20px 15px 20px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            font-weight: BOLD;
+            right: 87.5%;
+            top: -50%;
+            color: white;
+            position: absolute
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <!-- Caixa de Diálogo (Inicial) -->
+    <div id="dialog-box">
+
+        <h1 class="titulo">Diálogo</h1>
+        <div class="container">
+            <button class="btn" id="papiro-btn" onclick="window.location.href='papiro.html'"> Ler Papiro </button>
+            <button class="btn" onclick="window.location.href='inital_page.html'">Voltar para o Menu</button>
+
+        </div>
+
+
+
+        <div id="dialog-buttons" class="dialog-buttons">
+            <button class="dialog" style="background-color: gray;" onclick="showDialog('primeiros-passos')">Primeiros
+                Passos</button>
+            <button class="dialog" style="background-color: gray;" onclick="showDialog('comecando-entender')">Começando
+                a Entender</button>
+            <button class="dialog" style="background-color: gray;" onclick="showDialog('mestre-algarismos')">Mestre dos
+                Algarismos Romanos</button>
+        </div>
+        <hr class="vertical-hr">
+        <div id="dialog-content" class="dialog-content">
+            <!-- Conteúdo dos diálogos será mostrado aqui -->
+        </div>
+
+    </div>
+
+    <!-- Tutorial -->
+    <div id="tutorial" onclick="showTutorial()">&#8505; Tutorial</div>
+
+    <div class="tutorial-box" id="tutorial-box">
+        <p><strong>Como jogar:</strong><br>Este é um jogo de aventura onde você aprende a ler números romanos de 1 a
+            1000 e muito mais.</p>
+        <p>Pressione "Diálogo" para aprender a ler os números romanos em diferentes intervalos.</p>
+        <p>Clique em "Ler Papiro" para seguir para a próxima página.</p>
+        <button onclick="closeTutorial()">Fechar</button>
+    </div>
+
+    <script>
+        // Função para abrir a caixa de diálogo com os botões
+
+
+        // Função para exibir o conteúdo do diálogo escolhido
+        function showDialog(dialogType) {
+            document.getElementById("dialog-buttons").style.display = "none";  // Esconde os botões de escolha
+            document.getElementById("dialog-content").style.display = "block";  // Exibe o conteúdo do diálogo
+            let content = '';
+
+            if (dialogType === 'primeiros-passos') {
+                content = '<button class="back-btn" onclick="backToMenu()"><h1 class="back" >← Voltar</h2></button><p class="typing-animation"><strong>Sábio:</strong><br>Para ler os números romanos de 1 a 9, você usa I, II, III, IV, V, VI, VII, VIII, IX.</p>';
+            } else if (dialogType === 'comecando-entender') {
+                content = '<button class="back-btn" onclick="backToMenu()"><h1 class="back" >← Voltar</h2></button><p class="typing-animation"><strong>Começando a Entender:</strong><br>Para ler de 1 a 100, você combina os números básicos. Exemplo: XX (20), L (50), XC (90), etc.</p>';
+            } else if (dialogType === 'mestre-algarismos') {
+                content = '<button class="back-btn" onclick="backToMenu()"><h1 class="back" >← Voltar</h2></button><p class="typing-animation"><strong>Mestre dos Algarismos Romanos:</strong><br>De 1 a 1000, você usa combinações de centenas, como C (100), D (500), M (1000).</p>';
+            }
+
+            document.getElementById("dialog-content").innerHTML = content;
+        }
+
+        // Função para voltar ao menu de escolha de diálogos
+        function backToMenu() {
+            document.getElementById("dialog-buttons").style.display = "block";  // Exibe os botões de escolha
+            document.getElementById("dialog-content").style.display = "none";  // Esconde o conteúdo do diálogo
+        }
+
+        // Função para fechar o diálogo
+        function closeDialog() {
+            document.getElementById("dialog-box").style.display = "none";
+        }
+
+        // Função para mostrar o tutorial
+        function showTutorial() {
+            document.getElementById("tutorial-box").style.display = "block";
+        }
+
+        // Função para fechar o tutorial
+        function closeTutorial() {
+            document.getElementById("tutorial-box").style.display = "none";
+        }
+    </script>
+
+</body>
+
+</html>

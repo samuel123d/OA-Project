@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEAM</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #74ebd5, #acb6e5);
+            font-family: Arial, sans-serif;
+            position: relative;
+        }
+
+        .navbar {
+            width: 100%;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .steam {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .letter {
+            position: relative;
+            font-size: 5rem;
+            font-weight: bold;
+            color: white;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, z-index 0.3s ease;
+            z-index: 1;
+            border-radius: 10px;
+        }
+
+        .letter:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+
+        .letter.selected {
+            border: 5px solid black;
+            border-radius: 10px;
+        }
+
+        .s { background-color: #0074d9;  }
+        .t { background-color: #ff4136; }
+        .e { background-color: #2ecc40; }
+        .a { background-color: #ffdc00; }
+        .m { background-color: #b10dc9; }
+
+        .tooltip {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: inherit;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .letter:hover .tooltip {
+            opacity: 1;
+        }
+
+        .info-section {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: left;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: -50px;
+            transition: opacity 0.3s ease;
+        }
+
+        .info-text {
+            max-width: 600px;
+        }
+
+        .info-section iframe {
+            max-width: 40%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .cards-container {
+            width: 90%;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            transition: opacity 0.3s ease;
+            display: none;
+        }
+
+        .cards-container.active {
+            display: flex;
+        }
+
+        .card {
+            width: 200px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateX(-100%);
+            animation: slideIn 0.5s forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .card .tags {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card .tag {
+            font-size: 0.8rem;
+            margin: 2px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .tag.s { background-color: #0074d9;   }
+        .tag.t { background-color: #ff4136; }
+        .tag.e { background-color: #2ecc40; }
+        .tag.a { background-color: #ffdc00; }
+        .tag.m { background-color: #b10dc9; }
+
+        .medal {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(
+                gray 20%,
+                gray 20%,
+                gray 40%,
+                gray 40%,
+                gray 60%,
+                gray 60%,
+                gray 80%,
+                gray 80%,
+                gray 100%
+            );
+            border: 5px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .medal.active {
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        .medal-text {
+            position: absolute;
+            font-size: 0.8rem;
+        }
+
+        .iframe-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 900px;
+            height: 80%;
+            display: none;
+            z-index: 1000;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .no-match-message {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #ffcc00;
+            color: #333;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">STEAM</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="steam">
+        <div class="letter s" data-name="S">
+            S
+            <div class="tooltip" style="background-color: #0074d9;">Science</div>
+        </div>
+        <div class="letter t" data-name="T">
+            T
+            <div class="tooltip" style="background-color: #ff4136;">Technology</div>
+        </div>
+        <div class="letter e" data-name="E">
+            E
+            <div class="tooltip" style="background-color: #2ecc40;">Engineering</div>
+        </div>
+        <div class="letter a" data-name="A">
+            A
+            <div class="tooltip" style="background-color: #ffdc00;">Arts</div>
+        </div>
+        <div class="letter m" data-name="M">
+            M
+            <div class="tooltip" style="background-color: #b10dc9;">Mathematics</div>
+        </div>
+    </div>
+
+    <div class="medal" id="medal">
+        <span class="medal-text">Medal</span>
+        <div id="medalTooltip" class="tooltip-content" style="display: none; position: absolute; top: -40px; left: 50%; transform: translateX(-50%);">
+            <!-- Tooltip content will be updated dynamically -->
+        </div>
+    </div>
+
+    <div class="info-section" id="infoSection">
+        <div class="info-text">
+            <h2>Sobre a Abordagem STEAM</h2>
+            <p>A abordagem STEAM combina Ciência, Tecnologia, Engenharia, Artes e Matemática de maneira integrada, promovendo uma forma criativa de aprender...</p>
+        </div>
+        <iframe width="100%" height="250" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <div class="cards-container" id="cardsContainer"></div>
+    <div class="no-match-message" id="noMatchMessage">Nenhum jogo encontrado para as disciplinas selecionadas.</div>
+
+    <!-- Iframe Container -->
+    <div class="iframe-container" id="iframeContainer">
+        <iframe src="./iframe.html" class="game-over-iframe"></iframe>
+    </div>
+
+    <script>
+        const letters = document.querySelectorAll('.letter');
+        const infoSection = document.getElementById('infoSection');
+        const cardsContainer = document.getElementById('cardsContainer');
+        const selectedLetters = new Set();
+        const medal = document.getElementById('medal');
+        const medalTooltip = document.getElementById('medalTooltip');
+        const iframeContainer = document.getElementById('iframeContainer');
+        const noMatchMessage = document.getElementById('noMatchMessage');
+        let completedGames = new Set(); // Track completed games
+
+        const cardData = [
+            { title: "Jogo 1", description: "Exploração científica e tecnológica.", tags: ["S", "T"], img: "https://via.placeholder.com/200?text=Jogo+1" },
+            { title: "Jogo 2", description: "Artes e Matemática aplicadas.", tags: ["A", "M"], img: "https://via.placeholder.com/200?text=Jogo+2" },
+            { title: "Jogo 3", description: "Uma combinação de engenharia e ciência.", tags: ["E", "S"], img: "https://via.placeholder.com/200?text=Jogo+3" },
+            { title: "Jogo 4", description: "Tecnologia e Artes criativas.", tags: ["T", "A"], img: "https://via.placeholder.com/200?text=Jogo+4" },
+            { title: "Jogo 5", description: "Matemática e Engenharia práticas.", tags: ["M", "E"], img: "https://via.placeholder.com/200?text=Jogo+5" },
+            { title: "Jogo 6", description: "Ciência e Matemática aplicadas.", tags: ["S", "M"], img: "https://via.placeholder.com/200?text=Jogo+6" },
+            { title: "Jogo 7", description: "Tecnologia e Ciência.", tags: ["T", "S"], img: "https://via.placeholder.com/200?text=Jogo+7" }
+        ];
+
+        letters.forEach(letter => {
+            letter.addEventListener('click', () => {
+                const letterValue = letter.dataset.name;
+
+                if (selectedLetters.has(letterValue)) {
+                    selectedLetters.delete(letterValue);
+                    letter.classList.remove('selected');
+                } else {
+                    selectedLetters.add(letterValue);
+                    letter.classList.add('selected');
+                }
+
+                filterCards();
+                toggleInfoSection();
+                updateMedalProgress();
+            });
+        });
+
+        function filterCards() {
+            cardsContainer.innerHTML = '';
+            const filteredCards = cardData.filter(card => {
+                return [...selectedLetters].every(letter => card.tags.includes(letter));
+            });
+
+            if (filteredCards.length === 0 && selectedLetters.size > 0) {
+                noMatchMessage.style.display = 'block';
+            } else {
+                noMatchMessage.style.display = 'none';
+            }
+
+            if (selectedLetters.size === 0) {
+                cardsContainer.style.display = 'none';
+            } else {
+                cardsContainer.style.display = 'flex';
+            }
+
+            filteredCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                const isGameCompleted = completedGames.has(card.title);
+
+                cardElement.classList.add('card');
+                cardElement.innerHTML = `
+                    <img src="${card.img}" alt="${card.title}" class="img-fluid">
+                    <h4>${card.title}</h4>
+                    <p>${card.description}</p>
+                    <div class="tags">
+                        ${card.tags.map(tag => `<span class="tag ${tag.toLowerCase()}">${tag}</span>`).join('')}
+                    </div>
+                    <button class="btn ${isGameCompleted ? 'btn-secondary' : 'btn-primary'} mt-3" onclick="playGame('${card.title}')">
+                        ${isGameCompleted ? 'Jogado' : 'Jogar'}
+                    </button>
+                `;
+
+                cardsContainer.appendChild(cardElement);
+            });
+        }
+
+        function playGame(gameTitle) {
+            completedGames.add(gameTitle); // Mark this game as completed
+            updateMedalProgress();
+            filterCards();
+        }
+
+        function toggleInfoSection() {
+            if (selectedLetters.size > 0) {
+                infoSection.style.display = 'none';
+            } else {
+                infoSection.style.display = 'flex';
+            }
+        }
+
+        function updateMedalProgress() {
+            const medalProgress = completedGames.size;
+            const colors = ['#0074d9', '#ff4136', '#2ecc40', '#ffdc00', '#b10dc9'];
+            let gradientColors = '';
+
+            for (let i = 0; i < 5; i++) {
+                gradientColors += i < medalProgress ? `${colors[i]} ${(i + 1) * 20}%, ` : `gray ${(i + 1) * 20}%, `;
+            }
+
+            medal.style.background = `conic-gradient(${gradientColors.slice(0, -2)})`;
+
+            if (medalProgress === 7) {
+                medal.classList.add('active');
+                medal.addEventListener('click', showMedalContent);
+            }
+        }
+
+        function showMedalContent() {
+            alert('Parabéns! Você desbloqueou a medalha STEAM!');
+            iframeContainer.style.display = 'block'; // Show the iframe container
+        }
+
+        function updateTooltip() {
+            let tooltipContent = '';
+            cardData.forEach(card => {
+                const gameStatus = completedGames.has(card.title) ? 'Jogado' : 'Não jogado';
+                tooltipContent += `${card.title}: ${gameStatus}<br>`;
+            });
+            medalTooltip.innerHTML = tooltipContent;
+        }
+    </script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
