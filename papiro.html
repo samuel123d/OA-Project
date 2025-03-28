@@ -4,9 +4,7 @@
 <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Desafio da Carta</title>
@@ -17,11 +15,26 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 100%;
-      height: 100%;
-      background: url("./egipt-back.jpg") no-repeat;
+      height: 100vh;
+      width: 100vw;
+      background: url("./egipt-back.jpg") no-repeat center center;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       overflow: hidden;
-      flex-direction: column;
+      animation: chegadaFundo 3s ease-out forwards;
+    }
+
+    @keyframes chegadaFundo {
+      from {
+        opacity: 0;
+        transform: scale(1.1);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
 
     .papiro {
@@ -31,24 +44,24 @@
       padding: 40px;
       border-radius: 10px;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.9);
-      padding-top: -20px;
       font-family: "Georgia", serif;
       text-align: justify;
-      position: relative;
-      animation: abrirPapiro 5s forwards;
+      background-position: center;
       background: url("https://png.pngtree.com/back_origin_pic/04/24/92/570b51c61cbe277b03160d120b692f84.jpg") no-repeat center center;
       background-size: cover;
-      bottom: 30px;
+      opacity: 0;
+      animation: entradaPapiro 3s ease-out forwards;
     }
 
-    @keyframes abrirPapiro {
+    @keyframes entradaPapiro {
       from {
         top: -100vh;
+        opacity: 0;
       }
 
       to {
-        top: 1vh;
-        bottom: 3vh;
+        top: 10vh;
+        opacity: 1;
       }
     }
 
@@ -91,7 +104,6 @@
       display: none;
     }
 
-    /* Estilos para o iframe */
     .iframe-container {
       display: none;
       position: fixed;
@@ -111,16 +123,6 @@
       border-radius: 12px;
       border: none;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-      left: 100px;
-    }
-    .timer{
-      top:-20px;
-      position: absolute;
-      left: -330px;
-      display: inline;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding:3px;
-      color: bisque;
     }
   </style>
 </head>
@@ -165,12 +167,9 @@
       <li><strong>Engenheiros:</strong> <input type="number" id="engenheiros-input" min="1" max="7"></li>
       <li><strong>Exploradores:</strong> <input type="number" id="exploradores-input" min="1" max="9"></li>
     </ul>
-   
     <p id="mensagem"></p>
-    <p id="timer" class="timer">Tempo restante: 20s</p>
   </div>
 
-  <!-- iframe que aparece quando o jogo acaba ou o tempo acaba -->
   <div class="iframe-container" id="iframe-container">
     <iframe src="./gameover-papiro.html" id="iframe" frameborder="0"></iframe>
   </div>
@@ -242,44 +241,31 @@
       }
     }
 
-    // Função para iniciar o timer
-    function iniciarTimer() {
-      let tempoRestante = 24;
-      let timerInterval = setInterval(() => {
-        if (tempoRestante > 0) {
-          tempoRestante--;
-          document.getElementById("timer").innerText = `Tempo restante: ${tempoRestante}s`;
-        } else {
-          document.getElementById("mensagem").innerText = "Você perdeu! O tempo acabou.";
-          document.getElementById("iframe-container").style.display = "block";  // Exibe o iframe
-          clearInterval(timerInterval);
-        }
-      }, 1000);
-    }
+    // Exibe a segunda carta após o click no link "continuar"
+    document.getElementById("continue").addEventListener("click", function () {
+      document.getElementById("papiro").style.display = "none"; // Esconde a primeira carta
+      document.getElementById("segunda-carta").style.display = "block"; // Exibe a segunda carta
+    });
+
+    // Lógica de preenchimento dos inputs
     document.addEventListener("DOMContentLoaded", function () {
       const inputs = document.querySelectorAll(".segunda-carta input");
       if (inputs.length > 0) {
         inputs[0].focus();
       }
-      
+
       inputs.forEach((input, index) => {
         input.addEventListener("input", function () {
           if (this.value.length === 1 && index < inputs.length - 1) {
             inputs[index + 1].focus();
           }
-          
+
           let preenchidos = Array.from(inputs).filter(input => input.value).length;
           if (preenchidos === inputs.length) {
             verificarRespostas();
           }
         });
       });
-    }); 
-    // Exibe a segunda carta após o click no link "continuar" e inicia o timer
-    document.getElementById("continue").addEventListener("click", function () {
-      document.getElementById("papiro").style.display = "none"; // Esconde a primeira carta
-      document.getElementById("segunda-carta").style.display = "block"; // Exibe a segunda carta
-      iniciarTimer(); // Inicia o timer
     });
   </script>
 </body>
