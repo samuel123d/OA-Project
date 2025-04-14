@@ -46,7 +46,6 @@
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.9);
       font-family: "Georgia", serif;
       text-align: justify;
-      background-position: center;
       background: url("https://png.pngtree.com/back_origin_pic/04/24/92/570b51c61cbe277b03160d120b692f84.jpg") no-repeat center center;
       background-size: cover;
       opacity: 0;
@@ -69,15 +68,10 @@
       display: block;
       background-color: rgba(0, 0, 0, 0.3);
       border-radius: 6px;
-      padding: 15px;
-      padding-top: 5px;
-      padding-bottom: 10px;
+      padding: 15px 15px 10px;
     }
 
-    p,
-    h1,
-    li,
-    a {
+    p, h1, li, a {
       font-family: "Baskervville SC", serif;
       list-style: none;
       font-weight: bolder;
@@ -102,6 +96,49 @@
 
     .segunda-carta {
       display: none;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 30px;
+      width: 90vw;
+      max-width: 1000px;
+      padding: 30px;
+      border-radius: 10px;
+      font-family: "Georgia", serif;
+      background: url("https://png.pngtree.com/back_origin_pic/04/24/92/570b51c61cbe277b03160d120b692f84.jpg") no-repeat center center;
+      background-size: cover;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.9);
+      opacity: 0;
+      animation: entradaPapiro 3s ease-out forwards;
+    }
+
+    .drag-area, .drop-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .numero {
+      padding: 10px;
+      background-color: #f9d7a0;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      text-align: center;
+      cursor: grab;
+      font-size: 18px;
+    }
+
+    .alvo {
+      padding: 10px;
+      background-color: #fff9;
+      border: 2px dashed #aaa;
+      border-radius: 6px;
+      min-height: 40px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .iframe-container {
@@ -123,6 +160,21 @@
       border-radius: 12px;
       border: none;
       box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Novo: animação de erro */
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(5px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .alvo.erro {
+      animation: shake 0.5s;
+      background-color: #f88 !important;
     }
   </style>
 </head>
@@ -157,116 +209,125 @@
     </div>
   </div>
 
-  <div class="papiro segunda-carta" id="segunda-carta">
-    <h1>Desafio do General</h1>
-    <p>Preencha os números corretos antes que a carta desapareça!</p>
-    <ul>
-      <li><strong>Tribuno:</strong> <input type="number" id="tribuno-input" min="1" max="3"></li>
-      <li><strong>Centuriões:</strong> <input type="number" id="centurioes-input" min="1" max="4"></li>
-      <li><strong>Decanos:</strong> <input type="number" id="decanos-input" min="1" max="5"></li>
-      <li><strong>Engenheiros:</strong> <input type="number" id="engenheiros-input" min="1" max="7"></li>
-      <li><strong>Exploradores:</strong> <input type="number" id="exploradores-input" min="1" max="9"></li>
-    </ul>
-    <p id="mensagem"></p>
+  <div class="segunda-carta" id="segunda-carta">
+    <div class="drag-area" id="drag-area"></div>
+    <div class="drop-area" id="drop-area"></div>
   </div>
 
   <div class="iframe-container" id="iframe-container">
     <iframe src="./gameover-papiro.html" id="iframe" frameborder="0"></iframe>
   </div>
 
+  <audio id="erro-som" src="wrong.mp3"></audio>
+
   <script>
-    // Função para gerar números romanos aleatórios dentro de um limite
-    function getRandomRoman(max) {
-      const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
-      return romanNumerals[Math.floor(Math.random() * max)];
+    const romanoMap = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
+    const roles = ["tribuno", "centurioes", "decanos", "engenheiros", "exploradores"];
+    const sorteados = [];
+
+    while (sorteados.length < 5) {
+      const num = Math.floor(Math.random() * 9) + 1;
+      if (!sorteados.includes(num)) sorteados.push(num);
     }
 
-    // Função para converter números romanos para arábicos
-    function romanoParaArabe(romano) {
-      const tabelaRomanos = {
-        "I": 1,
-        "II": 2,
-        "III": 3,
-        "IV": 4,
-        "V": 5,
-        "VI": 6,
-        "VII": 7,
-        "VIII": 8,
-        "IX": 9
-      };
-      return tabelaRomanos[romano] || 0;  // Retorna 0 caso o romano não esteja na tabela
+    const valores = {};
+    roles.forEach((role, index) => {
+      valores[role] = sorteados[index];
+      document.getElementById(role).innerText = romanoMap[valores[role] - 1];
+    });
+
+    document.getElementById("continue").addEventListener("click", () => {
+      document.getElementById("papiro").style.display = "none";
+      document.getElementById("segunda-carta").style.display = "flex";
+      iniciarJogo();
+    });
+
+    function iniciarJogo() {
+      const dragArea = document.getElementById("drag-area");
+      const dropArea = document.getElementById("drop-area");
+
+      Object.values(valores).forEach(num => {
+        const div = document.createElement("div");
+        div.className = "numero";
+        div.draggable = true;
+        div.innerText = num;
+        div.dataset.valor = num;
+        div.addEventListener("dragstart", dragStart);
+        dragArea.appendChild(div);
+      });
+
+      roles.forEach(role => {
+        const alvo = document.createElement("div");
+        alvo.className = "alvo";
+        alvo.dataset.role = role;
+        alvo.dataset.romano = romanoMap[valores[role] - 1];
+        alvo.innerText = role.charAt(0).toUpperCase() + role.slice(1) + ": " + alvo.dataset.romano;
+        alvo.addEventListener("dragover", dragOver);
+        alvo.addEventListener("drop", drop);
+        dropArea.appendChild(alvo);
+      });
     }
 
-    // Gerando os números romanos com base nos limites específicos
-    let tribuno = getRandomRoman(3); // Até 3
-    let centurioes = getRandomRoman(4); // Até 4
-    let decanos = getRandomRoman(5); // Até 5
-    let engenheiros = getRandomRoman(7); // Até 7
-    let exploradores = getRandomRoman(9); // Até 9
+    function dragStart(e) {
+      e.dataTransfer.setData("text/plain", e.target.dataset.valor);
+      e.target.classList.add("dragging");
+    }
 
-    // Exibindo os números romanos na primeira carta
-    document.getElementById('tribuno').innerText = tribuno;
-    document.getElementById('centurioes').innerText = centurioes;
-    document.getElementById('decanos').innerText = decanos;
-    document.getElementById('engenheiros').innerText = engenheiros;
-    document.getElementById('exploradores').innerText = exploradores;
+    function dragOver(e) {
+      e.preventDefault();
+    }
 
-    // Função para validar as respostas
-    function verificarRespostas() {
-      const respostasCorretas = {
-        tribuno: romanoParaArabe(tribuno),
-        centurioes: romanoParaArabe(centurioes),
-        decanos: romanoParaArabe(decanos),
-        engenheiros: romanoParaArabe(engenheiros),
-        exploradores: romanoParaArabe(exploradores)
-      };
+    let tentativas = 0;
+    const maxTentativas = 3;
 
-      const inputs = document.querySelectorAll("input");
-      let todasCorretas = true;
+    function drop(e) {
+      e.preventDefault();
+      const numero = e.dataTransfer.getData("text/plain");
+      const alvo = e.currentTarget;
+      const elementoArrastado = [...document.querySelectorAll(".numero")].find(n => n.dataset.valor === numero);
+      if (!elementoArrastado) return;
 
-      inputs.forEach(input => {
-        const id = input.id.split('-')[0];
-        const valorResposta = parseInt(input.value.trim(), 10);  // Convertendo a resposta para número
-        if (valorResposta !== respostasCorretas[id]) {
-          todasCorretas = false;
+      const valorEsperado = valores[alvo.dataset.role];
+      const valorSolto = parseInt(numero);
+
+      if (valorEsperado === valorSolto) {
+        const anterior = alvo.querySelector(".numero");
+        if (anterior) document.getElementById("drag-area").appendChild(anterior);
+        alvo.appendChild(elementoArrastado);
+      } else {
+        tentativas++;
+        const somErro = document.getElementById("erro-som");
+        somErro.currentTime = 0;
+        somErro.play();
+
+        alvo.classList.add("erro");
+        setTimeout(() => {
+          alvo.classList.remove("erro");
+        }, 500);
+
+        if (tentativas >= maxTentativas) {
+          document.getElementById("iframe-container").style.display = "block";
+        }
+      }
+
+      verificarVitoria();
+    }
+
+    function verificarVitoria() {
+      const alvos = document.querySelectorAll(".alvo");
+      let correto = 0;
+
+      alvos.forEach(alvo => {
+        const numero = alvo.querySelector(".numero");
+        if (numero && parseInt(numero.dataset.valor) === valores[alvo.dataset.role]) {
+          correto++;
         }
       });
 
-      if (todasCorretas) {
+      if (correto === 5) {
         alert("Parabéns! Você venceu!");
-        window.location.href = "https://www.outrapagina.com";  // Redireciona para outra página
-      } else {
-        document.getElementById("mensagem").innerText = "Você perdeu! Respostas incorretas.";
-        document.getElementById("iframe-container").style.display = "block";  // Exibe o iframe
       }
     }
-
-    // Exibe a segunda carta após o click no link "continuar"
-    document.getElementById("continue").addEventListener("click", function () {
-      document.getElementById("papiro").style.display = "none"; // Esconde a primeira carta
-      document.getElementById("segunda-carta").style.display = "block"; // Exibe a segunda carta
-    });
-
-    // Lógica de preenchimento dos inputs
-    document.addEventListener("DOMContentLoaded", function () {
-      const inputs = document.querySelectorAll(".segunda-carta input");
-      if (inputs.length > 0) {
-        inputs[0].focus();
-      }
-
-      inputs.forEach((input, index) => {
-        input.addEventListener("input", function () {
-          if (this.value.length === 1 && index < inputs.length - 1) {
-            inputs[index + 1].focus();
-          }
-
-          let preenchidos = Array.from(inputs).filter(input => input.value).length;
-          if (preenchidos === inputs.length) {
-            verificarRespostas();
-          }
-        });
-      });
-    });
   </script>
 </body>
 
