@@ -4,7 +4,9 @@
 <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+    rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Desafio da Carta</title>
@@ -38,7 +40,7 @@
     }
 
     .papiro {
-      width: 60%;
+      width: 90%;
       max-width: 600px;
       background: #f4e1c1;
       padding: 40px;
@@ -71,7 +73,12 @@
       padding: 15px 15px 10px;
     }
 
-    p, h1, li, a {
+   
+
+    p,
+    h1,
+    li,
+    a {
       font-family: "Baskervville SC", serif;
       list-style: none;
       font-weight: bolder;
@@ -91,33 +98,76 @@
     }
 
     li {
-      font-size: 15px;
+      font-size: 20px;
     }
 
     .segunda-carta {
-      display: none;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 30px;
-      width: 90vw;
-      max-width: 1000px;
-      padding: 30px;
-      border-radius: 10px;
-      font-family: "Georgia", serif;
-      background: url("https://png.pngtree.com/back_origin_pic/04/24/92/570b51c61cbe277b03160d120b692f84.jpg") no-repeat center center;
-      background-size: cover;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.9);
-      opacity: 0;
-      animation: entradaPapiro 3s ease-out forwards;
-    }
+  display: none;
+  position: relative;
+  margin-top: 40px; /* Espaço entre as cartas */
+  width: 90%; /* Largura aumentada para ocupar mais espaço */
+  max-width: 1000px; /* Máxima largura para não ultrapassar o limite */
+  padding: 30px;
+  border-radius: 10px;
+  font-family: "Georgia", serif;
+  background: url("https://png.pngtree.com/back_origin_pic/04/24/92/570b51c61cbe277b03160d120b692f84.jpg") no-repeat center center;
+  background-size: cover;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  animation: entradaPapiro 3s ease-out forwards; /* Animação similar à primeira carta */
+}
 
-    .drag-area, .drop-area {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+@keyframes entradaPapiro {
+  from {
+    opacity: 0;
+    transform: scale(1.1); /* Inicialmente maior */
+  }
+  to {
+    opacity: 1;
+    transform: scale(1); /* Normaliza para o tamanho original */
+  }
+}
+
+
+
+.conteiner-carta {
+  display: flex;
+  align-items: flex-start; /* Alinha os itens no topo */
+  justify-content: space-between;
+}
+
+.enquadro2 {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  padding: 20px; /* Aumentando o padding */
+  width: 45%; /* Ajustado para que o enquadro2 ocupe 45% da largura da carta */
+  margin-right: 20px; /* Espaço entre o enquadro2 e a drop-area */
+  max-height: 600px; /* Ajustando a altura máxima do enquadro2 */
+  overflow-y: auto; /* Permite rolagem caso o conteúdo ultrapasse a altura */
+}
+
+.drag-area, .drop-area {
+  display: flex;
+  flex-direction: column; /* Organiza o conteúdo verticalmente */
+  gap: 20px;
+  justify-content: flex-start;
+  margin-top: 20px;
+  max-height: 600px; /* Definindo altura máxima para as áreas de drag e drop */
+  overflow-y: auto; /* Permite rolagem caso o conteúdo ultrapasse a altura */
+}
+
+.drag-area {
+  flex: 1;
+  padding: 20px;
+}
+
+.drop-area {
+  flex: 1;
+  padding: 20px;
+  border: 2px ; /* Adicionando borda de ponto para a área de drop */
+}
+
 
     .numero {
       padding: 10px;
@@ -164,12 +214,29 @@
 
     /* Novo: animação de erro */
     @keyframes shake {
-      0% { transform: translateX(0); }
-      20% { transform: translateX(-5px); }
-      40% { transform: translateX(5px); }
-      60% { transform: translateX(-5px); }
-      80% { transform: translateX(5px); }
-      100% { transform: translateX(0); }
+      0% {
+        transform: translateX(0);
+      }
+
+      20% {
+        transform: translateX(-5px);
+      }
+
+      40% {
+        transform: translateX(5px);
+      }
+
+      60% {
+        transform: translateX(-5px);
+      }
+
+      80% {
+        transform: translateX(5px);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
     }
 
     .alvo.erro {
@@ -204,15 +271,35 @@
       </p>
       <p>Avança com prudência, vence com glória!</p>
       <p><strong>Gaius Iulius Caesar Octavianus Augustus</strong></p>
-      <br>
-      <a href="javascript:void(0);" id="continue">Continuar</a>
     </div>
+    <button id="continue">Continuar</button>
   </div>
 
+  <!-- Segunda Carta com Informações -->
   <div class="segunda-carta" id="segunda-carta">
-    <div class="drag-area" id="drag-area"></div>
-    <div class="drop-area" id="drop-area"></div>
+    <div class="conteiner-carta">
+      <div class="enquadro2">
+        <h1>Prove seu conhecimento:</h1>
+        <br>
+        <p>Agora, é hora de testar seu conhecimento, combine os numeros com os repectivos nomes de acordo com a carta!</p>
+        <br>
+        <ul>
+          <li><strong>Tribuno:</strong> <span id="tribuno2"></span></li>
+          <br>
+          <li><strong>Centuriões:</strong> <span id="centurioes2"></span></li>
+          <br>
+          <li><strong>Decanos:</strong> <span id="decanos2"></span></li>
+          <br>
+          <li><strong>Engenheiros:</strong> <span id="engenheiros2"></span></li>
+          <br>
+          <li><strong>Exploradores:</strong> <span id="exploradores2"></span></li>
+        </ul>
+      </div>
+      <div class="drag-area" id="drag-area"></div>
+      <div class="drop-area" id="drop-area"></div>
+    </div>
   </div>
+  
 
   <div class="iframe-container" id="iframe-container">
     <iframe src="./gameover-papiro.html" id="iframe" frameborder="0"></iframe>
@@ -234,11 +321,17 @@
     roles.forEach((role, index) => {
       valores[role] = sorteados[index];
       document.getElementById(role).innerText = romanoMap[valores[role] - 1];
+      document.getElementById(role + "2").innerText = romanoMap[valores[role] - 1]; // Segunda carta também recebe as informações
     });
 
     document.getElementById("continue").addEventListener("click", () => {
+      // Oculta a primeira carta
       document.getElementById("papiro").style.display = "none";
-      document.getElementById("segunda-carta").style.display = "flex";
+
+      // Exibe a segunda carta
+      document.getElementById("segunda-carta").style.display = "block";
+
+      // Chama a função para iniciar o jogo
       iniciarJogo();
     });
 
@@ -260,8 +353,7 @@
         const alvo = document.createElement("div");
         alvo.className = "alvo";
         alvo.dataset.role = role;
-        alvo.dataset.romano = romanoMap[valores[role] - 1];
-        alvo.innerText = role.charAt(0).toUpperCase() + role.slice(1) + ": " + alvo.dataset.romano;
+        alvo.innerText = role.charAt(0).toUpperCase() + role.slice(1);
         alvo.addEventListener("dragover", dragOver);
         alvo.addEventListener("drop", drop);
         dropArea.appendChild(alvo);
