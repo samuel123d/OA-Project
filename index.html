@@ -3,36 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Imagem de Fundo Dinâmica</title>
+    <title>Batalha de Algarismos</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../Leonardo_Phoenix_09_Game_icon_for_Batalha_de_Algarismos_a_gol_1.ico">
+     
+    
 </head>
 <body>
     <div class="background">
         <br>
         <h1>Batalha dos Números: A Missão de Rahin </h1>
-    <br>
+        <br>
         <div class="buttons">
             <button id="startGame" href="historia.html">Iniciar Jogo</button>
             <button id="showCredits">Créditos</button>
         </div>
-        <button id="toggleMusic" class="toggle-music">&#x1F50A;</button> <!-- Botão de ligar/desligar música -->
+        <button id="toggleMusic" class="toggle-music">&#x1F50A;</button> <!-- Botão de música -->
     </div>
-    <audio id="backgroundMusic" src="./Dying Light Music of Suffering Theme - Angry Tiger.mp3"></audio> <!-- Adicione o caminho para sua música -->
+
+    <audio id="backgroundMusic" src="./Dying Light Music of Suffering Theme - Angry Tiger.mp3"></audio>
+
     <script src="script.js"></script>
 </body>
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Papyrus&display=swap');
-
-h1 {
-    font-family: 'Papyrus', sans-serif; 
-    color: #534439; /* Cor amarronzada */ 
-    font-size: 48px; /* Tamanho grande para o título */ 
-    font-weight: bold; /* Negrito para dar força ao título */  /* Alinha o título à esquerda */ 
-    margin-left: 80px; margin-top: 20px; /* Adiciona espaço acima do título */ 
-    background-color: rgba(185,131,91,0.7); 
-    display: inline; 
-    border-radius: 6px;
-     position: relative;
-}
 
 body, html {
     margin: 0;
@@ -40,42 +34,53 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-image: url('./backdoback.jpg');
-}
-.buttons{
-    margin-top: 70px;
-   
-    
-}
-.background {
-    position: fixed;
-    top: 0;
-    left: 0; /* Ajuste para colar a imagem na borda esquerda */
-    width: 100%; /* Ajuste para cobrir 100% da largura */
-    height: 100%; /* Ajuste para cobrir 100% da altura */
-    background-image: url('./back-perfect.jpg');
-    background-size: cover; /* Ajusta a imagem para cobrir todo o fundo */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita que a imagem se repita */
-    transition: transform 0.1s;
-    border-radius: 30px;
 }
 
-button { font-family: 'Papyrus', sans-serif;
- font-size: 24px; 
- color: #534439; /* Cor amarronzada */ 
- background-color: rgba(185,131,91,0.7);  
- border: none; 
- border-radius: 6px; 
- padding: 10px 20px;
- margin: 10px 0; /* Espaço entre os botões */ 
- cursor: pointer; position: relative;
- display: flex;
- flex-direction: column;
-margin-left: 80px;
- font-style: bold;
- }
- 
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('./back-perfect.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    font-family: 'Papyrus', sans-serif;
+    color: #534439;
+    font-size: 48px;
+    font-weight: bold;
+    margin-left: 80px;
+    margin-top: 20px;
+    background-color: rgba(185,131,91,0.7);
+    display: inline;
+    border-radius: 6px;
+    position: relative;
+}
+
+.buttons {
+    margin-top: 70px;
+}
+
+button {
+    font-family: 'Papyrus', sans-serif;
+    font-size: 24px;
+    color: #534439;
+    background-color: rgba(185,131,91,0.7);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-left: 80px;
+    font-style: bold;
+}
 
 button:hover {
     background-color: rgba(255, 69, 0, .7);
@@ -98,19 +103,9 @@ button:hover {
     background-color: rgba(255, 69, 0, .7);
 }
 </style>
+
 <script>
-document.addEventListener('mousemove', function(e) {
-    const background = document.querySelector('.background');
-    const x = e.clientX / window.innerWidth;
-    const y = e.clientY / window.innerHeight; 
-    
-    const moveX = (x - 0.5) * 20; // Ajuste o valor para controlar a intensidade do movimento
-    const moveY = (y - 0.5) * 20; // Ajuste o valor para controlar a intensidade do movimento
-    
-    background.style.transform = `translate(${-moveX}%, ${-moveY}%)`;
-});
-
-
+// Removido o efeito de movimento do fundo
 
 document.getElementById('showCredits').addEventListener('click', function() {
     alert('Créditos: Desenvolvido por [Seu Nome]');
@@ -122,22 +117,19 @@ const backgroundMusic = document.getElementById('backgroundMusic');
 toggleMusicButton.addEventListener('click', function() {
     if (backgroundMusic.paused) {
         backgroundMusic.play();
-        toggleMusicButton.innerHTML = ' &#x1F50A;'; // Ícone de som desligado
+        toggleMusicButton.innerHTML = ' &#x1F50A;';
     } else {
         backgroundMusic.pause();
         backgroundMusic.currentTime = 0;
-        toggleMusicButton.innerHTML = '&#x1F507;'; // Ícone de som ligado
+        toggleMusicButton.innerHTML = '&#x1F507;';
     }
 });
-</script>
 
-<script>
 document.getElementById('startGame').addEventListener('click', function(event) {
-    event.preventDefault(); // Previne o comportamento padrão do botão
+    event.preventDefault();
     window.location.href = this.getAttribute('href');
 });
 
-// Desabilita o botão de avançar do navegador
 window.history.pushState(null, null, window.location.href);
 window.onpopstate = function() {
     window.history.go(1);
