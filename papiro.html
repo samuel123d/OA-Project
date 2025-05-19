@@ -123,16 +123,17 @@
         align-items: flex-start;
         flex-direction: row;
         gap: 30px;
-        width: 100%;
-        max-width: 1000px;
+        width: 140%;
+        max-width: 1060px;
         background: url("papiro-perfect.png") no-repeat center center;
         background-size: cover;
         padding: 40px;
-        height: 90%;
-        border-radius: 10px;
+        height: 88%;
+        border-radius: 0px;
         font-family: "Georgia", serif;
         text-align: justify;
         opacity: 0;
+        
         animation: entradaPapiro 3s ease-out forwards;
       }
 
@@ -151,7 +152,8 @@
         display: flex;
         align-items: flex-start; /* Alinha os itens no topo */
         justify-content: space-between;
-        margin-top: 30px;
+        margin-top: 35px;
+        margin-left: 5px;
         margin-right: 45px;
       }
 
@@ -372,7 +374,7 @@
         document.getElementById("papiro").style.display = "none";
 
         // Exibe a segunda carta
-        document.getElementById("segunda-carta").style.display = "block";
+        document.getElementById("segunda-carta").style.display = "flex";
 
         // Chama a função para iniciar o jogo
         iniciarJogo();
