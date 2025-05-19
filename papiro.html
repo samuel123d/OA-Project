@@ -1,426 +1,480 @@
 <!DOCTYPE html>
 <html lang="pt">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desafio da Carta</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        background: url("./egipt-back.jpg") no-repeat center center;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        overflow: hidden;
+        animation: chegadaFundo 3s ease-out forwards;
+      }
 
-<head>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
-    rel="stylesheet">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Desafio da Carta</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      width: 100vw;
-      background: url("./egipt-back.jpg") no-repeat center center;
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      overflow: hidden;
-      animation: chegadaFundo 3s ease-out forwards;
-    }
+      @keyframes chegadaFundo {
+        from {
+          opacity: 0;
+          transform: scale(1.1);
+        }
 
-    @keyframes chegadaFundo {
-      from {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .papiro {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 30px;
+        width: 90%;
+        max-width: 1000px;
+        background: url("papiro-perfect.png") no-repeat center center;
+        background-size: cover;
+        padding: 40px;
+        border-radius: 10px;
+        font-family: "Georgia", serif;
+        text-align: justify;
         opacity: 0;
-        transform: scale(1.1);
+        animation: entradaPapiro 3s ease-out forwards;
       }
 
-      to {
-        opacity: 1;
-        transform: scale(1);
+      .enquadro {
+        border-radius: 6px;
+        padding: 22x;
+        margin-left: 55px;
+        flex: 2;
+        max-height: 600px;
+        overflow-y: auto;
       }
-    }
 
-    .papiro {
-      width: 90%;
-      max-width: 600px;
-      background: #f4e1c1;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.9);
-      font-family: "Georgia", serif;
-      text-align: justify;
-      background: url("https://png.pngtree.com/back_origin_pic/04/24/92/570b51c61cbe277b03160d120b692f84.jpg") no-repeat center center;
-      background-size: cover;
-      opacity: 0;
-      animation: entradaPapiro 3s ease-out forwards;
-    }
+      #continue {
+        margin-top: 20px;
+        margin-right: 100px;
+        height: 40px;
+        align-self: flex-start;
+        padding: 8px 20px;
+        background-color: bisque;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+      }
 
-    @keyframes entradaPapiro {
-      from {
-        top: -100vh;
+      @keyframes entradaPapiro {
+        from {
+          top: -100vh;
+          opacity: 0;
+        }
+
+        to {
+          top: 10vh;
+          opacity: 1;
+        }
+      }
+
+      p,
+      h1,
+      li,
+      a {
+        font-family: "Baskervville SC", serif;
+        list-style: none;
+        font-weight: bolder;
+      }
+
+      a {
+        list-style: none;
+        color: black;
+        display: inline;
+        border-radius: 4px;
+        padding: 5px;
+        background-color: bisque;
+      }
+
+      p {
+        font-size: 18px;
+      }
+
+      li {
+        font-size: 20px;
+      }
+
+      .segunda-carta {
+        display: none;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 30px;
+        width: 90%;
+        max-width: 1000px;
+        background: url("papiro-perfect.png") no-repeat center center;
+        background-size: cover;
+        padding: 40px;
+        height: 90%;
+        border-radius: 10px;
+        font-family: "Georgia", serif;
+        text-align: justify;
         opacity: 0;
+        animation: entradaPapiro 3s ease-out forwards;
       }
 
-      to {
-        top: 10vh;
-        opacity: 1;
-      }
-    }
-
-    .enquadro {
-      display: block;
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 6px;
-      padding: 15px 15px 10px;
-    }
-
-   
-
-    p,
-    h1,
-    li,
-    a {
-      font-family: "Baskervville SC", serif;
-      list-style: none;
-      font-weight: bolder;
-    }
-
-    a {
-      list-style: none;
-      color: black;
-      display: inline;
-      border-radius: 4px;
-      padding: 5px;
-      background-color: bisque;
-    }
-
-    p {
-      font-size: 18px;
-    }
-
-    li {
-      font-size: 20px;
-    }
-
-    .segunda-carta {
-  display: none;
-  position: relative;
-  margin-top: 40px; /* Espaço entre as cartas */
-  width: 90%; /* Largura aumentada para ocupar mais espaço */
-  max-width: 1000px; /* Máxima largura para não ultrapassar o limite */
-  padding: 30px;
-  border-radius: 10px;
-  font-family: "Georgia", serif;
-  background: url("https://png.pngtree.com/back_origin_pic/04/24/92/570b51c61cbe277b03160d120b692f84.jpg") no-repeat center center;
-  background-size: cover;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.9);
-  opacity: 0;
-  animation: entradaPapiro 3s ease-out forwards; /* Animação similar à primeira carta */
-}
-
-@keyframes entradaPapiro {
-  from {
-    opacity: 0;
-    transform: scale(1.1); /* Inicialmente maior */
-  }
-  to {
-    opacity: 1;
-    transform: scale(1); /* Normaliza para o tamanho original */
-  }
-}
-
-
-
-.conteiner-carta {
-  display: flex;
-  align-items: flex-start; /* Alinha os itens no topo */
-  justify-content: space-between;
-}
-
-.enquadro2 {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 6px;
-  padding: 20px; /* Aumentando o padding */
-  width: 45%; /* Ajustado para que o enquadro2 ocupe 45% da largura da carta */
-  margin-right: 20px; /* Espaço entre o enquadro2 e a drop-area */
-  max-height: 600px; /* Ajustando a altura máxima do enquadro2 */
-  overflow-y: auto; /* Permite rolagem caso o conteúdo ultrapasse a altura */
-}
-
-.drag-area, .drop-area {
-  display: flex;
-  flex-direction: column; /* Organiza o conteúdo verticalmente */
-  gap: 20px;
-  justify-content: flex-start;
-  margin-top: 20px;
-  max-height: 600px; /* Definindo altura máxima para as áreas de drag e drop */
-  overflow-y: auto; /* Permite rolagem caso o conteúdo ultrapasse a altura */
-}
-
-.drag-area {
-  flex: 1;
-  padding: 20px;
-}
-
-.drop-area {
-  flex: 1;
-  padding: 20px;
-  border: 2px ; /* Adicionando borda de ponto para a área de drop */
-}
-
-
-    .numero {
-      padding: 10px;
-      background-color: #f9d7a0;
-      border: 2px solid #ccc;
-      border-radius: 6px;
-      text-align: center;
-      cursor: grab;
-      font-size: 18px;
-    }
-
-    .alvo {
-      padding: 10px;
-      background-color: #fff9;
-      border: 2px dashed #aaa;
-      border-radius: 6px;
-      min-height: 40px;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .iframe-container {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      z-index: 9999;
-    }
-
-    iframe {
-      width: 80vw;
-      height: 60vh;
-      border-radius: 12px;
-      border: none;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Novo: animação de erro */
-    @keyframes shake {
-      0% {
-        transform: translateX(0);
+      @keyframes entradaPapiro {
+        from {
+          opacity: 0;
+          transform: scale(1.1); /* Inicialmente maior */
+        }
+        to {
+          opacity: 1;
+          transform: scale(1); /* Normaliza para o tamanho original */
+        }
       }
 
-      20% {
-        transform: translateX(-5px);
+      .conteiner-carta {
+        display: flex;
+        align-items: flex-start; /* Alinha os itens no topo */
+        justify-content: space-between;
+        margin-top: 30px;
+        margin-right: 45px;
       }
 
-      40% {
-        transform: translateX(5px);
+      .enquadro2 {
+        padding: 18x;
+        margin-left: 55px;
+        flex: 2;
+        max-height: 500px;
+        overflow-y: auto;
       }
 
-      60% {
-        transform: translateX(-5px);
+      .drag-area,
+      .drop-area {
+        display: flex;
+        flex-direction: column; /* Organiza o conteúdo verticalmente */
+        gap: 20px;
+        justify-content: flex-start;
+        margin-top: 20px;
+        max-height: 600px; /* Definindo altura máxima para as áreas de drag e drop */
+        overflow-y: auto; /* Permite rolagem caso o conteúdo ultrapasse a altura */
       }
 
-      80% {
-        transform: translateX(5px);
+      .drag-area {
+        flex: 1;
+        padding: 18px;
+        margin-right: 15px;
       }
 
-      100% {
-        transform: translateX(0);
+      .drop-area {
+        flex: 1;
+        padding: 18px;
+        border: 2px;
+        margin-right: 15px;
       }
-    }
 
-    .alvo.erro {
-      animation: shake 0.5s;
-      background-color: #f88 !important;
-    }
-  </style>
-</head>
+      .numero {
+        padding: 10px;
+        background-color: #f9d7a0;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        text-align: center;
+        cursor: grab;
+        font-size: 18px;
+      }
 
-<body>
-  <div class="papiro" id="papiro">
-    <div class="enquadro">
-      <h1>Ao meu valoroso General,</h1>
-      <p>Saudações sob o esplendor de Roma!</p>
-      <p>
-        O tempo chegou para reivindicarmos o Egito, fonte de riquezas e poder.
-        Confio a ti a honra e a responsabilidade de preparar nossa invasão com a
-        disciplina e a estratégia que fazem de Roma senhora do mundo.
-      </p>
-      <p>Ordeno que seleciones com rigor:</p>
-      <ul>
-        <li><strong>Tribuno:</strong> <span id="tribuno"></span></li>
-        <li><strong>Centuriões:</strong> <span id="centurioes"></span></li>
-        <li><strong>Decanos:</strong> <span id="decanos"></span></li>
-        <li><strong>Engenheiros:</strong> <span id="engenheiros"></span></li>
-        <li><strong>Exploradores:</strong> <span id="exploradores"></span></li>
-      </ul>
-      <p>
-        A provisão de suprimentos deve ser meticulosa. Mantém o moral elevado e
-        o exército pronto para marchar ao meu comando. Em breve, Roma se erguerá
-        sobre as margens do Nilo.
-      </p>
-      <p>Avança com prudência, vence com glória!</p>
-      <p><strong>Gaius Iulius Caesar Octavianus Augustus</strong></p>
-    </div>
-    <button id="continue">Continuar</button>
-  </div>
+      .alvo {
+        padding: 10px;
+        background-color: #fff9;
+        border: 2px dashed #aaa;
+        border-radius: 6px;
+        min-height: 40px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-  <!-- Segunda Carta com Informações -->
-  <div class="segunda-carta" id="segunda-carta">
-    <div class="conteiner-carta">
-      <div class="enquadro2">
-        <h1>Prove seu conhecimento:</h1>
-        <br>
-        <p>Agora, é hora de testar seu conhecimento, combine os numeros com os repectivos nomes de acordo com a carta!</p>
-        <br>
+      .iframe-container {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+      }
+
+      iframe {
+        width: 80vw;
+        height: 60vh;
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Novo: animação de erro */
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+
+        20% {
+          transform: translateX(-5px);
+        }
+
+        40% {
+          transform: translateX(5px);
+        }
+
+        60% {
+          transform: translateX(-5px);
+        }
+
+        80% {
+          transform: translateX(5px);
+        }
+
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      .alvo.erro {
+        animation: shake 0.5s;
+        background-color: #f88 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="papiro" id="papiro">
+      <div class="enquadro">
+        <h1>Ao meu valoroso General,</h1>
+        <p>Saudações sob o esplendor de Roma!</p>
+        <p>
+          O tempo chegou para reivindicarmos o Egito, fonte de riquezas e poder.
+          Confio a ti a honra e a responsabilidade de preparar nossa invasão com
+          a disciplina e a estratégia que fazem de Roma senhora do mundo.
+        </p>
+        <p>Ordeno que seleciones com rigor:</p>
         <ul>
-          <li><strong>Tribuno:</strong> <span id="tribuno2"></span></li>
-          <br>
-          <li><strong>Centuriões:</strong> <span id="centurioes2"></span></li>
-          <br>
-          <li><strong>Decanos:</strong> <span id="decanos2"></span></li>
-          <br>
-          <li><strong>Engenheiros:</strong> <span id="engenheiros2"></span></li>
-          <br>
-          <li><strong>Exploradores:</strong> <span id="exploradores2"></span></li>
+          <li><strong>Tribuno:</strong> <span id="tribuno"></span></li>
+          <li><strong>Centuriões:</strong> <span id="centurioes"></span></li>
+          <li><strong>Decanos:</strong> <span id="decanos"></span></li>
+          <li><strong>Engenheiros:</strong> <span id="engenheiros"></span></li>
+          <li>
+            <strong>Exploradores:</strong> <span id="exploradores"></span>
+          </li>
         </ul>
+        <p>
+          A provisão de suprimentos deve ser meticulosa. Mantém o moral elevado
+          e o exército pronto para marchar ao meu comando. Em breve, Roma se
+          erguerá sobre as margens do Nilo.
+        </p>
+        <p>Avança com prudência, vence com glória!</p>
+        <p><strong>Gaius Iulius Caesar Octavianus Augustus</strong></p>
       </div>
-      <div class="drag-area" id="drag-area"></div>
-      <div class="drop-area" id="drop-area"></div>
+      <button id="continue">Continuar</button>
     </div>
-  </div>
-  
 
-  <div class="iframe-container" id="iframe-container">
-    <iframe src="./gameover-papiro.html" id="iframe" frameborder="0"></iframe>
-  </div>
+    <!-- Segunda Carta com Informações -->
+    <div class="segunda-carta" id="segunda-carta">
+      <div class="conteiner-carta">
+        <div class="enquadro2">
+          <h1>Prove seu conhecimento:</h1>
+          <br />
+          <p>
+            Agora, é hora de testar seu conhecimento, combine os numeros com os
+            repectivos nomes de acordo com a carta!
+          </p>
+          <br />
+          <ul>
+            <li><strong>Tribuno:</strong> <span id="tribuno2"></span></li>
+            <br />
+            <li><strong>Centuriões:</strong> <span id="centurioes2"></span></li>
+            <br />
+            <li><strong>Decanos:</strong> <span id="decanos2"></span></li>
+            <br />
+            <li>
+              <strong>Engenheiros:</strong> <span id="engenheiros2"></span>
+            </li>
+            <br />
+            <li>
+              <strong>Exploradores:</strong> <span id="exploradores2"></span>
+            </li>
+          </ul>
+        </div>
+        <div class="drag-area" id="drag-area"></div>
+        <div class="drop-area" id="drop-area"></div>
+      </div>
+    </div>
 
-  <audio id="erro-som" src="wrong.mp3"></audio>
+    <div class="iframe-container" id="iframe-container">
+      <iframe src="./gameover-papiro.html" id="iframe" frameborder="0"></iframe>
+    </div>
 
-  <script>
-    const romanoMap = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
-    const roles = ["tribuno", "centurioes", "decanos", "engenheiros", "exploradores"];
-    const sorteados = [];
+    <audio id="erro-som" src="wrong.mp3"></audio>
 
-    while (sorteados.length < 5) {
-      const num = Math.floor(Math.random() * 9) + 1;
-      if (!sorteados.includes(num)) sorteados.push(num);
-    }
+    <script>
+      const romanoMap = [
+        "I",
+        "II",
+        "III",
+        "IV",
+        "V",
+        "VI",
+        "VII",
+        "VIII",
+        "IX",
+      ];
+      const roles = [
+        "tribuno",
+        "centurioes",
+        "decanos",
+        "engenheiros",
+        "exploradores",
+      ];
+      const sorteados = [];
 
-    const valores = {};
-    roles.forEach((role, index) => {
-      valores[role] = sorteados[index];
-      document.getElementById(role).innerText = romanoMap[valores[role] - 1];
-      document.getElementById(role + "2").innerText = romanoMap[valores[role] - 1]; // Segunda carta também recebe as informações
-    });
-
-    document.getElementById("continue").addEventListener("click", () => {
-      // Oculta a primeira carta
-      document.getElementById("papiro").style.display = "none";
-
-      // Exibe a segunda carta
-      document.getElementById("segunda-carta").style.display = "block";
-
-      // Chama a função para iniciar o jogo
-      iniciarJogo();
-    });
-
-    function iniciarJogo() {
-      const dragArea = document.getElementById("drag-area");
-      const dropArea = document.getElementById("drop-area");
-
-      Object.values(valores).forEach(num => {
-        const div = document.createElement("div");
-        div.className = "numero";
-        div.draggable = true;
-        div.innerText = num;
-        div.dataset.valor = num;
-        div.addEventListener("dragstart", dragStart);
-        dragArea.appendChild(div);
-      });
-
-      roles.forEach(role => {
-        const alvo = document.createElement("div");
-        alvo.className = "alvo";
-        alvo.dataset.role = role;
-        alvo.innerText = role.charAt(0).toUpperCase() + role.slice(1);
-        alvo.addEventListener("dragover", dragOver);
-        alvo.addEventListener("drop", drop);
-        dropArea.appendChild(alvo);
-      });
-    }
-
-    function dragStart(e) {
-      e.dataTransfer.setData("text/plain", e.target.dataset.valor);
-      e.target.classList.add("dragging");
-    }
-
-    function dragOver(e) {
-      e.preventDefault();
-    }
-
-    let tentativas = 0;
-    const maxTentativas = 3;
-
-    function drop(e) {
-      e.preventDefault();
-      const numero = e.dataTransfer.getData("text/plain");
-      const alvo = e.currentTarget;
-      const elementoArrastado = [...document.querySelectorAll(".numero")].find(n => n.dataset.valor === numero);
-      if (!elementoArrastado) return;
-
-      const valorEsperado = valores[alvo.dataset.role];
-      const valorSolto = parseInt(numero);
-
-      if (valorEsperado === valorSolto) {
-        const anterior = alvo.querySelector(".numero");
-        if (anterior) document.getElementById("drag-area").appendChild(anterior);
-        alvo.appendChild(elementoArrastado);
-      } else {
-        tentativas++;
-        const somErro = document.getElementById("erro-som");
-        somErro.currentTime = 0;
-        somErro.play();
-
-        alvo.classList.add("erro");
-        setTimeout(() => {
-          alvo.classList.remove("erro");
-        }, 500);
-
-        if (tentativas >= maxTentativas) {
-          document.getElementById("iframe-container").style.display = "block";
-        }
+      while (sorteados.length < 5) {
+        const num = Math.floor(Math.random() * 9) + 1;
+        if (!sorteados.includes(num)) sorteados.push(num);
       }
 
-      verificarVitoria();
-    }
-
-    function verificarVitoria() {
-      const alvos = document.querySelectorAll(".alvo");
-      let correto = 0;
-
-      alvos.forEach(alvo => {
-        const numero = alvo.querySelector(".numero");
-        if (numero && parseInt(numero.dataset.valor) === valores[alvo.dataset.role]) {
-          correto++;
-        }
+      const valores = {};
+      roles.forEach((role, index) => {
+        valores[role] = sorteados[index];
+        document.getElementById(role).innerText = romanoMap[valores[role] - 1];
+        document.getElementById(role + "2").innerText =
+          romanoMap[valores[role] - 1]; // Segunda carta também recebe as informações
       });
 
-      if (correto === 5) {
-        alert("Parabéns! Você venceu!");
-      }
-    }
-  </script>
-</body>
+      document.getElementById("continue").addEventListener("click", () => {
+        // Oculta a primeira carta
+        document.getElementById("papiro").style.display = "none";
 
+        // Exibe a segunda carta
+        document.getElementById("segunda-carta").style.display = "block";
+
+        // Chama a função para iniciar o jogo
+        iniciarJogo();
+      });
+
+      function iniciarJogo() {
+        const dragArea = document.getElementById("drag-area");
+        const dropArea = document.getElementById("drop-area");
+
+        // 🎯 EMBARALHAR VISUALMENTE OS VALORES
+        const numerosEmbaralhados = [...Object.values(valores)]
+          .map((valor) => ({ valor, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .map((obj) => obj.valor);
+
+        numerosEmbaralhados.forEach((num) => {
+          const div = document.createElement("div");
+          div.className = "numero";
+          div.draggable = true;
+          div.innerText = num;
+          div.dataset.valor = num;
+          div.addEventListener("dragstart", dragStart);
+          dragArea.appendChild(div);
+        });
+
+        roles.forEach((role) => {
+          const alvo = document.createElement("div");
+          alvo.className = "alvo";
+          alvo.dataset.role = role;
+          alvo.innerText = role.charAt(0).toUpperCase() + role.slice(1);
+          alvo.addEventListener("dragover", dragOver);
+          alvo.addEventListener("drop", drop);
+          dropArea.appendChild(alvo);
+        });
+      }
+
+      function dragStart(e) {
+        e.dataTransfer.setData("text/plain", e.target.dataset.valor);
+        e.target.classList.add("dragging");
+      }
+
+      function dragOver(e) {
+        e.preventDefault();
+      }
+
+      let tentativas = 0;
+      const maxTentativas = 3;
+
+      function drop(e) {
+        e.preventDefault();
+        const numero = e.dataTransfer.getData("text/plain");
+        const alvo = e.currentTarget;
+        const elementoArrastado = [
+          ...document.querySelectorAll(".numero"),
+        ].find((n) => n.dataset.valor === numero);
+        if (!elementoArrastado) return;
+
+        const valorEsperado = valores[alvo.dataset.role];
+        const valorSolto = parseInt(numero);
+
+        if (valorEsperado === valorSolto) {
+          const anterior = alvo.querySelector(".numero");
+          if (anterior)
+            document.getElementById("drag-area").appendChild(anterior);
+          alvo.appendChild(elementoArrastado);
+        } else {
+          tentativas++;
+          const somErro = document.getElementById("erro-som");
+          somErro.currentTime = 0;
+          somErro.play();
+
+          alvo.classList.add("erro");
+          setTimeout(() => {
+            alvo.classList.remove("erro");
+          }, 500);
+
+          if (tentativas >= maxTentativas) {
+            document.getElementById("iframe-container").style.display = "block";
+          }
+        }
+
+        verificarVitoria();
+      }
+
+      function verificarVitoria() {
+        const alvos = document.querySelectorAll(".alvo");
+        let correto = 0;
+
+        alvos.forEach((alvo) => {
+          const numero = alvo.querySelector(".numero");
+          if (
+            numero &&
+            parseInt(numero.dataset.valor) === valores[alvo.dataset.role]
+          ) {
+            correto++;
+          }
+        });
+
+        if (correto === 5) {
+          alert("Parabéns! Você venceu!");
+        }
+      }
+    </script>
+  </body>
 </html>
