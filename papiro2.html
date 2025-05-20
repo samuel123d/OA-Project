@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desafio da Carta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vw;
+        background: url("./egipt-back.jpg") no-repeat center center;
+        background-size: cover;
+        background-attachment: fixed;
+        overflow: hidden;
+        animation: chegadaFundo 3s ease-out forwards;
+      }
+
+      @keyframes chegadaFundo {
+        from {
+          opacity: 0;
+          transform: scale(1.1);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .papiro,
+      .segunda-carta {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 30px;
+        background: url("papiro-perfect.png") no-repeat center center;
+        background-size: cover;
+        padding: 40px;
+        border-radius: 10px;
+        font-family: "Georgia", serif;
+        text-align: justify;
+        opacity: 0;
+        animation: entradaPapiro 3s ease-out forwards;
+      }
+
+      .papiro {
+        width: 90%;
+        max-width: 1000px;
+      }
+
+      .segunda-carta {
+        display: none;
+        width: 140%;
+        max-width: 1060px;
+        height: 88%;
+        border-radius: 0;
+      }
+
+      @keyframes entradaPapiro {
+        from {
+          opacity: 0;
+          transform: scale(1.1);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .enquadro,
+      .enquadro2 {
+        border-radius: 6px;
+        margin-left: 55px;
+        flex: 2;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+
+      .enquadro {
+        padding: 22px;
+      }
+
+      .enquadro2 {
+        padding: 18px;
+      }
+
+      .conteiner-carta {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-top: 35px;
+        margin-left: 5px;
+        margin-right: 45px;
+      }
+
+      #continue {
+        margin-top: 20px;
+        margin-right: 100px;
+        height: 40px;
+        align-self: flex-start;
+        padding: 8px 20px;
+        background-color: bisque;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      p,
+      h1,
+      li,
+      a {
+        font-family: "Baskervville SC", serif;
+        font-weight: bolder;
+      }
+
+      a {
+        color: black;
+        border-radius: 4px;
+        padding: 5px;
+        background-color: bisque;
+        text-decoration: none;
+      }
+
+      p {
+        font-size: 18px;
+      }
+      li {
+        font-size: 20px;
+      }
+
+      .drag-area,
+      .drop-area {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: flex-start;
+        max-height: 600px;
+        overflow-y: auto;
+      }
+
+      .drag-area {
+        flex: 1;
+        padding: 18px;
+        margin-right: 15px;
+      }
+
+      .drop-area {
+        flex: 1;
+        padding: 18px;
+        margin-right: 15px;
+      }
+
+      .numero {
+        padding: 10px;
+        background-color: #f9d7a0;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        text-align: center;
+        cursor: grab;
+        font-size: 18px;
+      }
+
+      .alvo {
+        padding: 10px;
+        background-color: #fff9;
+        border: 2px dashed #aaa;
+        border-radius: 6px;
+        min-height: 40px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .alvo.erro {
+        animation: shake 0.5s;
+        background-color: #f88 !important;
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20%,
+        60% {
+          transform: translateX(-5px);
+        }
+        40%,
+        80% {
+          transform: translateX(5px);
+        }
+      }
+
+      .iframe-container {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 12px;
+        z-index: 9999;
+      }
+
+      iframe {
+        width: 80vw;
+        height: 60vh;
+        border-radius: 12px;
+        border: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Primeira carta -->
+    <div class="papiro" id="papiro">
+      <div class="enquadro">
+        <h1>Ao meu valoroso General,</h1>
+        <p>Saudações sob o esplendor de Roma!</p>
+        <p>
+          O tempo chegou para reivindicarmos o Egito, fonte de riquezas e poder.
+          Confio a ti a honra e a responsabilidade de preparar nossa invasão com
+          a disciplina e a estratégia que fazem de Roma senhora do mundo.
+        </p>
+        <p>Ordeno que seleciones com rigor:</p>
+        <ul>
+          <li><strong>Tribuno:</strong> <span id="tribuno"></span></li>
+          <li><strong>Centuriões:</strong> <span id="centurioes"></span></li>
+          <li><strong>Decanos:</strong> <span id="decanos"></span></li>
+          <li><strong>Engenheiros:</strong> <span id="engenheiros"></span></li>
+          <li>
+            <strong>Exploradores:</strong> <span id="exploradores"></span>
+          </li>
+        </ul>
+        <p>
+          A provisão de suprimentos deve ser meticulosa. Mantém o moral elevado
+          e o exército pronto para marchar ao meu comando. Em breve, Roma se
+          erguerá sobre as margens do Nilo.
+        </p>
+        <p>Avança com prudência, vence com glória!</p>
+        <p><strong>Gaius Iulius Caesar Octavianus Augustus</strong></p>
+      </div>
+      <button id="continue">Continuar</button>
+    </div>
+
+    <!-- Segunda carta -->
+    <div class="segunda-carta" id="segunda-carta">
+      <div class="conteiner-carta">
+        <div class="enquadro2">
+          <h1>Prove seu conhecimento:</h1>
+          <p>
+            Agora, é hora de testar seu conhecimento. Combine os números com os
+            respectivos nomes de acordo com a carta!
+          </p>
+          <ul>
+            <li><strong>Tribuno:</strong> <span id="tribuno2"></span></li>
+            <li><strong>Centuriões:</strong> <span id="centurioes2"></span></li>
+            <li><strong>Decanos:</strong> <span id="decanos2"></span></li>
+            <li>
+              <strong>Engenheiros:</strong> <span id="engenheiros2"></span>
+            </li>
+            <li>
+              <strong>Exploradores:</strong> <span id="exploradores2"></span>
+            </li>
+          </ul>
+        </div>
+        <div class="drag-area" id="drag-area"></div>
+        <div class="drop-area" id="drop-area"></div>
+      </div>
+    </div>
+
+    <div class="iframe-container" id="iframe-next">
+      <iframe src="./next.html" frameborder="0"></iframe>
+    </div>
+    <div class="iframe-container" id="iframe-container">
+      <iframe src="./gameover-papiro.html" frameborder="0"></iframe>
+    </div>
+
+    <audio id="erro-som" src="wrong.mp3"></audio>
+
+    <script>
+      const romanoMap = [...Array(91).keys()].map((i) => {
+        const romanos = [
+          "X",
+          "XI",
+          "XII",
+          "XIII",
+          "XIV",
+          "XV",
+          "XVI",
+          "XVII",
+          "XVIII",
+          "XIX",
+          "XX",
+          "XXI",
+          "XXII",
+          "XXIII",
+          "XXIV",
+          "XXV",
+          "XXVI",
+          "XXVII",
+          "XXVIII",
+          "XXIX",
+          "XXX",
+          "XXXI",
+          "XXXII",
+          "XXXIII",
+          "XXXIV",
+          "XXXV",
+          "XXXVI",
+          "XXXVII",
+          "XXXVIII",
+          "XXXIX",
+          "XL",
+          "XLI",
+          "XLII",
+          "XLIII",
+          "XLIV",
+          "XLV",
+          "XLVI",
+          "XLVII",
+          "XLVIII",
+          "XLIX",
+          "L",
+          "LI",
+          "LII",
+          "LIII",
+          "LIV",
+          "LV",
+          "LVI",
+          "LVII",
+          "LVIII",
+          "LIX",
+          "LX",
+          "LXI",
+          "LXII",
+          "LXIII",
+          "LXIV",
+          "LXV",
+          "LXVI",
+          "LXVII",
+          "LXVIII",
+          "LXIX",
+          "LXX",
+          "LXXI",
+          "LXXII",
+          "LXXIII",
+          "LXXIV",
+          "LXXV",
+          "LXXVI",
+          "LXXVII",
+          "LXXVIII",
+          "LXXIX",
+          "LXXX",
+          "LXXXI",
+          "LXXXII",
+          "LXXXIII",
+          "LXXXIV",
+          "LXXXV",
+          "LXXXVI",
+          "LXXXVII",
+          "LXXXVIII",
+          "LXXXIX",
+          "XC",
+          "XCI",
+          "XCII",
+          "XCIII",
+          "XCIV",
+          "XCV",
+          "XCVI",
+          "XCVII",
+          "XCVIII",
+          "XCIX",
+          "C",
+        ];
+        return romanos[i];
+      });
+
+      const roles = [
+        "tribuno",
+        "centurioes",
+        "decanos",
+        "engenheiros",
+        "exploradores",
+      ];
+      const sorteados = [];
+
+      while (sorteados.length < 5) {
+        const num = Math.floor(Math.random() * 91) + 10;
+        if (!sorteados.includes(num)) sorteados.push(num);
+      }
+
+      const valores = {};
+      roles.forEach((role, i) => {
+        valores[role] = sorteados[i];
+        document.getElementById(role).innerText = romanoMap[sorteados[i] - 10];
+        document.getElementById(role + "2").innerText =
+          romanoMap[sorteados[i] - 10];
+      });
+
+      document.getElementById("continue").addEventListener("click", () => {
+        document.getElementById("papiro").style.display = "none";
+        document.getElementById("segunda-carta").style.display = "flex";
+        iniciarJogo();
+      });
+
+      function iniciarJogo() {
+        const dragArea = document.getElementById("drag-area");
+        const dropArea = document.getElementById("drop-area");
+        const numerosEmbaralhados = [...Object.values(valores)].sort(
+          () => Math.random() - 0.5
+        );
+
+        numerosEmbaralhados.forEach((num) => {
+          const div = document.createElement("div");
+          div.className = "numero";
+          div.draggable = true;
+          div.innerText = num;
+          div.dataset.valor = num;
+          div.addEventListener("dragstart", dragStart);
+          dragArea.appendChild(div);
+        });
+
+        roles.forEach((role) => {
+          const alvo = document.createElement("div");
+          alvo.className = "alvo";
+          alvo.dataset.role = role;
+          alvo.innerText = role.charAt(0).toUpperCase() + role.slice(1);
+          alvo.addEventListener("dragover", dragOver);
+          alvo.addEventListener("drop", drop);
+          dropArea.appendChild(alvo);
+        });
+      }
+
+      function dragStart(e) {
+        e.dataTransfer.setData("text/plain", e.target.dataset.valor);
+      }
+
+      function dragOver(e) {
+        e.preventDefault();
+      }
+
+      let tentativas = 0;
+      const maxTentativas = 3;
+
+      function drop(e) {
+        e.preventDefault();
+        const numero = parseInt(e.dataTransfer.getData("text/plain"));
+        const alvo = e.currentTarget;
+        const esperado = valores[alvo.dataset.role];
+
+        const elemento = [...document.querySelectorAll(".numero")].find(
+          (el) => parseInt(el.dataset.valor) === numero
+        );
+
+        if (!elemento) return;
+
+        if (numero === esperado) {
+          alvo.innerText = "";
+          alvo.appendChild(elemento);
+        } else {
+          tentativas++;
+          document.getElementById("erro-som").play();
+          alvo.classList.add("erro");
+          setTimeout(() => alvo.classList.remove("erro"), 500);
+          if (tentativas >= maxTentativas) {
+            document.getElementById("iframe-container").style.display = "block";
+          }
+        }
+
+        verificarVitoria();
+      }
+      function verificarVitoria() {
+        const alvos = document.querySelectorAll(".alvo");
+        const completos = [...alvos].filter((alvo) =>
+          alvo.querySelector(".numero")
+        );
+        if (completos.length === 5) {
+          document.getElementById("iframe-next").style.display = "block";
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -133,7 +133,7 @@
         font-family: "Georgia", serif;
         text-align: justify;
         opacity: 0;
-        
+
         animation: entradaPapiro 3s ease-out forwards;
       }
 
@@ -328,7 +328,9 @@
         <div class="drop-area" id="drop-area"></div>
       </div>
     </div>
-
+    <div class="iframe-container" id="iframe-next">
+      <iframe src="./next.html" frameborder="0"></iframe>
+    </div>
     <div class="iframe-container" id="iframe-container">
       <iframe src="./gameover-papiro.html" id="iframe" frameborder="0"></iframe>
     </div>
@@ -384,7 +386,6 @@
         const dragArea = document.getElementById("drag-area");
         const dropArea = document.getElementById("drop-area");
 
-        // 🎯 EMBARALHAR VISUALMENTE OS VALORES
         const numerosEmbaralhados = [...Object.values(valores)]
           .map((valor) => ({ valor, sort: Math.random() }))
           .sort((a, b) => a.sort - b.sort)
@@ -461,20 +462,11 @@
 
       function verificarVitoria() {
         const alvos = document.querySelectorAll(".alvo");
-        let correto = 0;
-
-        alvos.forEach((alvo) => {
-          const numero = alvo.querySelector(".numero");
-          if (
-            numero &&
-            parseInt(numero.dataset.valor) === valores[alvo.dataset.role]
-          ) {
-            correto++;
-          }
-        });
-
-        if (correto === 5) {
-          alert("Parabéns! Você venceu!");
+        const completos = [...alvos].filter((alvo) =>
+          alvo.querySelector(".numero")
+        );
+        if (completos.length === 5) {
+          document.getElementById("iframe-next").style.display = "block";
         }
       }
     </script>
