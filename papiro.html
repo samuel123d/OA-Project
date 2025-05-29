@@ -45,11 +45,11 @@
         align-items: flex-start;
         flex-direction: row;
         gap: 30px;
-        width: 90%;
+        width: 100%;
         max-width: 1000px;
-        background: url("papiro-perfect.png") no-repeat center center;
+        background: url("the-best-papiro.png") no-repeat center center;
         background-size: cover;
-        padding: 40px;
+        padding: 65px;
         border-radius: 10px;
         font-family: "Georgia", serif;
         text-align: justify;
@@ -125,9 +125,9 @@
         gap: 30px;
         width: 140%;
         max-width: 1060px;
-        background: url("papiro-perfect.png") no-repeat center center;
+        background: url("the-best-papiro.png") no-repeat center center;
         background-size: cover;
-        padding: 40px;
+        padding: 65px;
         height: 88%;
         border-radius: 0px;
         font-family: "Georgia", serif;
@@ -368,17 +368,17 @@
         valores[role] = sorteados[index];
         document.getElementById(role).innerText = romanoMap[valores[role] - 1];
         document.getElementById(role + "2").innerText =
-          romanoMap[valores[role] - 1]; // Segunda carta também recebe as informações
+          romanoMap[valores[role] - 1]; 
       });
 
       document.getElementById("continue").addEventListener("click", () => {
-        // Oculta a primeira carta
+
         document.getElementById("papiro").style.display = "none";
 
-        // Exibe a segunda carta
+       
         document.getElementById("segunda-carta").style.display = "flex";
 
-        // Chama a função para iniciar o jogo
+       
         iniciarJogo();
       });
 

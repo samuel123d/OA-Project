@@ -2,478 +2,397 @@
 <html lang="pt">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>game</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Patua+One&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Patua+One&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Patua+One&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <style>
-        /* Geral */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            /* Garantir que o padding e borda não causem overflow */
-        }
+    body {
+      font-family: 'Patua One', cursive, Arial, sans-serif;
+      background-image: url('./end-back.png');
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-        body {
-            font-family: 'Patua One', cursive, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            background-image: url('./fundo\ do\ game.jpg')
-        }
+    .top-container {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      font-size: 18px;
+      font-weight: bold;
+      background: linear-gradient(to bottom,
+          rgba(207, 152, 34, 0.795),
+          rgba(218, 180, 98, 0.089));
+      color: white;
+      box-shadow: 12px 34px 23px rgba(218, 180, 98, 0.089);
+      z-index: 10;
+    }
 
-        /* Título centralizado no topo */
-        h1 {
-            margin: 40px 0;
-            text-align: center;
-            font-family: 'Sacramento', cursive;
-            /* Fonte grega clássica */
-            font-size: 3rem;
-            color: #2c3e50;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            /* Efeito de sombra */
-        }
+    .top-container .level {
+      color: #e7bc0e;
+      font-style: bold;
+    }
 
-        /* Container do topo com as informações de nível, vidas e tempo */
-        .top-container {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 40px;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            font-size: 18px;
-            /* Tamanho da fonte para os ícones */
-            font-weight: bold;
-            background-color: #333;
-            color: white;
-            border-bottom: 5px solid #f1c40f;
-            /* Cor dourada */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            /* Sombras do topo */
-        }
+    .top-container .timer {
+      color: #2ecc71;
+      text-align: right;
+    }
 
-        /* Ajuste de estilo para o nível e o timer */
-        .top-container .level,
-        .top-container .timer {
-            font-family: 'Patua One', cursive;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            /* Efeito de sombra */
-        }
+    .lives {
+      display: flex;
+      align-items: center;
+    }
 
-        .top-container .level {
-            color: #f1c40f;
-            /* Dourado */
-        }
+    .heart {
+      font-size: 2rem;
+      margin-left: 10px;
+      transition: all 0.3s ease;
+    }
 
-        .top-container .timer {
-            color: #2ecc71;
-            /* Verde */
-            text-align: right;
-        }
+    .heart.shake {
+      animation: shake 0.3s ease;
+    }
 
-        /* Exibição das vidas como emojis de corações */
-        .lives {
-            display: flex;
-            align-items: center;
-        }
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
+      }
 
-        .heart {
-            font-size: 2rem;
-            margin-right: 10px;
-        }
+      25% {
+        transform: translateX(-4px);
+      }
 
-        /* Container do jogo com espaçamento entre as áreas */
-        .game-container {
-            display: flex;
-            gap: 40px;
-            justify-content: center;
-            margin-top: 120px;
-            flex-wrap: wrap;
-        }
+      50% {
+        transform: translateX(4px);
+      }
 
-        /* Estilo dos itens de drag */
-        .item {
-            padding: 15px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
-            text-align: center;
-            cursor: grab;
-            background-color: #f0f0f0;
-            min-width: 120px;
-            font-size: 1.2rem;
-            color: #333;
-            transition: transform 0.3s ease;
-        }
+      75% {
+        transform: translateX(-4px);
+      }
 
-        /* Efeito hover para os itens */
-        .item:hover {
-            transform: scale(1.1);
-            /* Ampliar ao passar o mouse */
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
+      100% {
+        transform: translateX(0);
+      }
+    }
 
-        /* Estilo dos alvos para drop */
-        .target {
-            width: 120px;
-            height: 120px;
-            border: 2px dashed #aaa;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            background-color: #fff;
-            font-size: 20px;
-            min-width: 120px;
-            min-height: 120px;
-            color: #333;
-        }
+    main {
+      padding: 90px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
 
-        .correct {
-            border-color: green;
-            background-color: #e0ffe0;
-        }
+    .game-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+    }
 
-        .wrong {
-            border-color: red;
-            background-color: #ffe0e0;
-        }
+    /* AREA DROP - mostra número romano (onde jogador solta) */
+    .target {
+      flex: 1 1 120px;
+      max-width: 140px;
+      min-width: 110px;
+      height: 120px;
+      border-radius: 10px;
+      font-size: 1.4rem;
+      text-align: center;
+      line-height: 120px;
+      user-select: none;
+      cursor: default;
+      border: 2px dashed #aaa;
+      background-color: #fff;
+      color: #333;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      font-weight: bold;
+    }
 
-        /* Estilo do botão */
-        button {
-            padding: 15px 25px;
-            font-size: 18px;
-            background-color: #f1c40f;
-            /* Cor dourada */
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            margin-top: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
+    /* AREA DRAG - mostra número indo-arábico (opções para arrastar) */
+    .item {
+      flex: 1 1 120px;
+      max-width: 140px;
+      min-width: 110px;
+      height: 120px;
+      border-radius: 10px;
+      font-size: 1.4rem;
+      text-align: center;
+      line-height: 120px;
+      user-select: none;
+      cursor: grab;
+      border: 2px solid #ccc;
+      background-color: #f0f0f0;
+      color: #333;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
 
-        button:hover {
-            background-color: #e67e22;
-            /* Cor de laranja quando passar o mouse */
-            transform: translateY(-5px);
-            /* Elevação do botão */
-        }
+    .item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
 
-        /* Estilo para a mensagem */
-        .message {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-        }
+    .correct {
+      border-color: green !important;
+      background-color: #e0ffe0 !important;
+      cursor: default;
+    }
 
-        /* Overlay para game over */
-        .game-over-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-             width: 80%;
-            height: 80%;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
+    .wrong {
+      border-color: red !important;
+      background-color: #ffe0e0 !important;
+    }
 
-        .game-over-iframe {
-            width: 80%;
-            height: 80%;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-        }
-    </style>
+    #check-button {
+      display: none;
+    }
+
+    .iframe-container {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 12px;
+      z-index: 9999;
+    }
+
+    iframe {
+      width: 80vw;
+      height: 60vh;
+      border-radius: 12px;
+      border: none;
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Topo com nível, vidas e tempo -->
-    <div class="top-container">
-        <div class="level">Nível: 1</div>
-        <div class="lives">
-            <span id="heart1" class="heart">❤️</span>
-            <span id="heart2" class="heart">❤️</span>
-            <span id="heart3" class="heart">❤️</span>
-        </div>
-        <div class="timer">Tempo: 03:00</div> <!-- Exibição do tempo -->
+  <div class="top-container">
+    <div class="level">Nível: 1</div>
+    <div class="lives">
+      <span id="heart1" class="heart">❤️</span>
+      <span id="heart2" class="heart">❤️</span>
+      <span id="heart3" class="heart">❤️</span>
     </div>
-    <div id="message"></div>
+    <div class="timer">Tempo: 03:00</div>
+  </div>
 
+  <main>
+    <!-- Targets recebem números romanos, drag targets -->
     <div class="game-container" id="targets-container"></div>
+    <!-- Items são os números arábicos para arrastar -->
     <div class="game-container" id="items-container"></div>
+  </main>
 
-    <button id="check-button">Confirmar</button>
+  <audio id="correct-sound" src="correct.mp3"></audio>
+  <audio id="wrong-sound" src="wrong-sound.mp3"></audio>
 
-    <audio id="correct-sound" src="correct.mp3"></audio>
-    <audio id="wrong-sound" src="wrong-sound.mp3"></audio>
+  <div id="game-over-overlay" class="iframe-container">
+    <iframe src="gameover-papiro.html"></iframe>
+  </div>
 
-    <div id="game-over-overlay" class="game-over-overlay" style="display: none;">
-        <iframe src="gameover.html" class="game-over-iframe"></iframe>
-    </div>
-    <div id="play-warning"
-        style="position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background-color: rgba(0, 0, 0, 0.8); color: white; padding: 20px; font-size: 18px; font-weight: bold; border-radius: 10px; text-align: center; z-index: 1100;">
-        <p>Para jogar, por favor, ative o áudio!</p>
-        <button id="play-button"
-            style="margin-top: 20px; padding: 10px 20px; background-color: #f1c40f; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-            Play
-        </button>
-    </div>
+  <script>
+    const correctSound = document.getElementById('correct-sound');
+    const wrongSound = document.getElementById('wrong-sound');
+    const gameOverOverlay = document.getElementById('game-over-overlay');
+    const levelElement = document.querySelector('.level');
+    const timerElement = document.querySelector('.timer');
+    const hearts = [document.getElementById('heart1'), document.getElementById('heart2'), document.getElementById('heart3')];
 
-    <!-- Botão de alternância de música -->
-    <button id="music-toggle-btn" class="music-toggle-btn"
-        style="position: fixed; bottom: 20px; right: 20px; background-color: rgba(0, 0, 0, 0.6); color: white; border: none; padding: 10px; border-radius: 50%; cursor: pointer; font-size: 24px; z-index: 1000;">
-        <i class="bi bi-volume-up"></i> <!-- Ícone de som -->
-    </button>
+    let currentLevel = 1;
+    let attemptsLeft = 3;
+    let timeLeft = 180;
+    let timerInterval;
 
+   const levels = [
+  { count: 3, min: 1, max: 100 },
+  { count: 4, min: 101, max: 300 },
+  { count: 5, min: 301, max: 600 },
+  { count: 6, min: 601, max: 1000 }
+];
 
-    <script>
-        // Seleciona os elementos do DOM
-        const playWarning = document.getElementById('play-warning');
-        const playButton = document.getElementById('play-button');
-        const musicToggleBtn = document.getElementById('music-toggle-btn');
-        const backgroundMusic = new Audio('./arab-190763.mp3'); // Defina o caminho do arquivo de áudio
-        const musicIcon = musicToggleBtn.querySelector('i');
+    function toRoman(num) {
+      const romans = [
+        ['M', 1000],
+        ['CM', 900],
+        ['D', 500],
+        ['CD', 400],
+        ['C', 100],
+        ['XC', 90],
+        ['L', 50],
+        ['XL', 40],
+        ['X', 10],
+        ['IX', 9],
+        ['V', 5],
+        ['IV', 4],
+        ['I', 1]
+      ];
+      let result = '';
+      for (const [letter, value] of romans) {
+        while (num >= value) {
+          result += letter;
+          num -= value;
+        }
+      }
+      return result;
+    }
 
-        // Variável de controle para saber se o áudio está tocando
-        let isMusicPlaying = false;
+    function randomNumber(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
-        // Função para ativar a música (somente após o clique do usuário)
-        playButton.addEventListener('click', () => {
-            // Toca o áudio e esconde o aviso
-            backgroundMusic.play();
-            isMusicPlaying = true;
-            playWarning.style.display = 'none';  // Esconde o aviso quando o áudio é ativado
-            musicIcon.classList.remove('bi-volume-up');  // Troca o ícone para indicar que o áudio está ativado
-            musicIcon.classList.add('bi-volume-mute');   // Ícone de áudio mutado
+    function randomize(arr) {
+      return arr.sort(() => Math.random() - 0.5);
+    }
+
+    function generateItems(count, min, max) {
+      const set = new Set();
+      while (set.size < count) {
+        set.add(randomNumber(min, max));
+      }
+      return Array.from(set);
+    }
+
+    function initGame() {
+      clearInterval(timerInterval);
+
+      const levelData = levels[currentLevel - 1];
+      attemptsLeft = 3;
+      timeLeft = 180;
+
+      hearts.forEach(h => {
+        h.style.visibility = 'visible';
+        h.classList.remove('shake');
+      });
+
+      const itemsContainer = document.getElementById('items-container');
+      const targetsContainer = document.getElementById('targets-container');
+
+      const numbers = generateItems(levelData.count, levelData.min, levelData.max);
+
+      // Agora, targets recebem números romanos (área DROP)
+      const targets = numbers.map(n => ({ id: `target-${n}`, label: toRoman(n), number: n }));
+
+      // Items recebem números indo-arábicos (área DRAG)
+      const items = numbers.map(n => ({ id: `item-${n}`, label: n, number: n }));
+
+      const shuffledItems = randomize(items.slice());
+      const shuffledTargets = randomize(targets.slice());
+
+      targetsContainer.innerHTML = shuffledTargets.map(target => `<div class="target" data-target="${target.number}">${target.label}</div>`).join('');
+      itemsContainer.innerHTML = shuffledItems.map(item => `<div class="item" id="${item.id}" draggable="true">${item.label}</div>`).join('');
+
+      levelElement.textContent = `Nível: ${currentLevel}`;
+      timerElement.textContent = `Tempo: 03:00`;
+
+      document.querySelectorAll('.item').forEach(item => {
+        item.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', item.id);
         });
+      });
 
-        // Função de controle do botão de som
-        musicToggleBtn.addEventListener('click', () => {
-            if (isMusicPlaying) {
-                // Se a música estiver tocando, pause-a
-                backgroundMusic.pause();
-                isMusicPlaying = false;
-                musicIcon.classList.remove('bi-volume-mute');
-                musicIcon.classList.add('bi-volume-up');  // Troca para o ícone de som ligado
-            } else {
-                // Se a música estiver pausada, toque-a
-                backgroundMusic.play();
-                isMusicPlaying = true;
-                musicIcon.classList.remove('bi-volume-up');
-                musicIcon.classList.add('bi-volume-mute');  // Troca para o ícone de som desligado
+      document.querySelectorAll('.target').forEach(target => {
+        target.addEventListener('dragover', e => e.preventDefault());
+        target.addEventListener('drop', e => {
+          e.preventDefault();
+          const draggedId = e.dataTransfer.getData('text/plain');
+          const draggedItem = document.getElementById(draggedId);
+
+          if (!draggedItem) return;
+
+          const expectedNumber = parseInt(target.dataset.target);
+          const draggedNumber = parseInt(draggedId.split('-')[1]);
+
+          if (expectedNumber === draggedNumber) {
+            // mantém o número romano já no target
+            target.classList.add('correct');
+            draggedItem.remove();
+            correctSound.play();
+            checkWin();
+          } else {
+            wrongSound.play();
+            shakeHeart();
+            attemptsLeft--;
+            if (attemptsLeft >= 0) {
+              hearts[attemptsLeft].style.visibility = 'hidden';
             }
-        });
-
-        const checkButton = document.getElementById('check-button');
-        const correctSound = document.getElementById('correct-sound');
-        const wrongSound = document.getElementById('wrong-sound');
-        const messageElement = document.getElementById('message');
-        const gameOverOverlay = document.getElementById('game-over-overlay');
-        const levelElement = document.querySelector('.level');
-        const livesElement = document.querySelector('.lives');
-        const timerElement = document.querySelector('.timer'); // Elemento do tempo
-
-        let currentLevel = 1;
-        let attemptsLeft = 3; // 3 vidas
-        let timeLeft = 180; // Tempo inicial de 60 segundos
-        let timerInterval; // Intervalo para o contador
-
-        const levels = [
-            {
-                items: [
-                    { id: "i", label: "I", number: 1, egyptian: "1" },
-                    { id: "v", label: "V", number: 5, egyptian: "5" },
-                    { id: "x", label: "X", number: 10, egyptian: "10" }
-                ]
-            },
-            {
-                items: [
-                    { id: "l", label: "L", number: 50, egyptian: "50" },
-                    { id: "c", label: "C", number: 100, egyptian: "100" },
-                    { id: "d", label: "D", number: 500, egyptian: "500" },
-                    { id: "m", label: "M", number: 1000, egyptian: "1000" }
-                ]
-            },
-            {
-                items: [
-                    { id: "ii", label: "II", number: 2, egyptian: "2" },
-                    { id: "iv", label: "IV", number: 4, egyptian: "4" },
-                    { id: "vi", label: "VI", number: 6, egyptian: "6" },
-                    { id: "ix", label: "IX", number: 9, egyptian: "9" }
-                ]
-            }
-        ];
-
-        const randomizeArray = (arr) => {
-            return arr.sort(() => Math.random() - 0.5);
-        };
-
-        let currentItems = [];
-        let currentTargets = [];
-
-        const initGame = () => {
-            const itemsContainer = document.getElementById('items-container');
-            const targetsContainer = document.getElementById('targets-container');
-
-            const level = levels[currentLevel - 1];
-
-            currentItems = level.items.slice();
-            currentTargets = level.items.slice();
-
-            updateGameElements();
-
-            document.querySelectorAll('.item').forEach(item => {
-                item.addEventListener('dragstart', (event) => {
-                    event.dataTransfer.setData('text/plain', item.id);
-                });
-            });
-
-            document.querySelectorAll('.target').forEach(target => {
-                target.addEventListener('dragover', (event) => {
-                    event.preventDefault();
-                });
-
-                target.addEventListener('drop', (event) => {
-                    event.preventDefault();
-                    const draggedId = event.dataTransfer.getData('text/plain');
-                    const draggedItem = document.getElementById(draggedId);
-                    target.setAttribute('data-current', draggedId);
-                    target.textContent = draggedItem.textContent.split(' ')[0]; // Exibe o número egípcio
-                });
-            });
-
-            startTimer();
-        };
-
-        const updateGameElements = () => {
-            const itemsContainer = document.getElementById('items-container');
-            const targetsContainer = document.getElementById('targets-container');
-
-            const randomizedItems = randomizeArray(currentItems);
-            const randomizedTargets = randomizeArray(currentTargets);
-
-            itemsContainer.innerHTML = randomizedItems
-                .map(item => `<div class="item" draggable="true" id="${item.id}">${item.egyptian}</div>`)
-                .join("");
-
-            targetsContainer.innerHTML = randomizedTargets
-                .map(item => `<div class="target" data-target="${item.number}">${item.label}</div>`)
-                .join("");
-
-            levelElement.textContent = `Nível: ${currentLevel}`;
-        };
-
-        const startTimer = () => {
-            timerInterval = setInterval(() => {
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    gameOverOverlay.style.display = 'flex';
-                } else {
-                    timeLeft--;
-                    let minutes = Math.floor(timeLeft / 60);
-                    let seconds = timeLeft % 60;
-                    timerElement.textContent = `Tempo: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-                }
-            }, 1000);
-        };
-
-        const updateLives = () => {
-            const hearts = document.querySelectorAll('.heart');
-            for (let i = 0; i < 3; i++) {
-                if (i < attemptsLeft) {
-                    hearts[i].style.display = 'inline';
-                } else {
-                    hearts[i].style.display = 'none';
-                }
-            }
-        };
-
-        const checkProgress = () => {
-            let anyError = false;
-            let completedMatches = 0;
-
-            const allFieldsFilled = [...document.querySelectorAll('.target')].every(target => {
-                return target.getAttribute('data-current');
-            });
-
-            if (!allFieldsFilled) {
-                alert("Você precisa preencher todos os campos!");
-                return;
-            }
-
-            document.querySelectorAll('.target').forEach(target => {
-                const currentId = target.getAttribute('data-current');
-                const correctNumber = target.getAttribute('data-target');
-
-                if (currentId) {
-                    const correctItem = levels[currentLevel - 1].items.find(item => item.number == correctNumber);
-                    if (currentId === correctItem.id) {
-                        target.classList.add('correct');
-                        completedMatches++;
-                    } else {
-                        target.classList.add('wrong');
-                        anyError = true;
-                        setTimeout(() => {
-                            target.classList.remove('wrong');
-                            target.textContent = correctItem.label;
-                        }, 1000);
-                    }
-                }
-            });
-
-            if (anyError) {
-                wrongSound.play();
-                attemptsLeft--;
-                updateLives();
-            }
-
+            target.classList.add('wrong');
+            setTimeout(() => {
+              target.classList.remove('wrong');
+            }, 600);
             if (attemptsLeft <= 0) {
-                gameOverOverlay.style.display = 'flex';
+              clearInterval(timerInterval);
+              gameOverOverlay.style.display = 'flex';
             }
+          }
+        });
+      });
 
-            if (completedMatches === levels[currentLevel - 1].items.length) {
-                correctSound.play();
-                setTimeout(() => {
-                    if (currentLevel < levels.length) {
-                        currentLevel++;
-                        attemptsLeft = 3;
-                        updateLives();
-                        initGame();
-                    } else {
-                        alert("Parabéns! Você completou todos os níveis!");
-                        currentLevel = 1;
-                        attemptsLeft = 3;
-                        updateLives();
-                        initGame();
-                    }
-                }, 1500);
-            }
-        };
+      startTimer();
+    }
 
-        checkButton.addEventListener('click', checkProgress);
+    function shakeHeart() {
+      if (attemptsLeft > 0) {
+        hearts[attemptsLeft - 1].classList.add('shake');
+        setTimeout(() => {
+          hearts[attemptsLeft - 1].classList.remove('shake');
+        }, 300);
+      }
+    }
 
-        initGame();
-    </script>
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          gameOverOverlay.style.display = 'flex';
+        } else {
+          timeLeft--;
+          const min = Math.floor(timeLeft / 60);
+          const sec = timeLeft % 60;
+          timerElement.textContent = `Tempo: ${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+      }, 1000);
+    }
+
+    function checkWin() {
+      const remainingItems = document.querySelectorAll('.item');
+      if (remainingItems.length === 0) {
+        clearInterval(timerInterval);
+        if (currentLevel < levels.length) {
+          currentLevel++;
+          setTimeout(initGame, 1500);
+        } else {
+          alert('Você venceu o jogo!');
+        }
+      }
+    }
+
+    initGame();
+  </script>
 </body>
 
 </html>

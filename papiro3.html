@@ -46,7 +46,7 @@
         gap: 30px;
         background: url("the-best-papiro.png") no-repeat center center;
         background-size: cover;
-        padding: 40px;
+        padding: 65px;
         border-radius: 10px;
         font-family: "Georgia", serif;
         text-align: justify;
@@ -105,7 +105,7 @@
       }
 
       #continue {
-        margin-top: 50px;
+        margin-top: 20px;
         margin-right: 100px;
         height: 40px;
         align-self: flex-start;
@@ -284,7 +284,7 @@
     </div>
 
     <div class="iframe-container" id="iframe-next">
-      <iframe src="./end-next.html" frameborder="0"></iframe>
+      <iframe src="./final-end-next.html" frameborder="0"></iframe>
     </div>
     <div class="iframe-container" id="iframe-container">
       <iframe src="./gameover-papiro.html" frameborder="0"></iframe>
@@ -293,198 +293,120 @@
     <audio id="erro-som" src="wrong.mp3"></audio>
 
     <script>
-      const romanoMap = [...Array(91).keys()].map((i) => {
-        const romanos = [
-          "X",
-          "XI",
-          "XII",
-          "XIII",
-          "XIV",
-          "XV",
-          "XVI",
-          "XVII",
-          "XVIII",
-          "XIX",
-          "XX",
-          "XXI",
-          "XXII",
-          "XXIII",
-          "XXIV",
-          "XXV",
-          "XXVI",
-          "XXVII",
-          "XXVIII",
-          "XXIX",
-          "XXX",
-          "XXXI",
-          "XXXII",
-          "XXXIII",
-          "XXXIV",
-          "XXXV",
-          "XXXVI",
-          "XXXVII",
-          "XXXVIII",
-          "XXXIX",
-          "XL",
-          "XLI",
-          "XLII",
-          "XLIII",
-          "XLIV",
-          "XLV",
-          "XLVI",
-          "XLVII",
-          "XLVIII",
-          "XLIX",
-          "L",
-          "LI",
-          "LII",
-          "LIII",
-          "LIV",
-          "LV",
-          "LVI",
-          "LVII",
-          "LVIII",
-          "LIX",
-          "LX",
-          "LXI",
-          "LXII",
-          "LXIII",
-          "LXIV",
-          "LXV",
-          "LXVI",
-          "LXVII",
-          "LXVIII",
-          "LXIX",
-          "LXX",
-          "LXXI",
-          "LXXII",
-          "LXXIII",
-          "LXXIV",
-          "LXXV",
-          "LXXVI",
-          "LXXVII",
-          "LXXVIII",
-          "LXXIX",
-          "LXXX",
-          "LXXXI",
-          "LXXXII",
-          "LXXXIII",
-          "LXXXIV",
-          "LXXXV",
-          "LXXXVI",
-          "LXXXVII",
-          "LXXXVIII",
-          "LXXXIX",
-          "XC",
-          "XCI",
-          "XCII",
-          "XCIII",
-          "XCIV",
-          "XCV",
-          "XCVI",
-          "XCVII",
-          "XCVIII",
-          "XCIX",
-          "C",
-        ];
-        return romanos[i];
-      });
+  const romanoMap = [
+    [100, 'C'], [101, 'CI'], [102, 'CII'], [103, 'CIII'], [104, 'CIV'],
+    [105, 'CV'], [106, 'CVI'], [107, 'CVII'], [108, 'CVIII'], [109, 'CIX'],
+    [110, 'CX'], [120, 'CXX'], [130, 'CXXX'], [140, 'CXL'], [150, 'CL'],
+    [160, 'CLX'], [170, 'CLXX'], [180, 'CLXXX'], [190, 'CXC'], [200, 'CC'],
+    [250, 'CCL'], [300, 'CCC'], [325, 'CCCXXV'], [350, 'CCCL'], [375, 'CCCLXXV'],
+    [400, 'CD'], [450, 'CDL'], [475, 'CDLXXV'], [500, 'D'], [525, 'DXXV'],
+    [550, 'DL'], [575, 'DLXXV'], [600, 'DC'], [650, 'DCL'], [700, 'DCC'],
+    [750, 'DCCL'], [800, 'DCCC'], [850, 'DCCCL'], [900, 'CM'], [950, 'CML'],
+    [975, 'CMLXXV'], [1000, 'M']
+  ];
 
-      const roles = [
-        "tribuno",
-        "centurioes",
-        "decanos",
-        "engenheiros",
-        "exploradores",
-      ];
-      const sorteados = [];
+  const roles = ["tribuno", "centurioes", "decanos", "engenheiros", "exploradores"];
+  const valores = {};
 
-      while (sorteados.length < 5) {
-        const num = Math.floor(Math.random() * 91) + 10;
-        if (!sorteados.includes(num)) sorteados.push(num);
+  const numerosUnicos = new Set();
+  while (numerosUnicos.size < 5) {
+    const entry = romanoMap[Math.floor(Math.random() * romanoMap.length)];
+    numerosUnicos.add(JSON.stringify(entry)); // Garantir unicidade
+  }
+
+  const sorteados = Array.from(numerosUnicos).map(JSON.parse);
+
+  roles.forEach((role, index) => {
+    const [valor, romano] = sorteados[index];
+    valores[role] = valor;
+    document.getElementById(role).innerText = romano;
+    document.getElementById(role + "2").innerText = romano;
+  });
+
+  document.getElementById("continue").addEventListener("click", () => {
+    document.getElementById("papiro").style.display = "none";
+    document.getElementById("segunda-carta").style.display = "flex";
+    iniciarJogo();
+  });
+
+  function iniciarJogo() {
+    const dragArea = document.getElementById("drag-area");
+    const dropArea = document.getElementById("drop-area");
+
+    const numerosEmbaralhados = [...Object.values(valores)]
+      .map((valor) => ({ valor, sort: Math.random() }))
+      .sort((a, b) => a.sort - b.sort)
+      .map((obj) => obj.valor);
+
+    numerosEmbaralhados.forEach((num) => {
+      const div = document.createElement("div");
+      div.className = "numero";
+      div.draggable = true;
+      div.innerText = num;
+      div.dataset.valor = num;
+      div.addEventListener("dragstart", dragStart);
+      dragArea.appendChild(div);
+    });
+
+    roles.forEach((role) => {
+      const alvo = document.createElement("div");
+      alvo.className = "alvo";
+      alvo.dataset.role = role;
+      alvo.innerText = role.charAt(0).toUpperCase() + role.slice(1);
+      alvo.addEventListener("dragover", dragOver);
+      alvo.addEventListener("drop", drop);
+      dropArea.appendChild(alvo);
+    });
+  }
+
+  function dragStart(e) {
+    e.dataTransfer.setData("text/plain", e.target.dataset.valor);
+    e.target.classList.add("dragging");
+  }
+
+  function dragOver(e) {
+    e.preventDefault();
+  }
+
+  let tentativas = 0;
+  const maxTentativas = 3;
+
+  function drop(e) {
+    e.preventDefault();
+    const numero = e.dataTransfer.getData("text/plain");
+    const alvo = e.currentTarget;
+    const elementoArrastado = [...document.querySelectorAll(".numero")].find(
+      (n) => n.dataset.valor === numero
+    );
+    if (!elementoArrastado) return;
+
+    const valorEsperado = valores[alvo.dataset.role];
+    const valorSolto = parseInt(numero);
+
+    if (valorEsperado === valorSolto) {
+      const anterior = alvo.querySelector(".numero");
+      if (anterior) document.getElementById("drag-area").appendChild(anterior);
+      alvo.appendChild(elementoArrastado);
+    } else {
+      tentativas++;
+      const somErro = document.getElementById("erro-som");
+      somErro.currentTime = 0;
+      somErro.play();
+
+      alvo.classList.add("erro");
+      setTimeout(() => {
+        alvo.classList.remove("erro");
+      }, 500);
+
+      if (tentativas >= maxTentativas) {
+        document.getElementById("iframe-container").style.display = "block";
       }
+    }
 
-      const valores = {};
-      roles.forEach((role, i) => {
-        valores[role] = sorteados[i];
-        document.getElementById(role).innerText = romanoMap[sorteados[i] - 10];
-        document.getElementById(role + "2").innerText =
-          romanoMap[sorteados[i] - 10];
-      });
+    verificarVitoria();
+  }
 
-      document.getElementById("continue").addEventListener("click", () => {
-        document.getElementById("papiro").style.display = "none";
-        document.getElementById("segunda-carta").style.display = "flex";
-        iniciarJogo();
-      });
-
-      function iniciarJogo() {
-        const dragArea = document.getElementById("drag-area");
-        const dropArea = document.getElementById("drop-area");
-        const numerosEmbaralhados = [...Object.values(valores)].sort(
-          () => Math.random() - 0.5
-        );
-
-        numerosEmbaralhados.forEach((num) => {
-          const div = document.createElement("div");
-          div.className = "numero";
-          div.draggable = true;
-          div.innerText = num;
-          div.dataset.valor = num;
-          div.addEventListener("dragstart", dragStart);
-          dragArea.appendChild(div);
-        });
-
-        roles.forEach((role) => {
-          const alvo = document.createElement("div");
-          alvo.className = "alvo";
-          alvo.dataset.role = role;
-          alvo.innerText = role.charAt(0).toUpperCase() + role.slice(1);
-          alvo.addEventListener("dragover", dragOver);
-          alvo.addEventListener("drop", drop);
-          dropArea.appendChild(alvo);
-        });
-      }
-
-      function dragStart(e) {
-        e.dataTransfer.setData("text/plain", e.target.dataset.valor);
-      }
-
-      function dragOver(e) {
-        e.preventDefault();
-      }
-
-      let tentativas = 0;
-      const maxTentativas = 3;
-
-      function drop(e) {
-        e.preventDefault();
-        const numero = parseInt(e.dataTransfer.getData("text/plain"));
-        const alvo = e.currentTarget;
-        const esperado = valores[alvo.dataset.role];
-
-        const elemento = [...document.querySelectorAll(".numero")].find(
-          (el) => parseInt(el.dataset.valor) === numero
-        );
-
-        if (!elemento) return;
-
-        if (numero === esperado) {
-          alvo.innerText = "";
-          alvo.appendChild(elemento);
-        } else {
-          tentativas++;
-          document.getElementById("erro-som").play();
-          alvo.classList.add("erro");
-          setTimeout(() => alvo.classList.remove("erro"), 500);
-          if (tentativas >= maxTentativas) {
-            document.getElementById("iframe-container").style.display = "block";
-          }
-        }
-
-        verificarVitoria();
-      }
-      function verificarVitoria() {
+function verificarVitoria() {
         const alvos = document.querySelectorAll(".alvo");
         const completos = [...alvos].filter((alvo) =>
           alvo.querySelector(".numero")
@@ -493,6 +415,7 @@
           document.getElementById("iframe-next").style.display = "block";
         }
       }
-    </script>
+</script>
+
   </body>
 </html>
