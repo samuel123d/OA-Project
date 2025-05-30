@@ -213,7 +213,9 @@
   <div id="game-over-overlay" class="iframe-container">
     <iframe src="gameover-papiro.html"></iframe>
   </div>
-
+ <div id="victory-overlay" class="iframe-container">
+  <iframe src="final-end.html"></iframe>
+</div>
   <script>
     const correctSound = document.getElementById('correct-sound');
     const wrongSound = document.getElementById('wrong-sound');
@@ -386,7 +388,7 @@
           currentLevel++;
           setTimeout(initGame, 1500);
         } else {
-          alert('Você venceu o jogo!');
+          document.getElementById('victory-overlay').style.display = 'flex';
         }
       }
     }
