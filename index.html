@@ -1,139 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batalha de Algarismos</title>
-    <link rel="shortcut icon" type="image/x-icon" href="oficial-icon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jogo</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-     
-    
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .lado-esquerdo {
+      width: 50%;
+      background: url('final-final.png') no-repeat center center;
+      background-size: cover;
+      
+    }
+
+    .separador {
+      width: 4px;
+      background: linear-gradient(to bottom, #333, #aaa, #333);
+    }
+
+    .lado-direito {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    }
+
+    .mensagem {
+      text-align: center;
+      background-color: #ffffffcc;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      animation: aparecer 1s ease-out forwards;
+      max-width: 500px;
+    }
+
+    .mensagem h1 {
+      font-size: 3em;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .mensagem h3 {
+      font-size: 1.5em;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .botoes {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .botao {
+      padding: 12px 24px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: #3498db;
+      color: white;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+
+    .botao:hover {
+      background-color: #2980b9;
+      transform: scale(1.05);
+    }
+
+    .botao.voltar {
+      background-color: #95a5a6;
+    }
+
+    .botao.voltar:hover {
+      background-color: #7f8c8d;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="background">
-        <br>
-        <h1>Batalha dos Números: A Missão de Rahin </h1>
-        <br>
-        <div class="buttons">
-            <button id="startGame" href="historia.html">Iniciar Jogo</button>
-            <button id="showCredits">Créditos</button>
-        </div>
-        <button id="toggleMusic" class="toggle-music">&#x1F50A;</button> <!-- Botão de música -->
+  <div class="lado-esquerdo"></div>
+  <div class="separador"></div>
+  <div class="lado-direito">
+      <div class="botoes">
+        
+         <button class="botao voltar" onclick="window.top.location.href = './sabio.html'; ">Voltar</button>
+        <button class="botao" onclick="window.top.location.href='./index_game.html'">Próxima fase</button>
+        
+      </div>
     </div>
+  </div>
 
-    <audio id="backgroundMusic" src="./Dying Light Music of Suffering Theme - Angry Tiger.mp3"></audio>
 
-    <script src="script.js"></script>
 </body>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Papyrus&display=swap');
-
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 130vh;
-    background-image: url('./best-groud.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-h1 {
-    font-family: 'Papyrus', sans-serif;
-    color: #050603;
-    font-size: 48px;
-    font-weight: bold;
-    margin-left: 80px;
-    top: 20px;
-    background-color:  rgba(128, 72, 29, 0.7);
-    display: inline;
-    border-radius: 6px;
-    position: relative;
-}
-
-.buttons {
-    margin-top: 70px;
-}
-
-button {
-    font-family: 'Papyrus', sans-serif;
-    font-size: 24px;
-    color: #050603;
-    background-color: rgba(128, 72, 29, 0.7) ;
-    border-radius: 6px;
-    padding: 10px 20px;
-    margin: 10px 0;
-    cursor: pointer;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin-left: 80px;
-    font-style: bold;
-}
-
-button:hover {
-    background-color: rgba(255, 69, 0, .7);
-}
-
-.toggle-music {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 24px;
-    color: #D2691E;
-    background-color: rgba(255, 69, 0, .5);
-    border: none;
-    border-radius: 6px;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.toggle-music:hover {
-    background-color: rgba(255, 69, 0, .7);
-}
-</style>
-
-<script>
-// Removido o efeito de movimento do fundo
-
-document.getElementById('showCredits').addEventListener('click', function() {
-    alert('Créditos: Desenvolvido por [Seu Nome]');
-});
-
-const toggleMusicButton = document.getElementById('toggleMusic');
-const backgroundMusic = document.getElementById('backgroundMusic');
-
-toggleMusicButton.addEventListener('click', function() {
-    if (backgroundMusic.paused) {
-        backgroundMusic.play();
-        toggleMusicButton.innerHTML = ' &#x1F50A;';
-    } else {
-        backgroundMusic.pause();
-        backgroundMusic.currentTime = 0;
-        toggleMusicButton.innerHTML = '&#x1F507;';
-    }
-});
-
-document.getElementById('startGame').addEventListener('click', function(event) {
-    event.preventDefault();
-    window.location.href = this.getAttribute('href');
-});
-
-window.history.pushState(null, null, window.location.href);
-window.onpopstate = function() {
-    window.history.go(1);
-};
-</script>
-
 </html>
