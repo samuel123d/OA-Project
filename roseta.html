@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rosetta Stone Interativa</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('ruinas.png') no-repeat center center;
+      background-size: cover;
+      background-attachment: fixed;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .rosetta-img {
+      width: 70vw;
+      max-width: 400px;
+      height: auto;
+      position: absolute;
+      bottom: 150px;
+      left: 40px; 
+    }
+    .menu-container {
+      position: absolute;
+      bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .menu-principal button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: bold;
+      background-color: #ffdd57;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .submenu {
+      display: none;
+      gap: 10px;
+    }
+    .submenu button {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      border-radius: 8px;
+      border: none;
+      background-color: #d4a94f;
+      cursor: pointer;
+      position: relative;
+    }
+    .submenu button.completed::after {
+      content: "✓";
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: green;
+      color: white;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 600px;
+      background-color: #f4f1e5;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      z-index: 10;
+    }
+    .modal h2 {
+      margin-top: 0;
+    }
+    .modal img,
+    .modal video {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .quiz-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 15px;
+    }
+    .draggable {
+      padding: 10px;
+      background-color: #ffdd57;
+      border-radius: 8px;
+      cursor: grab;
+      font-weight: bold;
+      margin: 5px;
+    }
+    .dropzone {
+      width: 200px;
+      height: 50px;
+      border: 2px dashed #d4a94f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+    .ler-papiro-btn.disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+      position: relative;
+    }
+    .ler-papiro-btn.disabled:hover::after {
+      content: "Complete todos os módulos de aprendizado para desbloquear";
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+    .ler-papiro-btn.enabled {
+      background-color: #ffdd57;
+      animation: pulse 2s infinite;
+      cursor: pointer;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 221, 87, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 221, 87, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 221, 87, 0); }
+    }
+    .progress-container {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .progress-item {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+    }
+    .progress-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #ddd;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: white;
+    }
+    .progress-check.completed {
+      background-color: green;
+    }
+    .feedback-message {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ff4444;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      z-index: 100;
+      display: none;
+    }
+    .exit-iframe {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .exit-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      text-align: center;
+    }
+    .exit-content button {
+      margin: 10px;
+      padding: 8px 15px;
+      cursor: pointer;
+    }
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      color: white;
+      font-family: 'Georgia', serif;
+      text-align: center;
+      flex-direction: column;
+    }
+    .intro-dialog {
+      max-width: 600px;
+      padding: 20px;
+      background-color: rgba(30, 30, 30, 0.9);
+      border-radius: 10px;
+      border: 1px solid #d4a94f;
+      box-shadow: 0 0 20px rgba(212, 169, 79, 0.5);
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .intro-title {
+      color: #d4a94f;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    .intro-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .intro-btn {
+      background-color: #d4a94f;
+      color: black;
+      border: none;
+      padding: 10px 25px;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .intro-btn:hover {
+      background-color: #ffdd57;
+      transform: scale(1.05);
+    }
+    .fade-out {
+      animation: fadeOut 1s forwards;
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; visibility: hidden; }
+    }
+    .tutorial-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #d4a94f;
+      color: black;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .tutorial-panel {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 380px;
+      height: 100vh;
+      background-color: #f4f1e5;
+      z-index: 1000;
+      transition: left 0.3s ease;
+      overflow-y: auto;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    .tutorial-panel.open {
+      left: 0;
+    }
+    .tutorial-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #d4a94f;
+      padding-bottom: 10px;
+    }
+    .tutorial-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+    .tutorial-section {
+      margin-bottom: 25px;
+    }
+    .tutorial-section h3 {
+      color: #8a6d3b;
+      margin-top: 0;
+      border-bottom: 1px solid #d4a94f;
+      padding-bottom: 5px;
+    }
+    .tutorial-img {
+      max-width: 100%;
+      border: 1px solid #d4a94f;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .tutorial-note {
+      background-color: #ffdd57;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-style: italic;
+    }
+    .tutorial-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+    .tutorial-overlay.open {
+      display: block;
+    }
+    @media (max-width: 500px) {
+      .tutorial-panel {
+        width: 90%;
+        left: -100%;
+      }
+      .tutorial-panel.open {
+        left: 0;
+      }
+    }
+    .lupa-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 5;
+  }
+  
+  .lupa-icon {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 221, 87, 0.8);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    cursor: none;
+    position: relative;
+  }
+  
+  .lupa-glass {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid #d4a94f;
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  .lupa-tooltip {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  
+  .lupa-icon:hover .lupa-tooltip {
+    opacity: 1;
+  }
+  
+  .zoom-preview {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border: 5px solid #d4a94f;
+    border-radius: 10px;
+    background-color: #f4f1e5;
+    overflow: hidden;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    pointer-events: none;
+  }
+  
+  .zoom-preview-img {
+    position: absolute;
+    max-width: none;
+  }
+  
+  .lupa-message {
+    position: absolute;
+    bottom: 170px;
+    left: 120px;
+    background-color: rgba(255, 221, 87, 0.9);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    max-width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    animation: pulse 2s infinite;
+    display: none;
+  }body.lupa-active {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') 12 12, auto;
+}
+
+.lupa-instruction {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 1001;
+  display: none;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+body.lupa-active {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') 12 12, auto;
+}
+
+.lupa-instruction {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 1001;
+  display: none;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+  </style>
+</head>
+<body>
+<!-- Adicione isso após o zoom-preview -->
+<div class="lupa-instruction" id="lupaInstruction">
+  Pressione ESC para sair do modo lupa
+</div>
+  <!-- Diálogo Inicial Simplificado -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-dialog">
+      <div class="intro-title">Rahin e a Pedra de Rosetta</div>
+      <div class="intro-text">
+        *Rahin, você encontrou a lendária Pedra de Rosetta Romana! Decifre os números antigos para salvar seu povo da guerra iminente...*
+      </div>
+      <button class="intro-btn" id="nextBtn">Começar Jornada</button>
+    </div>
+  </div>
+<div class="lupa-container" id="lupaContainer">
+  <div class="lupa-icon" id="lupaIcon">
+    <div class="lupa-glass"></div>
+    🔍
+    <span class="lupa-tooltip">Passe sobre a Rosetta para examinar</span>
+  </div>
+  <div class="lupa-message" id="lupaMessage">
+    Use a lupa para examinar detalhes da Pedra de Rosetta!
+  </div>
+</div>
+
+<div class="zoom-preview" id="zoomPreview">
+  <img class="zoom-preview-img" id="zoomPreviewImg" src="roseta.png">
+</div>
+
+  <!-- Botão do Tutorial -->
+  <button class="tutorial-btn" id="tutorialBtn">?</button>
+  
+  <!-- Painel do Tutorial -->
+  <div class="tutorial-panel" id="tutorialPanel">
+    <div class="tutorial-header">
+      <h2>Tutorial Completo</h2>
+      <button class="tutorial-close" id="tutorialClose">&times;</button>
+    </div>
+    
+    <div class="tutorial-section">
+      <h3>Como Jogar</h3>
+      <p>Você está prestes a decifrar os segredos dos números romanos para salvar seu povo!</p>
+      <img src="roseta.png" class="tutorial-img" alt="Pedra Rosetta">
+      <ol>
+        <li>Explore os 3 módulos de aprendizado no menu "Aprender"</li>
+        <li>Complete os quizzes arrastando a resposta correta para a área indicada</li>
+        <li>Desbloqueie o papiro final após completar todos os módulos</li>
+      </ol>
+    </div>
+    
+    <div class="tutorial-section">
+      <h3>Regras dos Números Romanos</h3>
+      <h4>1. Regras da Soma</h4>
+      <p>Quando um símbolo menor aparece <strong>depois</strong> de um maior, some seus valores:</p>
+      <img src="soma-exemplo.jpg" class="tutorial-img" alt="Exemplo Soma">
+      <p>VI = 5 + 1 = 6<br>XII = 10 + 1 + 1 = 12</p>
+      
+      <h4>2. Regras da Subtração</h4>
+      <p>Quando um símbolo menor aparece <strong>antes</strong> de um maior, subtraia:</p>
+      <img src="subtracao-exemplo.gif" class="tutorial-img" alt="Exemplo Subtração">
+      <p>IV = 5 - 1 = 4<br>IX = 10 - 1 = 9</p>
+      
+      <h4>3. Formando Números</h4>
+      <p>Combine as regras para formar qualquer número:</p>
+      <img src="formando-numeros.jpg" class="tutorial-img" alt="Exemplo Formação">
+      <p>XIX = 10 + (10 - 1) = 19<br>XLII = (50 - 10) + 1 + 1 = 42</p>
+      <div class="tutorial-section">
+        <div class="tutorial-note">
+        <strong>Lembre-se:</strong> Símbolos I, X, C e M podem repetir até 3 vezes. V, L e D não se repetem!
+      </div>
+    </div>
+  <h3>Ferramenta de Lupa</h3>
+  <img src="lupa-exemplo.jpg" class="tutorial-img" alt="Exemplo de uso da lupa">
+  <p><strong>Como usar:</strong></p>
+  <ol>
+    <li>Clique no ícone da lupa no canto inferior esquerdo para ativar</li>
+    <li>O cursor se transformará em uma lupa de aumento</li>
+    <li>Passe o mouse sobre a Pedra de Rosetta para examinar detalhes</li>
+    <li>Pressione ESC ou clique novamente na lupa para desativar</li>
+  </ol>
+  <div class="tutorial-note">
+    <strong>Dica:</strong> Use a lupa para encontrar detalhes ocultos e inscrições pequenas na pedra!
+  </div>
+</div>
+      
+    
+    <div class="tutorial-section">
+      <h3>Controles e Interface</h3>
+      <img src="interface-exemplo.jpg" class="tutorial-img" alt="Exemplo Interface">
+      <p><strong>Menu Aprender:</strong> Acesse todos os módulos de aprendizado</p>
+      <p><strong>Progresso:</strong> Acompanhe quais módulos você já completou</p>
+      <p><strong>Papiro:</strong> Só será liberado após dominar todos os conceitos</p>
+    </div>
+  </div>
+  
+  <div class="tutorial-overlay" id="tutorialOverlay"></div>
+
+  <div class="exit-iframe" id="exit-iframe">
+    <div class="exit-content">
+      <h3>Você ainda não completou este módulo!</h3>
+      <p id="exit-message"></p>
+      <div>
+        <button onclick="continueLearning()">Continuar Aprendendo</button>
+        <button onclick="forceCloseModal()">Sair mesmo assim</button>
+      </div>
+    </div>
+  </div>
+
+  <img src="roseta.png" class="rosetta-img" alt="Rosetta Stone" />
+
+  <div class="progress-container">
+    <h3>Seu Progresso:</h3>
+    <div class="progress-item">
+      <div class="progress-check" id="progress-soma">?</div>
+      <span>Regras da Soma</span>
+    </div>
+    <div class="progress-item">
+      <div class="progress-check" id="progress-subtracao">?</div>
+      <span>Regras da Subtração</span>
+    </div>
+    <div class="progress-item">
+      <div class="progress-check" id="progress-formacao">?</div>
+      <span>Formando Números</span>
+    </div>
+  </div>
+
+  <div class="feedback-message" id="feedback-message"></div>
+
+  <div class="menu-container">
+    <div class="menu-principal">
+      <button onclick="toggleSubmenu()">Aprender</button>
+      <button id="lerPapiroBtn" class="ler-papiro-btn disabled" onclick="verificarAcessoPapiro()">Ler Papiro</button>
+    </div>
+    <div class="submenu" id="submenu">
+      <button onclick="abrirModal('soma')" id="btn-soma">Regras da Soma</button>
+      <button onclick="abrirModal('subtracao')" id="btn-subtracao">Regras da Subtração</button>
+      <button onclick="abrirModal('formacao')" id="btn-formacao">Formando Números</button>
+    </div>
+  </div>
+
+  <!-- Modal Regras da Soma com Quiz -->
+  <div class="modal" id="modal-soma">
+    <button class="close-btn" onclick="prepareToClose('soma')">X</button>
+    <h2>Regras da Soma</h2>
+    <p>Na numeração romana, quando um símbolo de menor valor aparece após um símbolo de maior valor, seus valores são somados. Exemplo: VI = V (5) + I (1) = 6.</p>
+    <p>Outros exemplos: XII = X (10) + I (1) + I (1) = 12, LX = L (50) + X (10) = 60.</p>
+    <img src="soma-exemplo.jpg" alt="Exemplo de soma">
+    <video controls src="soma-explicacao.mp4"></video>
+    <div class="quiz-container" id="quiz-soma">
+      <h3>Arraste a resposta correta:</h3>
+      <div id="question-text-soma"></div>
+      <div class="options" id="options-soma"></div>
+      <div class="dropzone" id="dropzone-soma">Solte aqui</div>
+    </div>
+  </div>
+  <div class="lupa-instruction" id="lupaInstruction">
+  Pressione ESC para sair do modo lupa
+</div>
+
+  <!-- Modal Regras da Subtração com Quiz -->
+  <div class="modal" id="modal-subtracao">
+    <button class="close-btn" onclick="prepareToClose('subtracao')">X</button>
+    <h2>Regras da Subtração</h2>
+    <p>Quando um símbolo de menor valor aparece antes de um símbolo de maior valor, seu valor é subtraído. Exemplo: IV = V (5) - I (1) = 4.</p>
+    <p>Esta regra se aplica apenas aos pares: I antes de V ou X, X antes de L ou C, C antes de D ou M.</p>
+    <p>Outros exemplos: IX = X (10) - I (1) = 9, XC = C (100) - X (10) = 90.</p>
+    <img src="subtracao-exemplo.gif" alt="Exemplo de subtração">
+    <video controls src="subtracao-explicacao.mp4"></video>
+    <div class="quiz-container" id="quiz-subtracao">
+      <h3>Arraste a resposta correta:</h3>
+      <div id="question-text-subtracao"></div>
+      <div class="options" id="options-subtracao"></div>
+      <div class="dropzone" id="dropzone-subtracao">Solte aqui</div>
+    </div>
+  </div>
+
+  <!-- Modal Formação de Números com Quiz -->
+  <div class="modal" id="modal-formacao">
+    <button class="close-btn" onclick="prepareToClose('formacao')">X</button>
+    <h2>Formando Números</h2>
+    <p>Combinando as regras de soma e subtração, podemos formar qualquer número romano. Algumas regras importantes:</p>
+    <ul>
+      <li>Os símbolos I, X, C e M podem ser repetidos até três vezes seguidas (III = 3, XXX = 30, CC = 200)</li>
+      <li>Os símbolos V, L e D não podem ser repetidos</li>
+      <li>Exemplo: XIX = X (10) + IX (9) = 19, XLII = XL (40) + II (2) = 42</li>
+    </ul>
+    <img src="formando-numeros.jpg" alt="Exemplo de formação">
+    <video controls src="formacao-explicacao.mp4"></video>
+    <div class="quiz-container" id="quiz-formacao">
+      <h3>Arraste a resposta correta:</h3>
+      <div id="question-text-formacao"></div>
+      <div class="options" id="options-formacao"></div>
+      <div class="dropzone" id="dropzone-formacao">Solte aqui</div>
+    </div>
+  </div>
+
+  <script>
+    // Variáveis globais para controle dos quizzes e progresso
+    let quizSolvedSoma = false, quizSolvedSubtracao = false, quizSolvedFormacao = false;
+    let currentAnswerSoma = "", currentAnswerSubtracao = "", currentAnswerFormacao = "";
+    const lerPapiroBtn = document.getElementById('lerPapiroBtn');
+    let currentModalToClose = null;
+    const modalTypes = ['soma', 'subtracao', 'formacao'];
+
+    // Diálogo inicial simplificado
+    const introOverlay = document.getElementById('introOverlay');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    nextBtn.addEventListener('click', () => {
+      introOverlay.classList.add('fade-out');
+      setTimeout(() => {
+        introOverlay.style.display = 'none';
+      }, 1000);
+    });
+
+    // Controle do Tutorial
+    const tutorialBtn = document.getElementById('tutorialBtn');
+    const tutorialPanel = document.getElementById('tutorialPanel');
+    const tutorialOverlay = document.getElementById('tutorialOverlay');
+    const tutorialClose = document.getElementById('tutorialClose');
+    
+    tutorialBtn.addEventListener('click', () => {
+      tutorialPanel.classList.add('open');
+      tutorialOverlay.classList.add('open');
+    });
+    
+    tutorialClose.addEventListener('click', () => {
+      tutorialPanel.classList.remove('open');
+      tutorialOverlay.classList.remove('open');
+    });
+    
+    tutorialOverlay.addEventListener('click', () => {
+      tutorialPanel.classList.remove('open');
+      tutorialOverlay.classList.remove('open');
+    });
+
+    // Atualiza o visual do progresso
+    function updateProgressVisual() {
+      const progressSoma = document.getElementById('progress-soma');
+      const progressSubtracao = document.getElementById('progress-subtracao');
+      const progressFormacao = document.getElementById('progress-formacao');
+      
+      progressSoma.textContent = quizSolvedSoma ? "✓" : "?";
+      progressSoma.className = quizSolvedSoma ? "progress-check completed" : "progress-check";
+      
+      progressSubtracao.textContent = quizSolvedSubtracao ? "✓" : "?";
+      progressSubtracao.className = quizSolvedSubtracao ? "progress-check completed" : "progress-check";
+      
+      progressFormacao.textContent = quizSolvedFormacao ? "✓" : "?";
+      progressFormacao.className = quizSolvedFormacao ? "progress-check completed" : "progress-check";
+
+      // Atualiza os botões do submenu
+      document.getElementById('btn-soma').className = quizSolvedSoma ? "completed" : "";
+      document.getElementById('btn-subtracao').className = quizSolvedSubtracao ? "completed" : "";
+      document.getElementById('btn-formacao').className = quizSolvedFormacao ? "completed" : "";
+    }
+
+    function toggleSubmenu() {
+      const submenu = document.getElementById('submenu');
+      submenu.style.display = submenu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function abrirModal(tipo) {
+      document.getElementById(`modal-${tipo}`).style.display = 'block';
+      if (tipo === 'soma') {
+        quizSolvedSoma = false;
+        setupQuizForModal("soma");
+      } else if (tipo === 'subtracao') {
+        quizSolvedSubtracao = false;
+        setupQuizForModal("subtracao");
+      } else if (tipo === 'formacao') {
+        quizSolvedFormacao = false;
+        setupQuizForModal("formacao");
+      }
+      updateProgressVisual();
+    }
+
+    function prepareToClose(tipo) {
+      currentModalToClose = tipo;
+      
+      if ((tipo === 'soma' && quizSolvedSoma) || 
+          (tipo === 'subtracao' && quizSolvedSubtracao) || 
+          (tipo === 'formacao' && quizSolvedFormacao)) {
+        fecharModal(tipo);
+        return;
+      }
+      
+      // Mostra o iframe de confirmação
+      const exitIframe = document.getElementById('exit-iframe');
+      const exitMessage = document.getElementById('exit-message');
+      
+      let missingModules = [];
+      if (tipo === 'soma' && !quizSolvedSoma) missingModules.push("Regras da Soma");
+      if (tipo === 'subtracao' && !quizSolvedSubtracao) missingModules.push("Regras da Subtração");
+      if (tipo === 'formacao' && !quizSolvedFormacao) missingModules.push("Formando Números");
+      
+      exitMessage.textContent = `Você ainda não completou o quiz de ${missingModules.join(" e ")}. Deseja sair mesmo assim?`;
+      exitIframe.style.display = 'flex';
+    }
+
+    function continueLearning() {
+      document.getElementById('exit-iframe').style.display = 'none';
+      showFeedback(`Complete o quiz para continuar!`, 'warning');
+    }
+
+    function forceCloseModal() {
+      document.getElementById('exit-iframe').style.display = 'none';
+      fecharModal(currentModalToClose);
+    }
+
+    function fecharModal(tipo) {
+      document.getElementById(`modal-${tipo}`).style.display = 'none';
+      verificarProgresso();
+    }
+
+    function verificarProgresso() {
+      if (quizSolvedSoma && quizSolvedSubtracao && quizSolvedFormacao) {
+        lerPapiroBtn.classList.remove('disabled');
+        lerPapiroBtn.classList.add('enabled');
+        showFeedback("Parabéns! Você completou todos os módulos. Agora pode ler o papiro!", 'success');
+      } else {
+        const missing = [];
+        if (!quizSolvedSoma) missing.push("Regras da Soma");
+        if (!quizSolvedSubtracao) missing.push("Regras da Subtração");
+        if (!quizSolvedFormacao) missing.push("Formando Números");
+        
+        showFeedback(`Você ainda precisa completar: ${missing.join(", ")}`, 'info');
+      }
+      updateProgressVisual();
+    }
+
+    function verificarAcessoPapiro() {
+      if (lerPapiroBtn.classList.contains('disabled')) {
+        const missing = [];
+        if (!quizSolvedSoma) missing.push("Regras da Soma");
+        if (!quizSolvedSubtracao) missing.push("Regras da Subtração");
+        if (!quizSolvedFormacao) missing.push("Formando Números");
+        
+        showFeedback(`Complete estes módulos primeiro: ${missing.join(", ")}`, 'error');
+        return false;
+      } else {
+        window.location.href = 'papiro.html';
+      }
+    }
+
+    function showFeedback(message, type) {
+      const feedback = document.getElementById('feedback-message');
+      feedback.textContent = message;
+      feedback.style.display = 'block';
+      
+      // Define a cor baseada no tipo
+      if (type === 'error') {
+        feedback.style.backgroundColor = '#ff4444';
+      } else if (type === 'success') {
+        feedback.style.backgroundColor = '#4CAF50';
+      } else if (type === 'warning') {
+        feedback.style.backgroundColor = '#ff9800';
+      } else {
+        feedback.style.backgroundColor = '#2196F3';
+      }
+      
+      setTimeout(() => {
+        feedback.style.display = 'none';
+      }, 3000);
+    }
+
+    // Quizzes para cada modal
+    const quizSoma = [
+      { question: "Qual é o valor de VI?", options: ["4", "6", "5"], answer: "6" },
+      { question: "Qual é o valor de XII?", options: ["10", "12", "11"], answer: "12" },
+      { question: "Qual é o valor de LX?", options: ["40", "60", "50"], answer: "60" }
+    ];
+
+    const quizSubtracao = [
+      { question: "Qual é o valor de IV?", options: ["4", "6", "5"], answer: "4" },
+      { question: "Qual é o valor de IX?", options: ["9", "11", "10"], answer: "9" },
+      { question: "Qual é o valor de XL?", options: ["40", "60", "50"], answer: "40" }
+    ];
+
+    const quizFormacao = [
+      { question: "Qual é o valor de XIX?", options: ["19", "21", "20"], answer: "19" },
+      { question: "Qual é o valor de XLII?", options: ["42", "62", "52"], answer: "42" },
+      { question: "Qual é o valor de XCIV?", options: ["94", "104", "114"], answer: "94" }
+    ];
+
+    // Função para randomizar o quiz conforme o modal
+    function randomizeQuiz(modalType) {
+      let quiz, questionElem, optionsContainer, dropzone;
+      if (modalType === "soma") {
+        quiz = quizSoma;
+        questionElem = document.getElementById("question-text-soma");
+        optionsContainer = document.getElementById("options-soma");
+        dropzone = document.getElementById("dropzone-soma");
+      } else if (modalType === "subtracao") {
+        quiz = quizSubtracao;
+        questionElem = document.getElementById("question-text-subtracao");
+        optionsContainer = document.getElementById("options-subtracao");
+        dropzone = document.getElementById("dropzone-subtracao");
+      } else if (modalType === "formacao") {
+        quiz = quizFormacao;
+        questionElem = document.getElementById("question-text-formacao");
+        optionsContainer = document.getElementById("options-formacao");
+        dropzone = document.getElementById("dropzone-formacao");
+      }
+      
+      const randomIndex = Math.floor(Math.random() * quiz.length);
+      const question = quiz[randomIndex];
+      if (questionElem) questionElem.innerText = question.question;
+      optionsContainer.innerHTML = "";
+      
+      // Embaralhar as opções
+      const shuffledOptions = [...question.options].sort(() => Math.random() - 0.5);
+      
+      shuffledOptions.forEach(option => {
+        const div = document.createElement("div");
+        div.classList.add("draggable");
+        div.setAttribute("draggable", "true");
+        div.innerText = option;
+        optionsContainer.appendChild(div);
+      });
+      
+      dropzone.innerText = "Solte aqui";
+      dropzone.style.pointerEvents = "auto";
+      
+      // Adiciona os eventos dragstart para as novas opções
+      const draggables = optionsContainer.querySelectorAll(".draggable");
+      draggables.forEach(item => {
+        item.addEventListener("dragstart", (event) => {
+          event.dataTransfer.setData("text/plain", event.target.innerText);
+        });
+      });
+      
+      // Atualiza a resposta correta conforme o modal
+      if (modalType === "soma") {
+        currentAnswerSoma = question.answer;
+      } else if (modalType === "subtracao") {
+        currentAnswerSubtracao = question.answer;
+      } else if (modalType === "formacao") {
+        currentAnswerFormacao = question.answer;
+      }
+    }
+    // Configuração da Lupa - Versão Completa
+    const lupaIcon = document.getElementById('lupaIcon');
+    const zoomPreview = document.getElementById('zoomPreview');
+    const zoomPreviewImg = document.getElementById('zoomPreviewImg');
+    const lupaMessage = document.getElementById('lupaMessage');
+    const lupaInstruction = document.getElementById('lupaInstruction');
+    const rosettaImg = document.querySelector('.rosetta-img');
+    let lupaActive = false;
+    let lupaUsed = false;
+
+    // Configurações do zoom
+    const zoomFactor = 2.5;
+    const previewSize = 300;
+    const offsetX = 120;
+    const offsetY = 40;
+
+    // Mostrar mensagem da lupa apenas na primeira vez
+    if (!sessionStorage.getItem('lupaShown')) {
+      setTimeout(() => {
+        lupaMessage.style.display = 'block';
+        sessionStorage.setItem('lupaShown', 'true');
+      }, 3000);
+      
+      setTimeout(() => {
+        lupaMessage.style.display = 'none';
+      }, 10000);
+    }
+
+    // Ativar/desativar lupa
+    lupaIcon.addEventListener('click', toggleLupa);
+
+    function toggleLupa() {
+      lupaActive = !lupaActive;
+      
+      // Ativa/desativa visualmente
+      if (lupaActive) {
+        zoomPreview.style.opacity = '1';
+        zoomPreview.style.display = 'block';
+        document.body.classList.add('lupa-active');
+        
+        // Mostrar instrução
+        lupaInstruction.style.display = 'block';
+        setTimeout(() => {
+          lupaInstruction.style.display = 'none';
+        }, 3000);
+        
+        lupaUsed = true;
+        lupaMessage.style.display = 'none';
+      } else {
+        zoomPreview.style.opacity = '0';
+        setTimeout(() => {
+          zoomPreview.style.display = 'none';
+        }, 300);
+        document.body.classList.remove('lupa-active');
+        
+        // Feedback ao desativar
+        lupaInstruction.textContent = 'Modo lupa desativado';
+        lupaInstruction.style.display = 'block';
+        setTimeout(() => {
+          lupaInstruction.style.display = 'none';
+        }, 2000);
+      }
+    }
+
+    // Mover a lupa pela tela
+    document.addEventListener('mousemove', (e) => {
+      if (!lupaActive) return;
+      
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      
+      // Posiciona o preview da lupa
+      zoomPreview.style.left = (mouseX + 20) + 'px';
+      zoomPreview.style.top = (mouseY + 20) + 'px';
+      
+      // Calcula a posição relativa na imagem da Rosetta
+      const rosettaRect = rosettaImg.getBoundingClientRect();
+      const relX = mouseX - rosettaRect.left;
+      const relY = mouseY - rosettaRect.top;
+      
+      // Verifica se o mouse está sobre a Rosetta
+      if (relX > 0 && relX < rosettaRect.width && 
+          relY > 0 && relY < rosettaRect.height) {
+        // Calcula a posição do zoom
+        const zoomX = -relX * zoomFactor + previewSize/2;
+        const zoomY = -relY * zoomFactor + previewSize/2;
+        
+        // Aplica o zoom
+        zoomPreviewImg.style.width = (rosettaRect.width * zoomFactor) + 'px';
+        zoomPreviewImg.style.height = (rosettaRect.height * zoomFactor) + 'px';
+        zoomPreviewImg.style.left = zoomX + 'px';
+        zoomPreviewImg.style.top = zoomY + 'px';
+      }
+    });
+
+    // Fechar lupa com ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lupaActive) {
+        toggleLupa();
+      }
+    });
+
+    // Função para configurar o quiz com drag & drop para cada modal
+    function setupQuizForModal(modalType) {
+      let dropzone;
+      if (modalType === "soma") {
+        dropzone = document.getElementById("dropzone-soma");
+        randomizeQuiz("soma");
+        quizSolvedSoma = false;
+      } else if (modalType === "subtracao") {
+        dropzone = document.getElementById("dropzone-subtracao");
+        randomizeQuiz("subtracao");
+        quizSolvedSubtracao = false;
+      } else if (modalType === "formacao") {
+        dropzone = document.getElementById("dropzone-formacao");
+        randomizeQuiz("formacao");
+        quizSolvedFormacao = false;
+      }
+      
+      // Para evitar múltiplos listeners, substituímos a dropzone por um clone novo
+      let newDropzone = dropzone.cloneNode(true);
+      dropzone.parentNode.replaceChild(newDropzone, dropzone);
+      
+      newDropzone.addEventListener("dragover", (event) => {
+        event.preventDefault();
+      });
+      
+      newDropzone.addEventListener("drop", (event) => {
+        event.preventDefault();
+        const dropped = event.dataTransfer.getData("text/plain").trim();
+        
+        if (modalType === "soma") {
+          if (dropped === currentAnswerSoma) {
+            newDropzone.innerText = "Correto!";
+            quizSolvedSoma = true;
+            newDropzone.style.pointerEvents = "none";
+            showFeedback("Resposta correta! Você completou este módulo.", 'success');
+          } else {
+            newDropzone.innerText = "Errado, tente novamente!";
+            showFeedback("Tente novamente!", 'error');
+            setTimeout(() => {
+              randomizeQuiz("soma");
+            }, 1000);
+          }
+        } else if (modalType === "subtracao") {
+          if (dropped === currentAnswerSubtracao) {
+            newDropzone.innerText = "Correto!";
+            quizSolvedSubtracao = true;
+            newDropzone.style.pointerEvents = "none";
+            showFeedback("Resposta correta! Você completou este módulo.", 'success');
+          } else {
+            newDropzone.innerText = "Errado, tente novamente!";
+            showFeedback("Tente novamente!", 'error');
+            setTimeout(() => {
+              randomizeQuiz("subtracao");
+            }, 1000);
+          }
+        } else if (modalType === "formacao") {
+          if (dropped === currentAnswerFormacao) {
+            newDropzone.innerText = "Correto!";
+            quizSolvedFormacao = true;
+            newDropzone.style.pointerEvents = "none";
+            showFeedback("Resposta correta! Você completou este módulo.", 'success');
+          } else {
+            newDropzone.innerText = "Errado, tente novamente!";
+            showFeedback("Tente novamente!", 'error');
+            setTimeout(() => {
+              randomizeQuiz("formacao");
+            }, 1000);
+          }
+        }
+        updateProgressVisual();
+        verificarProgresso();
+      });
+    }
+
+    // Inicializa o progresso visual
+    updateProgressVisual();
+  </script>
+</body>
+</html>
