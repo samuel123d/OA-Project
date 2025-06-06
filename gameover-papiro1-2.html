@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,20 @@
         .background {
             position: fixed;
             top: 0;
-            left: 0; /* Ajuste para colar a imagem na borda esquerda */
-            width: 100%; /* Ajuste para cobrir 100% da largura */
-            height: 100%; /* Ajuste para cobrir 100% da altura */
+            left: 0;
+            /* Ajuste para colar a imagem na borda esquerda */
+            width: 100%;
+            /* Ajuste para cobrir 100% da largura */
+            height: 130%;
+            /* Ajuste para cobrir 100% da altura */
             background-image: url('game-over-new.png');
-            background-size: cover; /* Ajusta a imagem para cobrir todo o fundo */
-            background-position: center; /* Centraliza a imagem */
-            background-repeat: no-repeat; /* Evita que a imagem se repita */
-            transition: transform 0.1s; 
+            background-size: cover;
+            /* Ajusta a imagem para cobrir todo o fundo */
+            background-position: center;
+            /* Centraliza a imagem */
+            background-repeat: no-repeat;
+            /* Evita que a imagem se repita */
+            transition: transform 0.1s;
         }
 
         .button-container {
@@ -51,23 +58,31 @@
         }
     </style>
 </head>
+
 <body>
     <div class="background"></div>
     <div class="button-container">
+        <!-- Adicionei id aos botões para referenciá-los no JavaScript -->
         <button id="startGame" class="button">Voltar para o Menu</button>
-        <button id="home" class="button">Tentar Novamente</button>
+        <button id="try" class="button">Tentar Novamente</button>
+        <button id="home" class="button">Voltar para Roseta</button>
     </div>
     <script>
         // Adicionando os eventos de clique aos botões
-        document.getElementById('startGame').addEventListener('click', function() {
+        document.getElementById('startGame').addEventListener('click', function () {
             // Navega para a página fora do iframe, fechando o iframe
             window.top.location.href = './index.html'; // O 'window.top' vai acessar a janela superior e redirecioná-la.
         });
-        
-        document.getElementById('home').addEventListener('click', function() {
+        document.getElementById('try').addEventListener('click', function () {
+            // Navega para a página fora do iframe, fechando o iframe
+            window.top.location.href = './papiro2.html'; // O 'window.top' vai acessar a janela superior e redirecioná-la.
+        });
+
+        document.getElementById('home').addEventListener('click', function () {
             // Navega para a página de tentar novamente fora do iframe
-            window.top.location.href = './index_game.html'; // O 'window.top' também é usado aqui.
+            window.top.location.href = './roseta.html'; // O 'window.top' também é usado aqui.
         });
     </script>
 </body>
+
 </html>
