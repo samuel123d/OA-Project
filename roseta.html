@@ -554,12 +554,12 @@ body.lupa-active {
     
     <div class="tutorial-section">
       <h3>Regras dos Números Romanos</h3>
-      <h4>1. Regras da Soma</h4>
+      <h4>1. Composição</h4>
       <p>Quando um símbolo menor aparece <strong>depois</strong> de um maior, some seus valores:</p>
       <img src="soma.png" class="tutorial-img" alt="Exemplo Soma">
       <p>VI = 5 + 1 = 6<br>XII = 10 + 1 + 1 = 12</p>
       
-      <h4>2. Regras da Subtração</h4>
+      <h4>2. Subtração</h4>
       <p>Quando um símbolo menor aparece <strong>antes</strong> de um maior, subtraia:</p>
       <img src="subtracao.png" class="tutorial-img" alt="Exemplo Subtração">
       <p>IV = 5 - 1 = 4<br>IX = 10 - 1 = 9</p>
@@ -616,11 +616,11 @@ body.lupa-active {
     <h3>Seu Progresso:</h3>
     <div class="progress-item">
       <div class="progress-check" id="progress-soma">?</div>
-      <span>Regras da Soma</span>
+      <span>Composição</span>
     </div>
     <div class="progress-item">
       <div class="progress-check" id="progress-subtracao">?</div>
-      <span>Regras da Subtração</span>
+      <span>Subtração</span>
     </div>
     <div class="progress-item">
       <div class="progress-check" id="progress-formacao">?</div>
@@ -636,8 +636,8 @@ body.lupa-active {
       <button id="lerPapiroBtn" class="ler-papiro-btn disabled" onclick="verificarAcessoPapiro()">Ler Papiro</button>
     </div>
     <div class="submenu" id="submenu">
-      <button onclick="abrirModal('soma')" id="btn-soma">Regras da Soma</button>
-      <button onclick="abrirModal('subtracao')" id="btn-subtracao">Regras da Subtração</button>
+      <button onclick="abrirModal('soma')" id="btn-soma">Composição</button>
+      <button onclick="abrirModal('subtracao')" id="btn-subtracao">Subtração</button>
       <button onclick="abrirModal('formacao')" id="btn-formacao">Formando Números</button>
     </div>
   </div>
@@ -645,7 +645,7 @@ body.lupa-active {
   <!-- Modal Regras da Soma com Quiz -->
   <div class="modal" id="modal-soma">
     <button class="close-btn" onclick="prepareToClose('soma')">X</button>
-    <h2>Regras da Soma</h2>
+    <h2>Composição</h2>
     <p>Na numeração romana, quando um símbolo de menor valor aparece após um símbolo de maior valor, seus valores são somados. Exemplo: VI = V (5) + I (1) = 6.</p>
     <p>Outros exemplos: XII = X (10) + I (1) + I (1) = 12, LX = L (50) + X (10) = 60.</p>
    
@@ -663,7 +663,7 @@ body.lupa-active {
   <!-- Modal Regras da Subtração com Quiz -->
   <div class="modal" id="modal-subtracao">
     <button class="close-btn" onclick="prepareToClose('subtracao')">X</button>
-    <h2>Regras da Subtração</h2>
+    <h2>Subtração</h2>
     <p>Quando um símbolo de menor valor aparece antes de um símbolo de maior valor, seu valor é subtraído. Exemplo: IV = V (5) - I (1) = 4.</p>
     <p>Esta regra se aplica apenas aos pares: I antes de V ou X, X antes de L ou C, C antes de D ou M.</p>
     <p>Outros exemplos: IX = X (10) - I (1) = 9, XC = C (100) - X (10) = 90.</p>
