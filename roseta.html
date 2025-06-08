@@ -24,8 +24,8 @@
       max-width: 400px;
       height: auto;
       position: absolute;
-      bottom: 150px;
-      left: 40px; 
+      bottom: 200px;
+      left: 10px; 
     }
     .menu-container {
       position: absolute;
@@ -453,9 +453,7 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     animation: pulse 2s infinite;
     display: none;
-  }body.lupa-active {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') 12 12, auto;
-}
+  }
 
 .lupa-instruction {
   position: fixed;
@@ -476,9 +474,7 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
-body.lupa-active {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') 12 12, auto;
-}
+
 
 .lupa-instruction {
   position: fixed;
@@ -503,15 +499,13 @@ body.lupa-active {
 </head>
 <body>
 <!-- Adicione isso após o zoom-preview -->
-<div class="lupa-instruction" id="lupaInstruction">
-  Pressione ESC para sair do modo lupa
-</div>
+
   <!-- Diálogo Inicial Simplificado -->
   <div class="intro-overlay" id="introOverlay">
     <div class="intro-dialog">
       <div class="intro-title">Rahin e a Pedra de Rosetta</div>
       <div class="intro-text">
-        *Rahin, você encontrou a lendária Pedra de Rosetta Romana! Decifre os números antigos para salvar seu povo da guerra iminente...*
+        *Rahin, você encontrou a lendária Pedra de Rosetta Romana! Decifre os números antigos para salvar seu povo da guerra...*
       </div>
       <button class="intro-btn" id="nextBtn">Começar Jornada</button>
     </div>
@@ -519,12 +513,17 @@ body.lupa-active {
 <div class="lupa-container" id="lupaContainer">
   <div class="lupa-icon" id="lupaIcon">
     <div class="lupa-glass"></div>
-    🔍
-    <span class="lupa-tooltip">Passe sobre a Rosetta para examinar</span>
+    👁️ <!-- Ícone de olho no lugar da lupa -->
+    <span class="lupa-tooltip">Observe atentamente a Pedra</span> <!-- Texto alterado -->
   </div>
   <div class="lupa-message" id="lupaMessage">
-    Use a lupa para examinar detalhes da Pedra de Rosetta!
+    Examine os detalhes da Pedra de Rosetta com atenção! <!-- Mensagem alterada -->
   </div>
+</div>
+
+<!-- E adicione esta instrução (mantendo a classe original): -->
+<div class="lupa-instruction" id="lupaInstruction">
+  Pressione ESC para sair do modo observação <!-- Texto alterado -->
 </div>
 
 <div class="zoom-preview" id="zoomPreview">
@@ -573,17 +572,17 @@ body.lupa-active {
         <strong>Lembre-se:</strong> Símbolos I, X, C e M podem repetir até 3 vezes. V, L e D não se repetem!
       </div>
     </div>
-  <h3>Ferramenta de Lupa</h3>
+  <h3>Ferramenta de observaçõo</h3>
   <img src="lupa-lupa.png" class="tutorial-img" alt="Exemplo de uso da lupa">
   <p><strong>Como usar:</strong></p>
   <ol>
-    <li>Clique no ícone da lupa no canto inferior esquerdo para ativar</li>
-    <li>O cursor se transformará em uma lupa de aumento</li>
+   <li>Clique no ícone do olho no canto inferior esquerdo para ativar</li>
+    <li>O cursor se transformará em um olho observador</li>
     <li>Passe o mouse sobre a Pedra de Rosetta para examinar detalhes</li>
-    <li>Pressione ESC ou clique novamente na lupa para desativar</li>
+    <li>Pressione ESC ou clique novamente no olho para desativar</li>
   </ol>
   <div class="tutorial-note">
-    <strong>Dica:</strong> Use a lupa para encontrar detalhes ocultos e inscrições pequenas na pedra!
+    <strong>Dica:</strong> Use o modo observação para ler a melhor as inscrições pequenas na pedra!
   </div>
 </div>
       
@@ -657,8 +656,7 @@ body.lupa-active {
     </div>
   </div>
   <div class="lupa-instruction" id="lupaInstruction">
-  Pressione ESC para sair do modo lupa
-</div>
+  Pressione ESC para sair do modo obsevação
 
   <!-- Modal Regras da Subtração com Quiz -->
   <div class="modal" id="modal-subtracao">
@@ -996,7 +994,7 @@ body.lupa-active {
         document.body.classList.remove('lupa-active');
         
         // Feedback ao desativar
-        lupaInstruction.textContent = 'Modo lupa desativado';
+        lupaInstruction.textContent = 'Modo observação desativado';
         lupaInstruction.style.display = 'block';
         setTimeout(() => {
           lupaInstruction.style.display = 'none';
