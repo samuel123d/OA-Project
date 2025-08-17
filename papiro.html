@@ -1,341 +1,518 @@
 <!DOCTYPE html>
 <html lang="pt">
-  <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Desafio da Carta</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        width: 100vw;
-        background: url("./egipt-back.jpg") no-repeat center center;
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        overflow: hidden;
-        animation: chegadaFundo 3s ease-out forwards;
-      }
 
-      @keyframes chegadaFundo {
-        from {
-          opacity: 0;
-          transform: scale(1.1);
-        }
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baskervville+SC&family=Cinzel+Decorative:wght@400;700;900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Desafio da Carta</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      background: url("./egipt-back.jpg") no-repeat center center;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      overflow: hidden;
+      animation: chegadaFundo 3s ease-out forwards;
+    }
 
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      .papiro {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        flex-direction: row;
-        gap: 30px;
-        width: 100%;
-        max-width: 1000px;
-        background: url("the-best-papiro.png") no-repeat center center;
-        background-size: cover;
-        padding: 65px;
-        border-radius: 10px;
-        font-family: "Georgia", serif;
-        text-align: justify;
+    @keyframes chegadaFundo {
+      from {
         opacity: 0;
-        animation: entradaPapiro 3s ease-out forwards;
+        transform: scale(1.1);
       }
 
-      .enquadro {
-        border-radius: 6px;
-        padding: 22x;
-        margin-left: 55px;
-        flex: 2;
-        max-height: 600px;
-        overflow-y: auto;
+      to {
+        opacity: 1;
+        transform: scale(1);
       }
+    }
 
-      #continue {
-        margin-top: 20px;
-        margin-right: 100px;
-        height: 40px;
-        align-self: flex-start;
-        padding: 8px 20px;
-        background-color: bisque;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-      }
+    .papiro {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: row;
+      gap: 30px;
+      width: 100%;
+      max-width: 1000px;
+      background: url("the-best-papiro.png") no-repeat center center;
+      background-size: cover;
+      padding: 65px;
+      border-radius: 10px;
+      font-family: "Georgia", serif;
+      text-align: justify;
+      opacity: 0;
+      animation: entradaPapiro 3s ease-out forwards;
+    }
 
-      @keyframes entradaPapiro {
-        from {
-          top: -100vh;
-          opacity: 0;
-        }
+    .enquadro {
+      border-radius: 6px;
+      padding: 22x;
+      margin-left: 55px;
+      flex: 2;
+      max-height: 600px;
+      overflow-y: auto;
+    }
 
-        to {
-          top: 10vh;
-          opacity: 1;
-        }
-      }
+    #continue {
+      margin-top: 20px;
+      margin-right: 100px;
+      height: 40px;
+      align-self: flex-start;
+      padding: 8px 20px;
+      background-color: bisque;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-      p,
-      h1,
-      li,
-      a {
-        font-family: "Baskervville SC", serif;
-        list-style: none;
-        font-weight: bolder;
-      }
-
-      a {
-        list-style: none;
-        color: black;
-        display: inline;
-        border-radius: 4px;
-        padding: 5px;
-        background-color: bisque;
-      }
-
-      p {
-        font-size: 18px;
-      }
-
-      li {
-        font-size: 20px;
-      }
-
-      .segunda-carta {
-        display: none;
-        justify-content: center;
-        align-items: flex-start;
-        flex-direction: row;
-        gap: 30px;
-        width: 140%;
-        max-width: 1060px;
-        background: url("the-best-papiro.png") no-repeat center center;
-        background-size: cover;
-        padding: 65px;
-        height: 88%;
-        border-radius: 0px;
-        font-family: "Georgia", serif;
-        text-align: justify;
+    @keyframes entradaPapiro {
+      from {
+        top: -100vh;
         opacity: 0;
-
-        animation: entradaPapiro 3s ease-out forwards;
       }
 
-      @keyframes entradaPapiro {
-        from {
-          opacity: 0;
-          transform: scale(1.1); /* Inicialmente maior */
-        }
-        to {
-          opacity: 1;
-          transform: scale(1); /* Normaliza para o tamanho original */
-        }
+      to {
+        top: 10vh;
+        opacity: 1;
+      }
+    }
+
+    p,
+    h1,
+    li,
+    a {
+      font-family: "Baskervville SC", serif;
+      list-style: none;
+      font-weight: bolder;
+    }
+
+    a {
+      list-style: none;
+      color: black;
+      display: inline;
+      border-radius: 4px;
+      padding: 5px;
+      background-color: bisque;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+    li {
+      font-size: 20px;
+    }
+
+    .segunda-carta {
+      display: none;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: row;
+      gap: 30px;
+      width: 140%;
+      max-width: 1060px;
+      background: url("the-best-papiro.png") no-repeat center center;
+      background-size: cover;
+      padding: 65px;
+      height: 88%;
+      border-radius: 0px;
+      font-family: "Georgia", serif;
+      text-align: justify;
+      opacity: 0;
+
+      animation: entradaPapiro 3s ease-out forwards;
+    }
+
+    @keyframes entradaPapiro {
+      from {
+        opacity: 0;
+        transform: scale(1.1);
+        /* Inicialmente maior */
       }
 
-      .conteiner-carta {
-        display: flex;
-        align-items: flex-start; /* Alinha os itens no topo */
-        justify-content: space-between;
-        margin-top: 35px;
-        margin-left: 5px;
-        margin-right: 45px;
+      to {
+        opacity: 1;
+        transform: scale(1);
+        /* Normaliza para o tamanho original */
+      }
+    }
+
+    .conteiner-carta {
+      display: flex;
+      align-items: flex-start;
+      /* Alinha os itens no topo */
+      justify-content: space-between;
+      margin-top: 35px;
+      margin-left: 5px;
+      margin-right: 45px;
+    }
+
+    .enquadro2 {
+      padding: 18x;
+      margin-left: 55px;
+      flex: 2;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .drag-area,
+    .drop-area {
+      display: flex;
+      flex-direction: column;
+      /* Organiza o conteúdo verticalmente */
+      gap: 20px;
+      justify-content: flex-start;
+      margin-top: 20px;
+      max-height: 600px;
+      /* Definindo altura máxima para as áreas de drag e drop */
+      overflow-y: auto;
+      /* Permite rolagem caso o conteúdo ultrapasse a altura */
+    }
+
+    .drag-area {
+      flex: 1;
+      padding: 18px;
+      margin-right: 15px;
+    }
+
+    .drop-area {
+      flex: 1;
+      padding: 18px;
+      border: 2px;
+      margin-right: 15px;
+    }
+
+    .numero {
+      padding: 10px;
+      background-color: #f9d7a0;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      text-align: center;
+      cursor: grab;
+      font-size: 18px;
+    }
+
+    .alvo {
+      padding: 10px;
+      background-color: #fff9;
+      border: 2px dashed #aaa;
+      border-radius: 6px;
+      min-height: 40px;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .iframe-container {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+    }
+
+    iframe {
+      width: 80vw;
+      height: 60vh;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Novo: animação de erro */
+    @keyframes shake {
+      0% {
+        transform: translateX(0);
       }
 
-      .enquadro2 {
-        padding: 18x;
-        margin-left: 55px;
-        flex: 2;
-        max-height: 500px;
-        overflow-y: auto;
+      20% {
+        transform: translateX(-5px);
       }
 
-      .drag-area,
-      .drop-area {
-        display: flex;
-        flex-direction: column; /* Organiza o conteúdo verticalmente */
-        gap: 20px;
-        justify-content: flex-start;
-        margin-top: 20px;
-        max-height: 600px; /* Definindo altura máxima para as áreas de drag e drop */
-        overflow-y: auto; /* Permite rolagem caso o conteúdo ultrapasse a altura */
+      40% {
+        transform: translateX(5px);
       }
 
-      .drag-area {
-        flex: 1;
-        padding: 18px;
-        margin-right: 15px;
+      60% {
+        transform: translateX(-5px);
       }
 
-      .drop-area {
-        flex: 1;
-        padding: 18px;
-        border: 2px;
-        margin-right: 15px;
+      80% {
+        transform: translateX(5px);
       }
 
-      .numero {
-        padding: 10px;
-        background-color: #f9d7a0;
-        border: 2px solid #ccc;
-        border-radius: 6px;
-        text-align: center;
-        cursor: grab;
-        font-size: 18px;
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    .alvo.erro {
+      animation: shake 0.5s;
+      background-color: #f88 !important;
+    }
+
+ .tutorial-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #d4a94f;
+      color: black;
+      border: none;
+      width: 50px;
+      /* largura fixa */
+      height: 50px;
+      /* altura fixa */
+      border-radius: 50%;
+      /* mantém circular */
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 24px;
+      /* aumenta o tamanho do ? */
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      display: flex;
+      /* centraliza o ? */
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Painel do Tutorial */
+    .tutorial-panel {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 380px;
+      height: 100vh;
+      background-color: #f4f1e5;
+      z-index: 1000;
+      transition: left 0.3s ease;
+      overflow-y: auto;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .tutorial-panel.open {
+      left: 0;
+    }
+
+    .tutorial-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #d4a94f;
+      padding-bottom: 10px;
+    }
+
+    .tutorial-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .tutorial-section {
+      margin-bottom: 25px;
+    }
+
+    .tutorial-section h3 {
+      color: #8a6d3b;
+      margin-top: 0;
+      border-bottom: 1px solid #d4a94f;
+      padding-bottom: 5px;
+    }
+
+    .tutorial-img {
+      max-width: 100%;
+      border: 1px solid #d4a94f;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .tutorial-note {
+      background-color: #ffdd57;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-style: italic;
+    }
+
+    .tutorial-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      display: none;
+    }
+
+    .tutorial-overlay.open {
+      display: block;
+    }
+
+    @media (max-width: 500px) {
+      .tutorial-panel {
+        width: 90%;
+        left: -100%;
       }
 
-      .alvo {
-        padding: 10px;
-        background-color: #fff9;
-        border: 2px dashed #aaa;
-        border-radius: 6px;
-        min-height: 40px;
-        font-size: 18px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      .tutorial-panel.open {
+        left: 0;
       }
+    }
+    .continue-btn3 {
+      position: relative;
+      margin-top: 10px;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ffffff;
+      color: #000;
+      border: solid 1px ;
+      border-radius: 4px;
+      margin-left: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0.5px 4px 8px rgba(0, 0, 0, 0.2);
+     
+    }
+  
+  </style>
+</head>
 
-      .iframe-container {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-        z-index: 9999;
-      }
-
-      iframe {
-        width: 80vw;
-        height: 60vh;
-        border-radius: 12px;
-        border: none;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-      }
-
-      /* Novo: animação de erro */
-      @keyframes shake {
-        0% {
-          transform: translateX(0);
-        }
-
-        20% {
-          transform: translateX(-5px);
-        }
-
-        40% {
-          transform: translateX(5px);
-        }
-
-        60% {
-          transform: translateX(-5px);
-        }
-
-        80% {
-          transform: translateX(5px);
-        }
-
-        100% {
-          transform: translateX(0);
-        }
-      }
-
-      .alvo.erro {
-        animation: shake 0.5s;
-        background-color: #f88 !important;
-      }
-    </style>
-  </head>
-
-  <body>
-   <div class="papiro" id="papiro">
-  <div class="enquadro">
-    <h1>Ao meu valoroso General,</h1>
-    <p>Saudações sob o esplendor de Roma!</p>
-    <p>
-      O tempo chegou para reivindicarmos o Império Sassânida, fonte de riquezas e poder.
-      Confio a ti a honra e a responsabilidade de preparar nossa invasão com
-      a disciplina e a estratégia que fazem de Roma senhora do mundo.
-    </p>
-    <p>Ordeno que seleciones com rigor:</p>
-    <ul>
-      <li><strong>Tribuno:</strong> <span id="tribuno"></span></li>
-      <li><strong>Centuriões:</strong> <span id="centurioes"></span></li>
-      <li><strong>Decanos:</strong> <span id="decanos"></span></li>
-      <li><strong>Engenheiros:</strong> <span id="engenheiros"></span></li>
-      <li>
-        <strong>Exploradores:</strong> <span id="exploradores"></span>
-      </li>
-    </ul>
-    <p>
-      A provisão de suprimentos deve ser meticulosa. Mantém o moral elevado
-      e o exército pronto para marchar ao meu comando. Em breve, Roma se
-      erguerá sobre as terras do Oriente.
-    </p>
-    <p>Avança com prudência, vence com glória!</p>
-    <p><strong>Gaius Iulius Caesar Octavianus Augustus</strong></p>
+<body>
+  <div class="papiro" id="papiro">
+    <div class="enquadro">
+      <h1>Ao meu valoroso General,</h1>
+      <p>Saudações sob o esplendor de Roma!</p>
+      <p>
+        O tempo chegou para reivindicarmos o Império Sassânida, fonte de riquezas e poder.
+        Confio a ti a honra e a responsabilidade de preparar nossa invasão com
+        a disciplina e a estratégia que fazem de Roma senhora do mundo.
+      </p>
+      <p>Ordeno que seleciones com rigor:</p>
+      <ul>
+        <li><strong>Tribuno:</strong> <span id="tribuno"></span></li>
+        <li><strong>Centuriões:</strong> <span id="centurioes"></span></li>
+        <li><strong>Decanos:</strong> <span id="decanos"></span></li>
+        <li><strong>Engenheiros:</strong> <span id="engenheiros"></span></li>
+        <li>
+          <strong>Exploradores:</strong> <span id="exploradores"></span>
+        </li>
+      </ul>
+      <p>
+        A provisão de suprimentos deve ser meticulosa. Mantém o moral elevado
+        e o exército pronto para marchar ao meu comando. Em breve, Roma se
+        erguerá sobre as terras do Oriente.
+      </p>
+      <p>Avança com prudência, vence com glória!</p>
+      <p><strong>Gaius Iulius Caesar Octavianus Augustus</strong></p>
+    </div>
+    <button id="continue">Continuar</button>
   </div>
-  <button id="continue">Continuar</button>
-</div>
 
-    <!-- Segunda Carta com Informações -->
-    <div class="segunda-carta" id="segunda-carta">
-      <div class="conteiner-carta">
-        <div class="enquadro2">
-          <h1>Prove seu conhecimento:</h1>
+  <!-- Segunda Carta com Informações -->
+  <div class="segunda-carta" id="segunda-carta">
+    <div class="conteiner-carta">
+      <div class="enquadro2">
+        <h1>Prove seu conhecimento:</h1>
+        <br />
+        <p>
+          Agora, é hora de testar seu conhecimento, combine os numeros com os
+          repectivos nomes de acordo com a carta!
+        </p>
+        <br />
+        <ul>
+          <li><strong>Tribuno:</strong> <span id="tribuno2"></span></li>
           <br />
-          <p>
-            Agora, é hora de testar seu conhecimento, combine os numeros com os
-            repectivos nomes de acordo com a carta!
-          </p>
+          <li><strong>Centuriões:</strong> <span id="centurioes2"></span></li>
           <br />
-          <ul>
-            <li><strong>Tribuno:</strong> <span id="tribuno2"></span></li>
-            <br />
-            <li><strong>Centuriões:</strong> <span id="centurioes2"></span></li>
-            <br />
-            <li><strong>Decanos:</strong> <span id="decanos2"></span></li>
-            <br />
-            <li>
-              <strong>Engenheiros:</strong> <span id="engenheiros2"></span>
-            </li>
-            <br />
-            <li>
-              <strong>Exploradores:</strong> <span id="exploradores2"></span>
-            </li>
-          </ul>
-        </div>
-        <div class="drag-area" id="drag-area"></div>
-        <div class="drop-area" id="drop-area"></div>
+          <li><strong>Decanos:</strong> <span id="decanos2"></span></li>
+          <br />
+          <li>
+            <strong>Engenheiros:</strong> <span id="engenheiros2"></span>
+          </li>
+          <br />
+          <li>
+            <strong>Exploradores:</strong> <span id="exploradores2"></span>
+          </li>
+        </ul>
       </div>
+      <div class="drag-area" id="drag-area"></div>
+      <div class="drop-area" id="drop-area"></div>
     </div>
-    <div class="iframe-container" id="iframe-next">
-      <iframe src="./next.html" frameborder="0"></iframe>
-    </div>
-    <div class="iframe-container" id="iframe-container">
-      <iframe src="./gameover-papiro1-1.html" id="iframe" frameborder="0"></iframe>
+  </div>
+  <div class="iframe-container" id="iframe-next">
+    <iframe src="./next.html" frameborder="0"></iframe>
+  </div>
+  <div class="iframe-container" id="iframe-container">
+    <iframe src="./gameover-papiro1-1.html" id="iframe" frameborder="0"></iframe>
+  </div>
+
+  <audio id="erro-som" src="wrong.mp3"></audio>
+ 
+
+ <!-- Botão do Tutorial -->
+  <button class="tutorial-btn" id="tutorialBtn">?</button>
+
+  <!-- Painel do Tutorial -->
+  <div class="tutorial-panel" id="tutorialPanel">
+    <div class="tutorial-header">
+      <h2>Tutorial dos Papiros</h2>
+      <button class="tutorial-close" id="tutorialClose">&times;</button>
     </div>
 
-    <audio id="erro-som" src="wrong.mp3"></audio>
+    <!-- Seções do Tutorial -->
+    <div class="tutorial-section">
+      <h3>Como jogar</h3>
+      <h4>Primeira pagína:</h4>
+      <ol>
+        <li>A primeira página apesenta quais os números que serão trabalhados.</li>
+        <li>Enquatos você lê sobre o contexto historico de roma e apredende nome de tropas romanas.</li>
+        <img src="./pagina_papiro.png" class="tutorial-img" alt=""">
+        <li>Aprete em continuar para ir para a próxima fase.</li>
+        <img src="./continuar_papiro.png" class="tutorial-img" alt=""">
+
+      </ol>
+      
+      <h4>Segunda página:</h4>
+      <p>Na segunda página você deve arrastar os números para o local correto de acordo com a carta que leu na primeira página. Você tem 3 tentativas para errar, caso erre 3 vezes, será redirecionado para uma página de game over. Caso acerte todos, um botão de continuar aparecerá para você avançar no jogo.
+      </p>
+      <img src="segundo_papiro.png" class="tutorial-img" alt="">
+      <br>
+      <h4>Quando você acertar a pergunta a aréa de seleção deve ficar assim!</h4>
+      <img src="drop_certo_papiro.png" class="tutorial-img" alt="">
+      <h4>Quando você errar a pergunta a aréa de seleção deve ficar assim!</h4>
+      <img src="drop_errado_papiro.png" class="tutorial-img" alt="">
+
+       <h3>Voltar para o menu inicial</h3>
+       <p>Aperte no botão para "voltar" para voltar o menu inicial!</p>
+       <button id="" class="continue-btn3" onclick="window.location.href = './index.html';">Voltar</button>
+    </div>
+
+
+
 
     <script>
       const romanoMap = [
@@ -368,17 +545,17 @@
         valores[role] = sorteados[index];
         document.getElementById(role).innerText = romanoMap[valores[role] - 1];
         document.getElementById(role + "2").innerText =
-          romanoMap[valores[role] - 1]; 
+          romanoMap[valores[role] - 1];
       });
 
       document.getElementById("continue").addEventListener("click", () => {
 
         document.getElementById("papiro").style.display = "none";
 
-       
+
         document.getElementById("segunda-carta").style.display = "flex";
 
-       
+
         iniciarJogo();
       });
 
@@ -469,6 +646,33 @@
           document.getElementById("iframe-next").style.display = "block";
         }
       }
+     const tutorialBtn = document.getElementById('tutorialBtn');
+      const tutorialPanel = document.getElementById('tutorialPanel');
+      const tutorialOverlay = document.getElementById('tutorialOverlay');
+      const tutorialClose = document.getElementById('tutorialClose');
+
+      tutorialBtn.addEventListener('click', () => {
+        tutorialPanel.classList.add('open');
+        tutorialOverlay.classList.add('open');
+      });
+
+      tutorialClose.addEventListener('click', () => {
+        tutorialPanel.classList.remove('open');
+        tutorialOverlay.classList.remove('open');
+      });
+
+      tutorialOverlay.addEventListener('click', () => {
+        tutorialPanel.classList.remove('open');
+        tutorialOverlay.classList.remove('open');
+      });
+
+      tutorialPanel.addEventListener('wheel', function (e) {
+        if (e.deltaY !== 0) {
+          e.preventDefault(); // impede o scroll vertical padrão
+          tutorialPanel.scrollLeft += e.deltaY; // move horizontalmente
+        }
+      }, { passive: false });
     </script>
-  </body>
+</body>
+
 </html>

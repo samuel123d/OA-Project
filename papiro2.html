@@ -222,6 +222,132 @@
         border-radius: 12px;
         border: none;
       }
+      .tutorial-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background-color: #d4a94f;
+      color: black;
+      border: none;
+      width: 50px;
+      /* largura fixa */
+      height: 50px;
+      /* altura fixa */
+      border-radius: 50%;
+      /* mantém circular */
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 24px;
+      /* aumenta o tamanho do ? */
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      display: flex;
+      /* centraliza o ? */
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Painel do Tutorial */
+    .tutorial-panel {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 380px;
+      height: 100vh;
+      background-color: #f4f1e5;
+      z-index: 1000;
+      transition: left 0.3s ease;
+      overflow-y: auto;
+      padding: 20px;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .tutorial-panel.open {
+      left: 0;
+    }
+
+    .tutorial-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #d4a94f;
+      padding-bottom: 10px;
+    }
+
+    .tutorial-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .tutorial-section {
+      margin-bottom: 25px;
+    }
+
+    .tutorial-section h3 {
+      color: #8a6d3b;
+      margin-top: 0;
+      border-bottom: 1px solid #d4a94f;
+      padding-bottom: 5px;
+    }
+
+    .tutorial-img {
+      max-width: 100%;
+      border: 1px solid #d4a94f;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .tutorial-note {
+      background-color: #ffdd57;
+      padding: 10px;
+      border-radius: 5px;
+      margin: 10px 0;
+      font-style: italic;
+    }
+
+    .tutorial-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      display: none;
+    }
+
+    .tutorial-overlay.open {
+      display: block;
+    }
+
+    @media (max-width: 500px) {
+      .tutorial-panel {
+        width: 90%;
+        left: -100%;
+      }
+
+      .tutorial-panel.open {
+        left: 0;
+      }
+    }
+    .continue-btn2 {
+      position: relative;
+      margin-top: 10px;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ffffff;
+      color: #000;
+      border: solid 1px ;
+      border-radius: 4px;
+      margin-left: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0.5px 4px 8px rgba(0, 0, 0, 0.2);
+     
+    }
     </style>
   </head>
 
@@ -290,6 +416,44 @@
     </div>
 
     <audio id="erro-som" src="wrong.mp3"></audio>
+     <!-- Botão do Tutorial -->
+  <button class="tutorial-btn" id="tutorialBtn">?</button>
+
+  <!-- Painel do Tutorial -->
+  <div class="tutorial-panel" id="tutorialPanel">
+    <div class="tutorial-header">
+      <h2>Tutorial dos Papiros</h2>
+      <button class="tutorial-close" id="tutorialClose">&times;</button>
+    </div>
+
+    <!-- Seções do Tutorial -->
+    <div class="tutorial-section">
+      <h3>Como jogar</h3>
+      <h4>Primeira pagína:</h4>
+      <ol>
+        <li>A primeira página apesenta quais os números que serão trabalhados.</li>
+        <li>Enquatos você lê sobre o contexto historico de roma e apredende nome de tropas romanas.</li>
+        <img src="./pagina_papiro.png" class="tutorial-img" alt=""">
+        <li>Aprete em continuar para ir para a próxima fase.</li>
+        <img src="./continuar_papiro.png" class="tutorial-img" alt=""">
+
+      </ol>
+      
+      <h4>Segunda página:</h4>
+      <p>Na segunda página você deve arrastar os números para o local correto de acordo com a carta que leu na primeira página. Você tem 3 tentativas para errar, caso erre 3 vezes, será redirecionado para uma página de game over. Caso acerte todos, um botão de continuar aparecerá para você avançar no jogo.
+      </p>
+      <img src="segundo_papiro.png" class="tutorial-img" alt="">
+      <br>
+      <h4>Quando você acertar a pergunta a aréa de seleção deve ficar assim!</h4>
+      <img src="drop_certo_papiro.png" class="tutorial-img" alt="">
+      <h4>Quando você errar a pergunta a aréa de seleção deve ficar assim!</h4>
+      <img src="drop_errado_papiro.png" class="tutorial-img" alt="">
+       <h3>Voltar para o menu inicial</h3>
+       <p>Aperte no botão para "voltar" para voltar o menu inicial!</p>
+       <button id="" class="continue-btn2" onclick="window.location.href = './index.html';">Voltar</button>
+    </div>
+
+
 
     <script>
       const romanoMap = [...Array(91).keys()].map((i) => {
@@ -492,6 +656,32 @@
           document.getElementById("iframe-next").style.display = "block";
         }
       }
+      const tutorialBtn = document.getElementById('tutorialBtn');
+      const tutorialPanel = document.getElementById('tutorialPanel');
+      const tutorialOverlay = document.getElementById('tutorialOverlay');
+      const tutorialClose = document.getElementById('tutorialClose');
+
+      tutorialBtn.addEventListener('click', () => {
+        tutorialPanel.classList.add('open');
+        tutorialOverlay.classList.add('open');
+      });
+
+      tutorialClose.addEventListener('click', () => {
+        tutorialPanel.classList.remove('open');
+        tutorialOverlay.classList.remove('open');
+      });
+
+      tutorialOverlay.addEventListener('click', () => {
+        tutorialPanel.classList.remove('open');
+        tutorialOverlay.classList.remove('open');
+      });
+
+      tutorialPanel.addEventListener('wheel', function (e) {
+        if (e.deltaY !== 0) {
+          e.preventDefault(); // impede o scroll vertical padrão
+          tutorialPanel.scrollLeft += e.deltaY; // move horizontalmente
+        }
+      }, { passive: false });
     </script>
   </body>
 </html>

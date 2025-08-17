@@ -495,6 +495,22 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+.continue-btn2 {
+      position: relative;
+      margin-top: 10px;
+      bottom: 20px;
+      right: 20px;
+      background-color: #ffffff;
+      color: #000;
+      border: solid 1px ;
+      border-radius: 4px;
+      margin-left: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0.5px 4px 8px rgba(0, 0, 0, 0.2);
+     
+    }
   </style>
 </head>
 <body>
@@ -583,6 +599,7 @@
   </ol>
   <div class="tutorial-note">
     <strong>Dica:</strong> Use o modo observação para ler a melhor as inscrições pequenas na pedra!
+
   </div>
 </div>
       
@@ -594,6 +611,9 @@
       <p><strong>Papiro:</strong> Só será liberado após dominar todos os conceitos</p>
         <img src="ler-papiro.png" class="tutorial-img" alt="Exemplo Interface">
     </div>
+        <h3>Voltar para o menu inicial</h3>
+       <p>Aperte no botão para "voltar" para voltar o menu inicial!</p>
+       <button id="" class="continue-btn2" onclick="window.location.href = './index.html';">Voltar</button>
   </div>
   
   <div class="tutorial-overlay" id="tutorialOverlay"></div>
@@ -1026,7 +1046,7 @@
         const zoomX = -relX * zoomFactor + previewSize/2;
         const zoomY = -relY * zoomFactor + previewSize/2;
         
-        // Aplica o zoom
+       
         zoomPreviewImg.style.width = (rosettaRect.width * zoomFactor) + 'px';
         zoomPreviewImg.style.height = (rosettaRect.height * zoomFactor) + 'px';
         zoomPreviewImg.style.left = zoomX + 'px';
@@ -1034,14 +1054,14 @@
       }
     });
 
-    // Fechar lupa com ESC
+    
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && lupaActive) {
         toggleLupa();
       }
     });
 
-    // Função para configurar o quiz com drag & drop para cada modal
+    
     function setupQuizForModal(modalType) {
       let dropzone;
       if (modalType === "soma") {
@@ -1058,7 +1078,7 @@
         quizSolvedFormacao = false;
       }
       
-      // Para evitar múltiplos listeners, substituímos a dropzone por um clone novo
+   
       let newDropzone = dropzone.cloneNode(true);
       dropzone.parentNode.replaceChild(newDropzone, dropzone);
       
@@ -1115,7 +1135,6 @@
       });
     }
 
-    // Inicializa o progresso visual
     updateProgressVisual();
   </script>
 </body>
