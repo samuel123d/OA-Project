@@ -96,18 +96,22 @@
         }
 
         .modal-content {
-            background-color: #fefefe;
+            background: linear-gradient(180deg, #FDEBD0, #FAD7A0);
             margin: auto;
             padding: 20px;
             border-radius: 10px;
             width: 80%;
-            max-width: 800px;
+            max-width: 900px;
             position: relative;
+            max-height: 80vh;
+            overflow-x: auto;
+            overflow-y: auto;
         }
 
         .modal-content h2 {
+            text-align: center;
+            color: #8B4513;
             font-family: 'Papyrus', sans-serif;
-            color: #050603;
         }
 
         .modal-content iframe {
@@ -115,6 +119,7 @@
             height: 400px;
             border: none;
             border-radius: 6px;
+            margin-top: 15px;
         }
 
         .close-button {
@@ -131,27 +136,112 @@
         .close-button:hover {
             color: #000;
         }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 20px;
+            padding: 8px 15px;
+            background-color: rgba(128, 72, 29, 0.7);
+            color: #050603;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .download-btn:hover {
+            background-color: rgba(255, 69, 0, .7);
+        }
+
+        .guidelines-text {
+            font-family: 'Papyrus', sans-serif;
+            color: #050603;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        .guidelines-text ul {
+            margin-left: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="background">
         <br>
-        <h1>Batalha de Algarismos: A Missão de Rahin</h1>
+        <h1>Batalha dos Números: A Missão de Rahim</h1>
         <br>
         <div class="buttons">
             <button id="startGame" href="historia.html">Iniciar Jogo</button>
-            <button id="showCredits" >Créditos</button>
+            <button id="showCredits">Créditos</button>
+            <button id="showGuidelines">Orientações</button>
         </div>
         <button id="toggleMusic" class="toggle-music">&#x1F50A;</button>
     </div>
 
     <audio id="backgroundMusic" src="./Dying Light Music of Suffering Theme - Angry Tiger.mp3"></audio>
 
+    <!-- Modal Créditos -->
     <div id="creditsModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2>Créditos</h2>
             <iframe src="creditos.html" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <!-- Modal Orientações -->
+    <div id="guidelinesModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Orientações Pedagógicas</h2>
+
+            <div class="guidelines-text">
+                <p><strong>Orientações ao professor</strong></p>
+                <p>O Objeto de Aprendizagem (OA) <strong>Batalha dos Algarismos: A Missão de Rahim</strong> combina História da Matemática e tecnologias digitais numa narrativa sobre as guerras romano-persas, para explorar o sistema de numeração romano e sua conversão para números hindu-arábicos, promovendo imersão interdisciplinar.</p>
+                
+                <p><strong>Conhecimento de natureza matemática mobilizado</strong></p>
+                <ul>
+                    <li><strong>Sistemas de numeração:</strong> Sistema de numeração romano</li>
+                    <li><strong>Operações básicas:</strong> Adição e subtração com números naturais e inteiros</li>
+                </ul>
+
+                <p><strong>Conhecimento de natureza histórica mobilizado</strong></p>
+                <ul>
+                    <li>Grupos sociais e relações de poder do Império Romano e Sassânida</li>
+                    <li>Contexto histórico das guerras romano-persas</li>
+                    <li>Registro e evolução de sistemas de numeração ao longo da história</li>
+                </ul>
+
+                <p><strong>Habilidades da BNCC – Matemática</strong></p>
+                <ul>
+                    <li>EF03MA02, EF03MA05: Uso e compreensão de números naturais</li>
+                    <li>EF04MA01, EF04MA14: Operações com números naturais e inteiros</li>
+                    <li>EF05MA01, EF06MA02: Compreensão de números inteiros e sua aplicação em problemas</li>
+                </ul>
+
+                <p><strong>Habilidades da BNCC – História</strong></p>
+                <ul>
+                    <li>EF05HI03: Identificar e analisar grupos sociais e relações de poder em diferentes contextos históricos</li>
+                    <li>EF05HI04: Organizar o tempo histórico e compreender a evolução de sistemas de registro numérico</li>
+                </ul>
+
+                <p><strong>Público-alvo:</strong> Estudantes do Ensino Fundamental anos iniciais e finais, estudantes do Ensino Médio e professores.</p>
+
+                <p><strong>Atividades propostas pelo OA:</strong></p>
+                <ul>
+                    <li>Decifração de cartas com quantidades de tropas romanas (números romanos) e conversão para números hindu-arábicos.</li>
+                    <li>Exploração de desafios crescentes em três níveis:</li>
+                    <ul>
+                        <li>Nível 1: 1 a 9</li>
+                        <li>Nível 2: 10 a 100</li>
+                        <li>Nível 3: 100 a 1000</li>
+                    </ul>
+                    <li>Narrativa de aventura imersiva contextualizando o personagem Rahim e o Império Sassânida.</li>
+                </ul>
+
+              
+                <!-- Botão opcional para download -->
+                <a class="download-btn" href="Artigo_OA.pdf" download>Baixar PDF do artigo</a>
+            </div>
         </div>
     </div>
 
@@ -175,22 +265,29 @@
             }
         });
 
-        const modal = document.getElementById('creditsModal');
-        const closeBtn = document.querySelector('.close-button');
+        // Função modal geral
+        function setupModal(buttonId, modalId) {
+            const button = document.getElementById(buttonId);
+            const modal = document.getElementById(modalId);
+            const closeBtn = modal.querySelector('.close-button');
 
-        document.getElementById('showCredits').addEventListener('click', function () {
-            modal.style.display = 'block';
-        });
+            button.addEventListener('click', function () {
+                modal.style.display = 'block';
+            });
 
-        closeBtn.addEventListener('click', function () {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', function (event) {
-            if (event.target == modal) {
+            closeBtn.addEventListener('click', function () {
                 modal.style.display = 'none';
-            }
-        });
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        setupModal('showCredits', 'creditsModal');
+        setupModal('showGuidelines', 'guidelinesModal');
 
         window.history.pushState(null, null, window.location.href);
         window.onpopstate = function () {
@@ -199,4 +296,3 @@
     </script>
 </body>
 </html>
-    
