@@ -571,7 +571,7 @@
       <h3>Regras dos Números Romanos</h3>
       <h4>1. Composição</h4>
       <p>Quando um símbolo menor aparece <strong>depois</strong> de um maior, some seus valores:</p>
-      <img src="soma1.png" class="tutorial-img" alt="Exemplo Soma">
+      <img src="soma1.png" class="tutorial-img" alt="Exemplo de composição">
       <p>VI = 5 + 1 = 6<br>XII = 10 + 1 + 1 = 12</p>
       
       <h4>2. Subtração</h4>
@@ -810,7 +810,7 @@
       const exitMessage = document.getElementById('exit-message');
       
       let missingModules = [];
-      if (tipo === 'soma' && !quizSolvedSoma) missingModules.push("Regras da Soma");
+      if (tipo === 'soma' && !quizSolvedSoma) missingModules.push("Regras da composição");
       if (tipo === 'subtracao' && !quizSolvedSubtracao) missingModules.push("Regras da Subtração");
       if (tipo === 'formacao' && !quizSolvedFormacao) missingModules.push("Formando Números");
       
@@ -840,7 +840,7 @@
         showFeedback("Parabéns! Você completou todos os módulos. Agora pode ler o papiro!", 'success');
       } else {
         const missing = [];
-        if (!quizSolvedSoma) missing.push("Regras da Soma");
+        if (!quizSolvedSoma) missing.push("Regras da composição");
         if (!quizSolvedSubtracao) missing.push("Regras da Subtração");
         if (!quizSolvedFormacao) missing.push("Formando Números");
         
@@ -852,7 +852,7 @@
     function verificarAcessoPapiro() {
       if (lerPapiroBtn.classList.contains('disabled')) {
         const missing = [];
-        if (!quizSolvedSoma) missing.push("Regras da Soma");
+        if (!quizSolvedSoma) missing.push("Regras da composição");
         if (!quizSolvedSubtracao) missing.push("Regras da Subtração");
         if (!quizSolvedFormacao) missing.push("Formando Números");
         
@@ -1138,4 +1138,5 @@
     updateProgressVisual();
   </script>
 </body>
+
 </html>
