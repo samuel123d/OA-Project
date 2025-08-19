@@ -392,9 +392,11 @@
         const activeIndex = Array.from(carouselEl.querySelectorAll('.carousel-item'))
           .findIndex(slide => slide.classList.contains('active'));
 
-        // Bloqueia botões nos limites
-        prevBtn.disabled = activeIndex === 0;
-        nextBtn.disabled = activeIndex === totalSlides - 1;
+        // Mostrar botão "Anterior" apenas no 2º slide (index 1)
+        prevBtn.style.display = (activeIndex === 1 || activeIndex === 2) ? 'block' : 'none';
+
+        // Mostrar botão "Próximo" apenas no 1º (index 0) e 2º (index 1)
+        nextBtn.style.display = (activeIndex === 0 || activeIndex === 1) ? 'block' : 'none';
 
         // Mostrar botão "Continuar" somente no último slide
         continueBtn.style.display = (activeIndex === totalSlides - 1) ? 'block' : 'none';
