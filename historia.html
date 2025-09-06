@@ -14,23 +14,36 @@
       width: 100%;
       height: 100vh;
     }
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 72%;
+  transform: translateY(-50%);
+  width: 80%;           /* largura relativa à tela */
+  max-width: 300px;     /* limite da largura */
+  max-height: 200px;    /* limite da altura padrão */
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 12px;
+  border-radius: 8px;
+  text-align: left;
 
-    .carousel-caption {
-      position: absolute;
-      top: 50%;
-      left: 73%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.7);
-      border-radius: 10px;
-      padding: 20px;
-      width: 25%;
-    }
+  /* 🔒 Garante que o texto nunca ultrapasse a caixa */
+  overflow-y: auto;        /* rolagem vertical se necessário */
+  overflow-x: hidden;      /* impede transbordo lateral */
+  word-wrap: break-word;   /* quebra palavras longas */
+  overflow-wrap: break-word;
+  white-space: normal;     /* permite quebrar linhas */
+}
+.carousel-caption p {
+  color: #fff;
+  font-size: 14px;
+  margin: 0;
+}
 
-    .carousel-caption h5,
-    .carousel-caption p {
-      color: white;
-      text-align: left;
-    }
+.carousel-caption h5 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
 
     .toggle-music {
       position: absolute;
@@ -181,7 +194,7 @@
       align-items: center;
     }
 
-    /* Painel do Tutorial */
+  
     .tutorial-panel {
       position: fixed;
       top: 0;
@@ -263,53 +276,7 @@
       }
 
       .tutorial-panel.open {
-        left: 0;
-      }
-@media (max-heigth: 300px) and (orientation: landscape) {
-  .carousel-item img {
-    height: 100vh; /* sempre tela cheia */
-    object-fit: cover;
-  }
-
-  /* Caixa do texto fica do lado direito como no PC */
-  .carousel-caption {
-    position: absolute;
-    top: 50%;
-    left: 72%; /* mesma ideia do PC */
-    transform: translateY(-50%);
-    height: 80%;         /* altura proporcional */
-    max-height: 300px;   /* limite da altura da caixa */
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 12px;
-    border-radius: 8px;
-    text-align: left;
-    overflow-y: auto;    /* rolagem caso o texto seja grande */
-  }
-
-  .carousel-caption h5,
-  .carousel-caption p {
-    color: #fff;
-    font-size: 14px;
-  }
-
-  .carousel-caption h5 {
-    font-size: 16px;
-    margin-bottom: 6px;
-  }
-
-  /* Botões lado a lado */
-  .carousel-buttons {
-    flex-direction: row !important;
-    gap: 12px;
-    bottom: 15px;
-  }
-
-  .carousel-buttons button {
-    font-size: 14px;
-    padding: 8px 14px;
-    width: auto;
-  }
-}
+          left: 0;}
 
 
     }
