@@ -265,6 +265,48 @@
       .tutorial-panel.open {
         left: 0;
       }
+      /* Ajustes para mobile */
+@media (max-width: 768px) {
+
+  /* Texto direto no fundo da imagem */
+  .carousel-caption {
+    position: absolute;
+    bottom: 15%;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    background: none; /* tira fundo preto */
+    padding: 10px;
+    text-align: center;
+  }
+
+  .carousel-caption h5,
+  .carousel-caption p {
+    color: #fff; /* branco para destacar */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* contraste */
+    font-size: 16px;
+  }
+
+  .carousel-caption h5 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  /* Botões lado a lado */
+  .carousel-buttons {
+    flex-direction: row !important;
+    gap: 12px;
+    bottom: 10px;
+  }
+
+  .carousel-buttons button {
+    width: auto;
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+}
+
     }
   </style>
 </head>
