@@ -265,9 +265,7 @@
       .tutorial-panel.open {
         left: 0;
       }
-      /* Ajustes para mobile */
-/* Para telas menores, mas mantendo layout igual ao PC */
-@media (max-width: 768px) {
+@media (max-heigth: 300px) and (orientation: landscape) {
   .carousel-item img {
     height: 100vh; /* sempre tela cheia */
     object-fit: cover;
@@ -276,15 +274,16 @@
   /* Caixa do texto fica do lado direito como no PC */
   .carousel-caption {
     position: absolute;
-    top: 100%;
+    top: 50%;
     left: 72%; /* mesma ideia do PC */
     transform: translateY(-50%);
-    width: 80%;  /* mais larga para caber bem em telas pequenas */
-    max-width: 300px; /* limite da largura da caixa */
+    height: 80%;         /* altura proporcional */
+    max-height: 300px;   /* limite da altura da caixa */
     background-color: rgba(0, 0, 0, 0.7);
     padding: 12px;
     border-radius: 8px;
     text-align: left;
+    overflow-y: auto;    /* rolagem caso o texto seja grande */
   }
 
   .carousel-caption h5,
