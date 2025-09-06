@@ -164,39 +164,32 @@
         .guidelines-text ul {
             margin-left: 20px;
         }
-/* Ajustes para celulares em modo paisagem */
-    /* Ajustes gerais para telas pequenas */
+/* Ajustes só para celular (até 768px de largura) */
 @media screen and (max-width: 768px) {
-    body, html {
-        overflow: auto; /* permite rolagem caso o conteúdo fique maior que a tela */
-    }
-
     h1 {
-        font-size: 24px;
+        font-size: 26px;
         margin: 10px auto;
         text-align: center;
         display: block;
-        padding: 5px 10px;
+        padding: 6px 12px;
     }
 
     .buttons {
-        margin: 20px auto;
+        margin-top: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 12px;
     }
 
     button {
-        font-size: 16px;
-        padding: 8px 12px;
-        margin: 8px 0;
-        margin-left: 0;
-        width: 80%; /* ocupa boa parte da tela */
-        text-align: center;
+        font-size: 18px;
+        padding: 8px 14px;
+        width: 80%; /* centralizado e ocupa bem a tela */
     }
 
     .toggle-music {
-        font-size: 16px;
+        font-size: 18px;
         padding: 6px;
         top: 10px;
         right: 10px;
@@ -204,8 +197,8 @@
 
     .modal-content {
         width: 95%;
-        max-height: 90vh;
-        padding: 15px;
+        height: 90%;
+        padding: 12px;
     }
 
     .modal-content iframe {
@@ -213,34 +206,30 @@
     }
 
     .guidelines-text {
-        font-size: 14px;
+        font-size: 15px;
     }
 }
 
-/* Ajustes específicos para celulares em modo paisagem */
+/* Ajuste extra para celular de lado (landscape) */
 @media screen and (max-width: 768px) and (orientation: landscape) {
     h1 {
         font-size: 20px;
-        margin: 5px auto;
-        padding: 4px 8px;
     }
 
     .buttons {
-        flex-direction: row; /* coloca os botões lado a lado */
-        justify-content: center;
+        flex-direction: row;      /* coloca os botões lado a lado */
         flex-wrap: wrap;
-        margin: 15px auto;
+        justify-content: center;
     }
 
     button {
         font-size: 14px;
         width: auto;
         margin: 5px;
-        padding: 6px 10px;
     }
 
     .modal-content iframe {
-        height: 180px; /* menor altura para caber em paisagem */
+        height: 160px; /* menor altura pra caber em paisagem */
     }
 }
 
