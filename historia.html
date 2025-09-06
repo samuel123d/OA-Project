@@ -266,46 +266,52 @@
         left: 0;
       }
       /* Ajustes para mobile */
+/* Para telas menores, mas mantendo layout igual ao PC */
 @media (max-width: 768px) {
+  .carousel-item img {
+    height: 100vh; /* sempre tela cheia */
+    object-fit: cover;
+  }
 
-  /* Texto direto no fundo da imagem */
+  /* Caixa do texto fica do lado direito como no PC */
   .carousel-caption {
     position: absolute;
-    bottom: 15%;
-    top: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    background: none; /* tira fundo preto */
-    padding: 10px;
-    text-align: center;
+    top: 50%;
+    left: 72%; /* mesma ideia do PC */
+    transform: translateY(-50%);
+    width: 80%;  /* mais larga para caber bem em telas pequenas */
+    max-width: 300px; /* limite da largura da caixa */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: left;
   }
 
   .carousel-caption h5,
   .carousel-caption p {
-    color: #fff; /* branco para destacar */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* contraste */
-    font-size: 16px;
+    color: #fff;
+    font-size: 14px;
   }
 
   .carousel-caption h5 {
-    font-size: 20px;
-    margin-bottom: 8px;
+    font-size: 16px;
+    margin-bottom: 6px;
   }
 
   /* Botões lado a lado */
   .carousel-buttons {
     flex-direction: row !important;
     gap: 12px;
-    bottom: 10px;
+    bottom: 15px;
   }
 
   .carousel-buttons button {
-    width: auto;
     font-size: 14px;
     padding: 8px 14px;
+    width: auto;
   }
 }
+
 
     }
   </style>
