@@ -165,26 +165,38 @@
             margin-left: 20px;
         }
 /* Ajustes para celulares em modo paisagem */
-@media screen and (max-width: 768px) and (orientation: landscape) {
+    /* Ajustes gerais para telas pequenas */
+@media screen and (max-width: 768px) {
+    body, html {
+        overflow: auto; /* permite rolagem caso o conteúdo fique maior que a tela */
+    }
+
     h1 {
-        font-size: 28px;
-        margin-left: 20px;
-        margin-top: 10px;
+        font-size: 24px;
+        margin: 10px auto;
+        text-align: center;
+        display: block;
+        padding: 5px 10px;
     }
 
     .buttons {
-        margin-top: 20px;
-        margin-left: 10px;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     button {
-        font-size: 18px;
-        padding: 8px 15px;
-        margin-left: 20px;
+        font-size: 16px;
+        padding: 8px 12px;
+        margin: 8px 0;
+        margin-left: 0;
+        width: 80%; /* ocupa boa parte da tela */
+        text-align: center;
     }
 
     .toggle-music {
-        font-size: 18px;
+        font-size: 16px;
         padding: 6px;
         top: 10px;
         right: 10px;
@@ -192,16 +204,43 @@
 
     .modal-content {
         width: 95%;
-        height: auto;
         max-height: 90vh;
+        padding: 15px;
     }
 
     .modal-content iframe {
-        height: 250px; /* reduzido para caber melhor na tela */
+        height: 220px;
     }
 
     .guidelines-text {
         font-size: 14px;
+    }
+}
+
+/* Ajustes específicos para celulares em modo paisagem */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    h1 {
+        font-size: 20px;
+        margin: 5px auto;
+        padding: 4px 8px;
+    }
+
+    .buttons {
+        flex-direction: row; /* coloca os botões lado a lado */
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 15px auto;
+    }
+
+    button {
+        font-size: 14px;
+        width: auto;
+        margin: 5px;
+        padding: 6px 10px;
+    }
+
+    .modal-content iframe {
+        height: 180px; /* menor altura para caber em paisagem */
     }
 }
 
