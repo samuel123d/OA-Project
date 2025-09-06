@@ -164,6 +164,47 @@
         .guidelines-text ul {
             margin-left: 20px;
         }
+/* Ajustes para celulares em modo paisagem */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    h1 {
+        font-size: 28px;
+        margin-left: 20px;
+        margin-top: 10px;
+    }
+
+    .buttons {
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+
+    button {
+        font-size: 18px;
+        padding: 8px 15px;
+        margin-left: 20px;
+    }
+
+    .toggle-music {
+        font-size: 18px;
+        padding: 6px;
+        top: 10px;
+        right: 10px;
+    }
+
+    .modal-content {
+        width: 95%;
+        height: auto;
+        max-height: 90vh;
+    }
+
+    .modal-content iframe {
+        height: 250px; /* reduzido para caber melhor na tela */
+    }
+
+    .guidelines-text {
+        font-size: 14px;
+    }
+}
+
     </style>
 </head>
 <body>
