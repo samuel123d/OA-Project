@@ -36,7 +36,7 @@ Através de uma mecânica de "arrastar e soltar" (drag and drop) e desafios prog
 
 O projeto apresenta uma organização robusta para suportar os diversos assets multimédia:
 
-* **Oa/**: Core da lógica do Objeto de Aprendizagem.
+* **Oa/**: Parte e um projeto extra.
 * **Assets (Imagens/Áudio)**: Coleção de papiros, personagens egípcios e trilhas sonoras temáticas.
 * **index.html**: Interface de entrada e menu principal.
 * **final-end-next.html**: Fluxos de conclusão e feedback pedagógico.
