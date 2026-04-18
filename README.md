@@ -1,8 +1,8 @@
 # OA-Project | Batalha de Algarismos 🏆
 
-**Projeto premiado com o 2.º Lugar no Ctrl+E 2025 (Congresso de Tecnologia na Educação).**
+**Projeto premiado com o 2.º Lugar na Mostra de RED do Ctrl+E 2025.**
 
-O Batalha de Algarismos é um Objeto de Aprendizagem (OA) gamificado, desenvolvido no âmbito da equipa de investigação OBAMA. O projeto utiliza uma narrativa imersiva ambientada no Antigo Egito para ensinar e reforçar conceitos matemáticos de forma lúdica e interactiva.
+O Batalha de Algarismos é um Objeto de Aprendizagem (OA) gamificado, desenvolvido no âmbito da equipa de investigação OBAMA. O projeto utiliza uma narrativa tática e imersiva para o ensino de algarismos romanos no Ensino Fundamental, aliando design visual e teoria de aprendizagem.
 
 **Link de Acesso:** [Jogar Batalha de Algarismos](https://samuel123d.github.io/OA-Project)
 
@@ -10,16 +10,18 @@ O Batalha de Algarismos é um Objeto de Aprendizagem (OA) gamificado, desenvolvi
 
 ## 🌟 Reconhecimento e Ciência
 
-Este projeto não é apenas um jogo, mas uma ferramenta pedagógica validada cientificamente. A sua eficácia no ensino foi apresentada e premiada no **Ctrl+E 2025**, destacando-se pela sua capacidade de aliar design visual (UI), experiência do utilizador (UX) e teoria de aprendizagem.
+Este projeto é um **Objeto de Aprendizagem (OA)** validado cientificamente, tendo sido reconhecido pela sua eficácia pedagógica no cenário nacional:
 
-* **Artigo Científico:** `Artigo_ Objeto de Aprendizagem Batalha de Algarismos.pdf` (disponível no repositório).
-* **Evento:** [Ctrl+E 2025](https://doity.com.br/ctrl-e-2025)
+* **Publicação Oficial (SBC SOL):** [Batalha de Algarismos: A Missão de Rahim](https://sol.sbc.org.br/index.php/ctrle/article/view/40532)
+* **DOI do Artigo:** [https://doi.org/10.5753/ctrle.2025.40532](https://doi.org/10.5753/ctrle.2025.40532)
+* **Artigo no Repositório:** [Visualizar PDF Local](./Artigo_%20Objeto%20de%20Aprendizagem%20Batalha%20de%20Algarismos.docx%20(2).pdf)
+* **Evento:** [Ctrl+E 2025 - IX Congresso sobre Tecnologias na Educação](https://doity.com.br/ctrl-e-2025)
 
 ---
 
 ## Resumo do Projeto
 
-Através de uma mecânica de "arrastar e soltar" (drag and drop) e desafios progressivos, os alunos são desafiados a resolver problemas matemáticos para avançar na história. O sistema conta com feedback imediato, gestão de vidas e recompensas visuais.
+Através de uma mecânica de "arrastar e soltar" (drag and drop) e desafios progressivos, os alunos são desafiados a resolver problemas matemáticos para avançar na história. O sistema conta com feedback imediato, gestão de vidas e recompensas visuais baseadas em elementos históricos.
 
 ### Tecnologias e Ferramentas
 
@@ -36,8 +38,8 @@ Através de uma mecânica de "arrastar e soltar" (drag and drop) e desafios prog
 
 O projeto apresenta uma organização robusta para suportar os diversos assets multimédia:
 
-* **Oa/**: Parte e um projeto extra.
-* **Assets (Imagens/Áudio)**: Coleção de papiros, personagens egípcios e trilhas sonoras temáticas.
+* **Oa/**: Parte de um projeto em desenvolvimento.
+* **Assets (Imagens/Áudio)**: Coleção de papiros, personagens e trilhas sonoras temáticas.
 * **index.html**: Interface de entrada e menu principal.
 * **final-end-next.html**: Fluxos de conclusão e feedback pedagógico.
 
@@ -48,13 +50,13 @@ O projeto apresenta uma organização robusta para suportar os diversos assets m
 O diferencial deste projeto reside na sua fundamentação educacional:
 
 > **Narrativa Gamificada**
-> A integração de elementos históricos (Antigo Egito) com mecânicas de jogo aumenta o engajamento do aluno, facilitando a retenção de conceitos de aritmética e lógica.
+> A integração de uma narrativa histórica envolvente com mecânicas de jogo aumenta o engajamento do aluno, facilitando a retenção de conceitos de aritmética e lógica de forma natural.
 
 ---
 
 ## Instalação e Execução
 
-Para fins de estudo acadêmico ou implementação em sala de aula:
+Para fins de estudo académico ou implementação em sala de aula:
 
 1. Efetue o clone do repositório:
    ```bash
